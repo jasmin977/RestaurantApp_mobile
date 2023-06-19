@@ -1,8 +1,10 @@
 import { FunctionComponent } from "react";
 import { styled } from "styled-components/native";
-import { Palette } from "../themes";
-import { BackgoundContainer, CenteredView, Paragraph } from "../components";
 import { StatusBar } from "expo-status-bar";
+import { restaurants } from "../data/restaurants";
+import { Palette } from "../themes";
+import SearchInput from "../components/common/inputs/Search";
+import { BackgoundContainer, ListSection } from "../components";
 
 const HomeContainer = styled(BackgoundContainer)`
   background-color: ${Palette.background};
@@ -19,12 +21,15 @@ interface HomeProps {}
 
 const Home: FunctionComponent<HomeProps> = () => {
   return (
-    <BackgoundContainer>
-      <StatusBar style="light" />
-      <CenteredView>
-        <Paragraph>Feed page</Paragraph>
-      </CenteredView>
-    </BackgoundContainer>
+    <StyledScrollView>
+      <HomeContainer>
+        <StatusBar style="light" />
+        <SearchInput></SearchInput>
+
+        <ListSection header="Recommended" data={restaurants} />
+        <ListSection header="Popular Near you" data={restaurants} />
+      </HomeContainer>
+    </StyledScrollView>
   );
 };
 

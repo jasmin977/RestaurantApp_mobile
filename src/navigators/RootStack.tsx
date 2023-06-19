@@ -3,8 +3,8 @@ import React, { FunctionComponent } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen, ScanQRScreen, SettingsScreen } from "../screens";
 import { Palette } from "../themes";
-import { ScanQRButton } from "../components";
-import { HomeIcon, SettingsIcon } from "../assets";
+import { Greeting, ScanQRButton } from "../components";
+import { HomeIcon, MenuIcon, NotifIcon, SettingsIcon } from "../assets";
 
 export type RootBottomStackParamList = {
   Feed: undefined;
@@ -19,8 +19,6 @@ const TabStack: FunctionComponent = () => {
     <Tab.Navigator
       initialRouteName="Feed"
       screenOptions={{
-        headerShown: false,
-
         tabBarShowLabel: false,
 
         tabBarStyle: {
@@ -40,6 +38,16 @@ const TabStack: FunctionComponent = () => {
         name="Feed"
         component={HomeScreen}
         options={{
+          headerStyle: {
+            backgroundColor: Palette.background,
+            height: 120,
+          },
+          headerTitle: () => (
+            <Greeting mainText="Hey!👋" subText="Share your own experiences" />
+          ),
+          headerLeft: () => <MenuIcon />,
+          headerRight: () => <NotifIcon />,
+
           tabBarIcon: ({ focused, size, color }) => (
             <HomeIcon color={color} size={size} outline={focused} />
           ),
@@ -50,6 +58,7 @@ const TabStack: FunctionComponent = () => {
         name="ScanQR"
         component={ScanQRScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => <ScanQRButton />,
         }}
       />
@@ -58,6 +67,7 @@ const TabStack: FunctionComponent = () => {
         name="Settings"
         component={SettingsScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => <SettingsIcon />,
         }}
       />
