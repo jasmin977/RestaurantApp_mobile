@@ -1,14 +1,16 @@
 import { FunctionComponent } from "react";
-import { ImageSourcePropType } from "react-native";
 import { styled } from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import { Palette } from "../../../themes";
 import SubTitle from "../texts/SubTitle";
 import Title from "../texts/Title";
-
 import { ScreenWidth } from "../containers/Backgound";
+import { Restaurant } from "../../../entities";
+import { RestaurantNavigationProps } from "../../../navigators/stacks/Restaurants";
+import Review from "../review/Review";
 
 const StyledCard = styled.TouchableOpacity`
-  width: ${ScreenWidth * 0.76}px;
+  width: ${ScreenWidth * 0.8}px;
   background-color: ${Palette.surafce};
   border-radius: 15px;
   margin-right: 20px;
@@ -27,20 +29,43 @@ const StyledImage = styled.Image`
   height: 150px;
   border-radius: 15px;
 `;
-export interface CardProps {
-  id: number;
-  name: string;
-  location: string;
-  img: ImageSourcePropType;
-}
 
-const CardItem: FunctionComponent<CardProps> = ({ name, location, img }) => {
+const CardItem: FunctionComponent<Restaurant> = ({
+  name,
+  location,
+  img,
+  description,
+  workingTime,
+  rating,
+  id,
+  menu,
+}) => {
+  const navigation = useNavigation<RestaurantNavigationProps>();
+
+  const restaurantObject: Restaurant = {
+    id: id,
+    name: name,
+    location: location,
+    img: img,
+    rating: rating,
+    description: description,
+    workingTime: workingTime,
+    menu: menu,
+  };
+
   return (
-    <StyledCard activeOpacity={0.5}>
+    <StyledCard
+      activeOpacity={0.5}
+      onPress={() => {
+        navigation.navigate("RestaurantProfile", {
+          restoData: restaurantObject,
+        });
+      }}
+    >
       <StyledView>
         <Title>{name}</Title>
+        <Review rating={rating} />
         <StyledImage resizeMode="contain" source={img} />
-        <SubTitle>{location}</SubTitle>
       </StyledView>
     </StyledCard>
   );

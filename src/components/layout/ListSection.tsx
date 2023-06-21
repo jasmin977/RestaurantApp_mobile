@@ -1,11 +1,8 @@
 import { FunctionComponent } from "react";
 import { styled } from "styled-components/native";
-
-import { ScrollView, TouchableOpacity } from "react-native";
-import BackgoundContainer from "../common/containers/Backgound";
-import SubTitle from "../common/texts/SubTitle";
-import Hint from "../common/texts/Hint";
-import CardItem, { CardProps } from "../common/cards/CardItem";
+import { ScrollView } from "react-native";
+import { Restaurant } from "../../entities";
+import { BackgoundContainer, CardItem, Hint, SubTitle } from "../common";
 
 //components
 const StyledCardList = styled(BackgoundContainer)``;
@@ -34,7 +31,7 @@ interface ListSectionProps {
   horizontal?: boolean;
   header: string;
   seeMore?: string;
-  data: Array<CardProps>;
+  data: Array<Restaurant>;
 }
 
 const ListSection: FunctionComponent<ListSectionProps> = ({
@@ -51,7 +48,7 @@ const ListSection: FunctionComponent<ListSectionProps> = ({
       </HeaderView>
       <ScrollView horizontal={horizontal}>
         <List>
-          {data.map((item: CardProps) => (
+          {data.map((item: Restaurant) => (
             <CardItem key={`key_${item.id}_for${header}`} {...item} />
           ))}
         </List>

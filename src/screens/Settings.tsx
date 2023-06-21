@@ -1,5 +1,9 @@
 import { FunctionComponent } from "react";
-import { BackgoundContainer, CenteredView, Paragraph } from "../components";
+import {
+  BackgoundContainer,
+  CenteredView,
+  Paragraph,
+} from "../components/common";
 
 interface SettingsProps {}
 

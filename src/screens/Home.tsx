@@ -4,7 +4,8 @@ import { StatusBar } from "expo-status-bar";
 import { restaurants } from "../data/restaurants";
 import { Palette } from "../themes";
 import SearchInput from "../components/common/inputs/Search";
-import { BackgoundContainer, ListSection } from "../components";
+import { ListSection } from "../components/layout";
+import { BackgoundContainer } from "../components/common";
 
 const HomeContainer = styled(BackgoundContainer)`
   background-color: ${Palette.background};
