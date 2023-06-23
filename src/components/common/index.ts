@@ -7,7 +7,7 @@ export { default as Greeting } from "./header/Greeting";
 
 //cards
 export { default as MealCard } from "./cards/MealItem";
-export { default as CardItem } from "./cards/CardItem";
+export { default as RestaurantItem } from "./cards/RestaurantItem";
 
 //texts
 export { default as Title } from "./texts/Title";

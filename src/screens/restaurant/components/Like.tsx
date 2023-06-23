@@ -1,14 +1,14 @@
 import { FunctionComponent } from "react";
 import { styled } from "styled-components/native";
 import { Palette } from "../../../themes";
-import { ButtnProps, CenteredView } from "../../../components/common";
+import { ButtnProps } from "../../../components/common";
 import { LikeIcon } from "../../../assets";
 
 const ButtonView = styled.TouchableOpacity`
   align-items: center;
   background-color: ${Palette.surafce};
   border-radius: 10px;
-  padding: 10px;
+  padding: 13px;
   align-items: center;
   justify-content: center;
 `;
@@ -16,9 +16,7 @@ const ButtonView = styled.TouchableOpacity`
 const LikeButton: FunctionComponent<ButtnProps> = ({ onPress, btnStyle }) => {
   return (
     <ButtonView onPress={onPress} style={btnStyle}>
-      <CenteredView>
-        <LikeIcon color={Palette.PrimaryColor} />
-      </CenteredView>
+      <LikeIcon color={Palette.PrimaryColor} />
     </ButtonView>
   );
 };

@@ -3,5 +3,6 @@ export interface Meal {
   description?: string;
   price?: number;
   rating: number;
+  img: ImageSourcePropType;
 }
 export default Meal;

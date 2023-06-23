@@ -1,18 +1,12 @@
-import React, { FunctionComponent, useState } from "react";
-import { TouchableOpacity, View, FlatList } from "react-native";
+import React, { FunctionComponent } from "react";
+import { TouchableOpacity, View } from "react-native";
 import { styled } from "styled-components/native";
 import { Palette } from "../../themes";
-import { LikeButton } from "../../screens/restaurant/components";
+import { LikeButton, MenuSection } from "../../screens/restaurant/components";
 import Review from "../common/review/Review";
 import { ClockIcon, LocationIcon } from "../../assets";
 import { MenuCategory, Restaurant } from "../../entities";
-import {
-  BackgoundContainer,
-  MealCard,
-  Paragraph,
-  SubTitle,
-  Title,
-} from "../common";
+import { BackgoundContainer, Paragraph, SubTitle, Title } from "../common";
 
 const DetailsContainer = styled(BackgoundContainer)`
   padding: 20px;
@@ -23,26 +17,6 @@ const DetailsContainer = styled(BackgoundContainer)`
   gap: 25px;
 `;
 
-const MenuItemsContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 15px;
-`;
-
-const mostPopularCategory: MenuCategory = {
-  category: "Most Popular",
-  items: [],
-};
-
-const getCategoryItems = (categoryName: string, menu: MenuCategory[]) => {
-  if (categoryName === "Most Popular") {
-    return menu.flatMap((category) => category.items);
-  }
-  const category = menu.find((item) => item.category === categoryName);
-  return category ? category.items : [];
-};
-
 const RestaurantDetails: FunctionComponent<Restaurant> = ({
   name,
   location,
@@ -51,13 +25,6 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
   rating,
   menu,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    "Most Popular"
-  );
-  const handleCategoryPress = (category: string) => {
-    setSelectedCategory(category);
-  };
-
   return (
     <DetailsContainer>
       <View
@@ -68,9 +35,15 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
           justifyContent: "space-between",
         }}
       >
-        <View>
+        <View style={{ flex: 1 }}>
           <Title>{name}</Title>
-          <View style={{ flexDirection: "row", gap: 5 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 5,
+              maxWidth: "90%",
+            }}
+          >
             <LocationIcon color={Palette.text} />
             <SubTitle>{location}</SubTitle>
           </View>
@@ -89,43 +62,7 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
         <SubTitle textStyle={{ fontSize: 18 }}>{workingTime}</SubTitle>
       </View>
       <Paragraph>{description}</Paragraph>
-
-      {/** menu */}
-      <View>
-        <FlatList
-          data={[mostPopularCategory, ...menu]}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: 20, paddingVertical: 10 }}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => handleCategoryPress(item.category)}
-            >
-              <SubTitle
-                textStyle={[
-                  { fontSize: 20, color: Palette.text },
-                  selectedCategory === item.category && {
-                    color: Palette.PrimaryColor,
-                  },
-                ]}
-              >
-                {item.category}
-              </SubTitle>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item: MenuCategory) => item.category}
-        />
-        <MenuItemsContainer>
-          {selectedCategory &&
-            getCategoryItems(selectedCategory, menu).map((item) => (
-              <MealCard
-                name={item.name}
-                rating={item.rating}
-                key={`${item.name}_${item.description}`}
-              />
-            ))}
-        </MenuItemsContainer>
-      </View>
+      <MenuSection menu={menu} />
     </DetailsContainer>
   );
 };

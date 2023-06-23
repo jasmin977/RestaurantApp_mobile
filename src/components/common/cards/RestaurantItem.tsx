@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import { styled } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Palette } from "../../../themes";
-import SubTitle from "../texts/SubTitle";
 import Title from "../texts/Title";
 import { ScreenWidth } from "../containers/Backgound";
 import { Restaurant } from "../../../entities";
@@ -30,7 +29,7 @@ const StyledImage = styled.Image`
   border-radius: 15px;
 `;
 
-const CardItem: FunctionComponent<Restaurant> = ({
+const RestaurantItem: FunctionComponent<Restaurant> = ({
   name,
   location,
   img,
@@ -71,4 +70,4 @@ const CardItem: FunctionComponent<Restaurant> = ({
   );
 };
 
-export default CardItem;
+export default RestaurantItem;

@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 import { styled } from "styled-components/native";
 import { ScrollView } from "react-native";
 import { Restaurant } from "../../entities";
-import { BackgoundContainer, CardItem, Hint, SubTitle } from "../common";
+import { BackgoundContainer, RestaurantItem, Hint, SubTitle } from "../common";
 
 //components
 const StyledCardList = styled(BackgoundContainer)``;
@@ -49,7 +49,7 @@ const ListSection: FunctionComponent<ListSectionProps> = ({
       <ScrollView horizontal={horizontal}>
         <List>
           {data.map((item: Restaurant) => (
-            <CardItem key={`key_${item.id}_for${header}`} {...item} />
+            <RestaurantItem key={`key_${item.id}_for${header}`} {...item} />
           ))}
         </List>
       </ScrollView>

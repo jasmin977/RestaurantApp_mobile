@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import { ImageBackground } from "react-native";
-import { burger } from "../../../assets";
 import Review from "../review/Review";
 import { Palette } from "../../../themes";
 import { ScreenWidth } from "../containers/Backgound";
@@ -8,16 +7,15 @@ import SubTitle from "../texts/SubTitle";
 import { Meal } from "../../../entities";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity } from "react-native";
-import { styled } from "styled-components/native";
 
-const MealItem: FunctionComponent<Meal> = ({ name, rating }) => {
+const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <ImageBackground
         resizeMode="cover"
         imageStyle={{ borderRadius: 20 }}
         style={{ width: ScreenWidth * 0.4, height: 150 }}
-        source={burger}
+        source={img}
       >
         <Review
           rating={rating}

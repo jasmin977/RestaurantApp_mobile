@@ -6,7 +6,15 @@ export { default as rest_4 } from "./images/restaurants/4.jpg";
 export { default as rest_5 } from "./images/restaurants/5.jpg";
 //meals
 
-export { default as burger } from "./images/meals/burger1.jpg";
+export { default as classicBurger } from "./images/meals/burger1.jpg";
+export { default as vegyBurger } from "./images/meals/burger2.jpg";
+export { default as vegeterianPizza } from "./images/meals/vegeterian_pizza.jpg";
+export { default as peperoniPizza } from "./images/meals/peperoni_pizza.jpg";
+export { default as eggsBenedict } from "./images/meals/eggs_benedict.jpg";
+export { default as avocadoToast } from "./images/meals/avocado_toast.jpg";
+export { default as pancakes } from "./images/meals/pancakes.jpg";
+export { default as salad } from "./images/meals/salad.jpg";
+export { default as seafood } from "./images/meals/seafood.jpg";
 
 //fonts
 export { default as BOLD } from "./fonts/poppins/Poppins-Bold.ttf";
