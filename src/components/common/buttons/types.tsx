@@ -8,7 +8,7 @@ import {
 
 export default interface ButtnProps {
   btnStyle?: StyleProp<ViewStyle>;
-  onPress?: (event: GestureResponderEvent) => void | undefined;
+  onPress: (event: GestureResponderEvent) => void | undefined;
   textStyle?: StyleProp<TextStyle>;
-  children: ReactNode;
+  children?: ReactNode;
 }

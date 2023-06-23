@@ -4,6 +4,18 @@ export { default as rest_2 } from "./images/restaurants/2.jpg";
 export { default as rest_3 } from "./images/restaurants/3.jpg";
 export { default as rest_4 } from "./images/restaurants/4.jpg";
 export { default as rest_5 } from "./images/restaurants/5.jpg";
+//meals
+
+export { default as classicBurger } from "./images/meals/burger1.jpg";
+export { default as vegyBurger } from "./images/meals/burger2.jpg";
+export { default as vegeterianPizza } from "./images/meals/vegeterian_pizza.jpg";
+export { default as peperoniPizza } from "./images/meals/peperoni_pizza.jpg";
+export { default as eggsBenedict } from "./images/meals/eggs_benedict.jpg";
+export { default as avocadoToast } from "./images/meals/avocado_toast.jpg";
+export { default as pancakes } from "./images/meals/pancakes.jpg";
+export { default as salad } from "./images/meals/salad.jpg";
+export { default as seafood } from "./images/meals/seafood.jpg";
+
 //fonts
 export { default as BOLD } from "./fonts/poppins/Poppins-Bold.ttf";
 export { default as MEDIUM } from "./fonts/poppins/Poppins-Medium.ttf";
@@ -20,3 +32,6 @@ export { default as QRcodeIcon } from "./svg/QRcode";
 export { default as LikeIcon } from "./svg/Like";
 export { default as StarIcon } from "./svg/Star";
 export { default as LoaderIcon } from "./svg/Loader";
+export { default as BackIcon } from "./svg/Back";
+export { default as LocationIcon } from "./svg/Location";
+export { default as ClockIcon } from "./svg/Clock";

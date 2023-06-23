@@ -1,3 +1,5 @@
+import { MenuCategory } from "./MenuCategory";
+
 export interface Restaurant {
   id: number;
   name: string;
@@ -6,5 +8,6 @@ export interface Restaurant {
   rating: number;
   description: string;
   workingTime: string;
+  menu: MenuCategory[];
 }
 export default Restaurant;

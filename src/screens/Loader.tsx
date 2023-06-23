@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
-import { BackgoundContainer, CenteredView } from "../components";
+
 import { LoaderIcon } from "../assets";
+import { BackgoundContainer, CenteredView } from "../components/common";
 
 interface LoaderProps {}
 

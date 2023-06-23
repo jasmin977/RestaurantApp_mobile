@@ -9,38 +9,24 @@ const ScanButton: FunctionComponent = () => {
   return (
     <View
       style={{
-        width: 80,
-        height: 80,
-        borderRadius: 100,
-        top: -10,
-        backgroundColor: "white",
+        width: 60,
+        height: 60,
 
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 50,
       }}
     >
       <LinearGradient
-        colors={[Palette.PrimaryColor, Palette.SecondColor]}
+        colors={[Palette.PrimaryColor, Palette.PrimaryColor]}
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 100,
+          borderRadius: 30,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <TouchableOpacity
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: 100,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <QRcodeIcon />
-        </TouchableOpacity>
+        <QRcodeIcon />
       </LinearGradient>
     </View>
   );

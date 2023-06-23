@@ -1,6 +1,10 @@
 import { FunctionComponent } from "react";
-import { BackgoundContainer, CenteredView, Paragraph } from "../components";
 import { StatusBar } from "expo-status-bar";
+import {
+  BackgoundContainer,
+  CenteredView,
+  Paragraph,
+} from "../components/common";
 
 interface ScanQRProps {}
 
