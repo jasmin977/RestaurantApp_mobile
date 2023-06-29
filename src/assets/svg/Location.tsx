@@ -1,26 +1,15 @@
-import * as React from "react";
-import { FunctionComponent } from "react";
+import * as React from 'react';
+import { FunctionComponent } from 'react';
 
-import { Palette } from "../../themes";
-import Svg, { Path } from "react-native-svg";
-import { IconProps } from "./types";
+import Svg, { Path } from 'react-native-svg';
+import { IconProps } from './types';
 
-const LocationIcon: FunctionComponent<IconProps> = ({
-  color = Palette.text,
-  size = 30,
-  outline,
-}) => {
-  const stroke = outline ? color : "none";
-  const fill = outline ? "none" : color;
+const LocationIcon: FunctionComponent<IconProps> = ({ color = 'red', size = 30, outline }) => {
+  const stroke = outline ? color : 'none';
+  const fill = outline ? 'none' : color;
 
   return (
-    <Svg
-      fill={fill}
-      strokeWidth={1.5}
-      stroke={stroke}
-      width={size}
-      height={size}
-    >
+    <Svg fill={fill} strokeWidth={1.5} stroke={stroke} width={size} height={size}>
       {outline ? (
         <>
           <Path

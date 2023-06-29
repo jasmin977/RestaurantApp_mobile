@@ -1,12 +1,12 @@
-import { FunctionComponent } from "react";
-import { styled } from "styled-components/native";
-import { Palette } from "../../../themes";
-import { ButtnProps } from "../../../components/common";
-import { LikeIcon } from "../../../assets";
+import { FunctionComponent } from 'react';
+import { styled } from 'styled-components/native';
+import { ButtnProps } from '../../../components/common';
+import { LikeIcon } from '../../../assets';
+import { useTheme } from '../../../hooks';
 
 const ButtonView = styled.TouchableOpacity`
   align-items: center;
-  background-color: ${Palette.surafce};
+
   border-radius: 10px;
   padding: 13px;
   align-items: center;
@@ -14,9 +14,10 @@ const ButtonView = styled.TouchableOpacity`
 `;
 
 const LikeButton: FunctionComponent<ButtnProps> = ({ onPress, btnStyle }) => {
+  const { theme } = useTheme();
   return (
     <ButtonView onPress={onPress} style={btnStyle}>
-      <LikeIcon color={Palette.PrimaryColor} />
+      <LikeIcon color={theme.colors.primary} />
     </ButtonView>
   );
 };

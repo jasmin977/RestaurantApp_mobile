@@ -1,18 +1,11 @@
-import * as React from "react";
-import { Palette } from "../../themes";
-import Svg, { Path } from "react-native-svg";
-import { View } from "react-native";
+import * as React from 'react';
+
+import Svg, { Path } from 'react-native-svg';
+import { View } from 'react-native';
 
 const NotifIcon = () => (
   <View style={{ paddingRight: 20 }}>
-    <Svg
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke={Palette.text}
-      width={30}
-      height={30}
-    >
+    <Svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={'red'} width={30} height={30}>
       <Path
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -1,11 +1,9 @@
-import { FunctionComponent } from "react";
-import { styled } from "styled-components/native";
-import { ScrollView } from "react-native";
-import { Restaurant } from "../../entities";
-import { BackgoundContainer, RestaurantItem, Hint, SubTitle } from "../common";
-
-//components
-const StyledCardList = styled(BackgoundContainer)``;
+import { FunctionComponent } from 'react';
+import { styled } from 'styled-components/native';
+import { ScrollView, View } from 'react-native';
+import { Restaurant } from '../../entities';
+import { BackgoundContainer, RestaurantItem } from '../common';
+import { RNText } from '../themed';
 
 const List = styled.View`
   flex: 1;
@@ -38,13 +36,13 @@ const ListSection: FunctionComponent<ListSectionProps> = ({
   data,
   header,
   horizontal = true,
-  seeMore = "see more",
+  seeMore = 'see more',
 }) => {
   return (
-    <StyledCardList>
+    <View>
       <HeaderView>
-        <SubTitle>{header}</SubTitle>
-        <Hint>{seeMore}</Hint>
+        <RNText variant="h5">{header}</RNText>
+        <RNText variant="caption">{seeMore}</RNText>
       </HeaderView>
       <ScrollView horizontal={horizontal}>
         <List>
@@ -53,7 +51,7 @@ const ListSection: FunctionComponent<ListSectionProps> = ({
           ))}
         </List>
       </ScrollView>
-    </StyledCardList>
+    </View>
   );
 };
 

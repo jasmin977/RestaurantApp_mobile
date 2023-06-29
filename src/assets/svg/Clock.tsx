@@ -1,26 +1,15 @@
-import * as React from "react";
-import { Palette } from "../../themes";
-import Svg, { Path } from "react-native-svg";
-import { FunctionComponent } from "react";
-import { IconProps } from "./types";
+import * as React from 'react';
 
-const ClockIcon: FunctionComponent<IconProps> = ({
-  color = Palette.text,
-  size = 25,
-  outline,
-}) => {
-  const stroke = outline ? color : "none";
-  const fill = outline ? "none" : color;
+import Svg, { Path } from 'react-native-svg';
+import { FunctionComponent } from 'react';
 
+interface IconProps {
+  outline?: boolean;
+}
+
+const ClockIcon: FunctionComponent<IconProps> = ({ outline = true }) => {
   return (
-    <Svg
-      fill={fill}
-      strokeWidth={1.5}
-      stroke={stroke}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-    >
+    <>
       {outline ? (
         <Path
           strokeLinecap="round"
@@ -39,7 +28,7 @@ const ClockIcon: FunctionComponent<IconProps> = ({
         strokeLinejoin="round"
         d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
       />
-    </Svg>
+    </>
   );
 };
 export default ClockIcon;

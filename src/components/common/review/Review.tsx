@@ -1,42 +1,39 @@
-import { FunctionComponent } from "react";
-import { Palette } from "../../../themes";
-import { StarIcon } from "../../../assets";
-import { StyleProp, ViewStyle, View } from "react-native";
-import CenteredContainer from "../containers/Centered";
-import SubTitle from "../texts/SubTitle";
-import Hint from "../texts/Hint";
+import { FunctionComponent } from 'react';
+
+import { StarIcon } from '../../../assets';
+import { ViewStyle, View } from 'react-native';
+import { RNIcon, RNText } from '../../themed';
 
 type RatingProps = {
   rating: number;
   detailled?: boolean;
-  additinalStyle?: StyleProp<ViewStyle>;
+  additinalStyle?: ViewStyle;
 };
 
-const Review: FunctionComponent<RatingProps> = ({
-  rating,
-  detailled = false,
-  additinalStyle,
-}) => {
+const Review: FunctionComponent<RatingProps> = ({ rating, detailled = false, additinalStyle }) => {
   return (
     <View
       style={[
         {
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "row",
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
           gap: 8,
         },
         additinalStyle,
       ]}
     >
-      <StarIcon size={15} color={Palette.PrimaryColor} />
+      <RNIcon outline={false} color="white" size={15}>
+        <StarIcon outline={false} />
+      </RNIcon>
 
-      <SubTitle textStyle={{ fontSize: 20 }}>{(5).toFixed(1)}</SubTitle>
+      <RNText variant="h5">{(5).toFixed(1)}</RNText>
+
       {detailled ? (
         <>
-          <Hint>(30+)</Hint>
+          <RNText>(30+)</RNText>
 
-          <Hint textStyle={{ color: Palette.PrimaryColor }}>see review </Hint>
+          <RNText color="primary">see review </RNText>
         </>
       ) : (
         <></>

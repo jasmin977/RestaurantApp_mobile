@@ -1,19 +1,15 @@
-import { FunctionComponent } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  BackgoundContainer,
-  CenteredView,
-  Paragraph,
-} from "../components/common";
+import { FunctionComponent } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { BackgoundContainer, CenteredView } from '../components/common';
+import { RNText } from '../components/themed';
 
 interface ScanQRProps {}
 
 const ScanQRScreen: FunctionComponent<ScanQRProps> = () => {
   return (
     <BackgoundContainer>
-      <StatusBar style="light" />
       <CenteredView>
-        <Paragraph>SCAN</Paragraph>
+        <RNText>scan</RNText>
       </CenteredView>
     </BackgoundContainer>
   );

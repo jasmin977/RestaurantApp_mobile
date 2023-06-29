@@ -1,29 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { useFonts } from "expo-font";
-import RootStack from "./src/navigators/RootStack";
-import { BOLD, MEDIUM, REGULAR } from "./src/assets";
-import { LoaderScreen } from "./src/screens";
+import { LoaderScreen } from './src/screens';
+import { ThemeProvider } from './src/context';
+import RootStack from './src/navigators/RootStack';
+import { useAssetLoader } from './src/hooks';
 
-//react navigation
 export default function App() {
-  const [fontLoaded] = useFonts({
-    FONT_BOLD: BOLD,
-    FONT_REGULAR: REGULAR,
-    FONT_MEDIUM: MEDIUM,
-  });
+  const { isLoading } = useAssetLoader();
 
-  if (!fontLoaded) {
+  if (isLoading) {
     return <LoaderScreen />;
   }
-  return <RootStack />;
+  return (
+    <ThemeProvider>
+      <RootStack />
+    </ThemeProvider>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -1,25 +1,14 @@
-import * as React from "react";
-import { Palette } from "../../themes";
-import Svg, { Path } from "react-native-svg";
-import { IconProps } from "./types";
+import * as React from 'react';
+import Svg, { Path } from 'react-native-svg';
+import { FunctionComponent } from 'react';
 
-const LikeIcon: React.FunctionComponent<IconProps> = ({
-  color = Palette.text,
-  size = 30,
-  outline = false,
-}) => {
-  const stroke = outline ? "none" : color;
-  const fill = !outline ? color : "none";
+interface IStarIconProps {
+  outline?: boolean;
+}
 
+const StarIcon: FunctionComponent<IStarIconProps> = ({ outline = false }) => {
   return (
-    <Svg
-      fill={fill}
-      strokeWidth={1.5}
-      stroke={stroke}
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-    >
+    <>
       {outline ? (
         <Path
           strokeLinecap="round"
@@ -33,8 +22,8 @@ const LikeIcon: React.FunctionComponent<IconProps> = ({
           clipRule="evenodd"
         />
       )}
-    </Svg>
+    </>
   );
 };
 
-export default LikeIcon;
+export default StarIcon;

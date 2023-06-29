@@ -1,14 +1,16 @@
-import { FunctionComponent } from "react";
-import { ImageBackground } from "react-native";
-import Review from "../review/Review";
-import { Palette } from "../../../themes";
-import { ScreenWidth } from "../containers/Backgound";
-import SubTitle from "../texts/SubTitle";
-import { Meal } from "../../../entities";
-import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native";
+import { FunctionComponent } from 'react';
+import { ImageBackground } from 'react-native';
+import Review from '../review/Review';
+
+import { ScreenWidth } from '../containers/Backgound';
+import { Meal } from '../../../entities';
+import { LinearGradient } from 'expo-linear-gradient';
+import { TouchableOpacity } from 'react-native';
+import { RNText } from '../../themed';
+import { useTheme } from '../../../hooks';
 
 const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
+  const { theme } = useTheme();
   return (
     <TouchableOpacity activeOpacity={0.5}>
       <ImageBackground
@@ -20,9 +22,9 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
         <Review
           rating={rating}
           additinalStyle={{
-            backgroundColor: Palette.surafce,
+            backgroundColor: theme.colors.card,
             borderRadius: 100,
-            width: "50%",
+            width: '50%',
             paddingHorizontal: 5,
             top: 10,
             left: 10,
@@ -31,14 +33,16 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
         <LinearGradient
           style={{
             bottom: 0,
-            position: "absolute",
-            width: "100%",
+            position: 'absolute',
+            width: '100%',
             padding: 10,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
             paddingBottom: 5,
           }}
-          colors={["transparent", Palette.background]}
+          colors={['transparent', 'black']}
         >
-          <SubTitle>{name}</SubTitle>
+          <RNText>{name}</RNText>
         </LinearGradient>
       </ImageBackground>
     </TouchableOpacity>

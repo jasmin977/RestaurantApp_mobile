@@ -1,11 +1,12 @@
-import { FunctionComponent, useState } from "react";
-import { styled } from "styled-components/native";
-import { MenuCategory } from "../../../entities";
-import { GestureResponderEvent, TouchableOpacity } from "react-native";
-import { MealCard, SubTitle } from "../../../components/common";
-import { FlatList } from "react-native";
-import { View } from "react-native";
-import { Palette } from "../../../themes";
+import { FunctionComponent, useState } from 'react';
+import { styled } from 'styled-components/native';
+import { MenuCategory } from '../../../entities';
+import { GestureResponderEvent, TouchableOpacity } from 'react-native';
+import { MealCard } from '../../../components/common';
+import { FlatList } from 'react-native';
+import { View } from 'react-native';
+import { RNText } from '../../../components/themed';
+import { useTheme } from '../../../hooks';
 
 interface MenuSectionProps {
   menu: MenuCategory[];
@@ -24,37 +25,32 @@ const MenuItemsContainer = styled.View`
   gap: 15px;
 `;
 
-const MenuCategoryItem: FunctionComponent<MenuCategoryItemProps> = ({
+const MenuCategoryItem: React.FunctionComponent<MenuCategoryItemProps> = ({
   category,
   onPress,
   selectedCategory,
-}) => (
-  <TouchableOpacity onPress={onPress}>
-    <SubTitle
-      textStyle={[
-        { fontSize: 20, color: Palette.text },
-        selectedCategory === category && {
-          color: Palette.PrimaryColor,
-        },
-      ]}
-    >
-      {category}
-    </SubTitle>
-  </TouchableOpacity>
-);
+}) => {
+  const { theme } = useTheme();
+
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <RNText variant="h5" color={selectedCategory === category ? 'primary' : 'onSurface'}>
+        {category}
+      </RNText>
+    </TouchableOpacity>
+  );
+};
 
 const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   const getCategoryItems = (categoryName: string) => {
-    if (categoryName === "Most Popular") {
-      return menu.flatMap((category) => category.items);
+    if (categoryName === 'Most Popular') {
+      return menu.flatMap(category => category.items);
     }
-    const category = menu.find((item) => item.category === categoryName);
+    const category = menu.find(item => item.category === categoryName);
     return category ? category.items : [];
   };
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    "Most Popular"
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('Most Popular');
   const handleCategoryPress = (category: string) => {
     setSelectedCategory(category);
   };
@@ -62,7 +58,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   return (
     <View>
       <FlatList
-        data={[{ category: "Most Popular" }, ...menu]}
+        data={[{ category: 'Most Popular' }, ...menu]}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ gap: 20, paddingVertical: 10 }}
@@ -73,11 +69,11 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
             onPress={() => handleCategoryPress(item.category)}
           />
         )}
-        keyExtractor={(item) => item.category}
+        keyExtractor={item => item.category}
       />
       <MenuItemsContainer>
         {selectedCategory &&
-          getCategoryItems(selectedCategory).map((item) => (
+          getCategoryItems(selectedCategory).map(item => (
             <MealCard
               name={item.name}
               rating={item.rating}

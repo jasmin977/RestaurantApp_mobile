@@ -1,23 +1,25 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent } from 'react';
 import {
   StackNavigationProp,
   TransitionPresets,
   TransitionSpecs,
   createStackNavigator,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 
 import {
   HomeScreen,
   RestaurantCommentScreen,
   RestaurantProfileScreen,
   RestaurantReviewsScreen,
-} from "../../screens";
+} from '../../screens';
 
-import { MenuIcon, NotifIcon } from "../../assets";
-import { Colors } from "../../themes";
+import { MenuIcon, NotifIcon } from '../../assets';
 
-import { Restaurant } from "../../entities";
-import { Greeting } from "../../components/common";
+import { Restaurant } from '../../entities';
+import { Greeting } from '../../components/common';
+import { useTheme } from '../../hooks';
+import { RNIcon } from '../../components/themed';
+import { View } from 'react-native';
 
 export type RestaurantStackParamList = {
   Home: undefined;
@@ -28,13 +30,13 @@ export type RestaurantStackParamList = {
 
 export type RestaurantNavigationProps = StackNavigationProp<
   RestaurantStackParamList,
-  "RestaurantProfile"
+  'RestaurantProfile'
 >;
 
 const Stack = createStackNavigator<RestaurantStackParamList>();
 
 const customTransition = {
-  animation: "spring",
+  animation: 'spring',
   config: {
     stiffness: 1000,
     damping: 50,
@@ -44,21 +46,28 @@ const customTransition = {
     restSpeedThreshold: 0.01,
   },
 };
+const HeaderLeft = () => {
+  return (
+    <View style={{ paddingLeft: 20 }}>
+      <RNIcon outline={true} color="white">
+        <MenuIcon />
+      </RNIcon>
+    </View>
+  );
+};
 const RestaurantStack: FunctionComponent = () => {
+  const { theme } = useTheme();
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         options={{
           headerStyle: {
-            backgroundColor: Colors.BackgroundColor,
+            backgroundColor: theme.colors.background,
             height: 120,
           },
 
-          headerTitle: () => (
-            <Greeting mainText="Hey!👋" subText="Share your own experiences" />
-          ),
-          headerLeft: () => <MenuIcon />,
-          headerRight: () => <NotifIcon />,
+          headerTitle: () => <Greeting mainText="Hey!👋" subText="Share your own experiences" />,
+          headerLeft: () => <HeaderLeft />,
         }}
         name="Home"
         component={HomeScreen}
@@ -67,19 +76,13 @@ const RestaurantStack: FunctionComponent = () => {
         name="RestaurantProfile"
         component={RestaurantProfileScreen}
         options={{
-          title: "Profile",
+          title: 'Profile',
           ...TransitionPresets.ModalSlideFromBottomIOS,
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="RestaurantComments"
-        component={RestaurantCommentScreen}
-      />
-      <Stack.Screen
-        name="RestaurantReviews"
-        component={RestaurantReviewsScreen}
-      />
+      <Stack.Screen name="RestaurantComments" component={RestaurantCommentScreen} />
+      <Stack.Screen name="RestaurantReviews" component={RestaurantReviewsScreen} />
     </Stack.Navigator>
   );
 };

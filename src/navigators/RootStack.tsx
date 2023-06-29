@@ -1,12 +1,13 @@
-import { NavigationContainer } from "@react-navigation/native";
-import React, { FunctionComponent } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ScanQRScreen, SettingsScreen } from "../screens";
-import { Palette } from "../themes";
+import { NavigationContainer } from '@react-navigation/native';
+import React, { FunctionComponent } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ScanQRScreen, SettingsScreen } from '../screens';
 
-import { HomeIcon, SettingsIcon } from "../assets";
-import RestaurantStack from "./stacks/Restaurants";
-import { ScanQRButton } from "../components/common";
+import { HomeIcon, SaveIcon, SettingsIcon } from '../assets';
+import RestaurantStack from './stacks/Restaurants';
+import { ScanQRButton } from '../components/common';
+import { useTheme } from '../hooks';
+import { RNIcon } from '../components/themed';
 
 export type RootBottomStackParamList = {
   Feed: undefined;
@@ -17,6 +18,7 @@ export type RootBottomStackParamList = {
 const Tab = createBottomTabNavigator<RootBottomStackParamList>();
 
 const TabStack: FunctionComponent = () => {
+  const { theme } = useTheme();
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -24,11 +26,11 @@ const TabStack: FunctionComponent = () => {
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Palette.background,
+          backgroundColor: theme.colors.background,
           height: 80,
         },
-        tabBarInactiveTintColor: Palette.text,
-        tabBarActiveTintColor: Palette.text,
+        tabBarInactiveTintColor: theme.colors.text,
+        tabBarActiveTintColor: theme.colors.text,
       }}
     >
       <Tab.Screen
@@ -36,12 +38,14 @@ const TabStack: FunctionComponent = () => {
         component={RestaurantStack}
         options={{
           headerStyle: {
-            backgroundColor: Palette.background,
+            backgroundColor: theme.colors.background,
             height: 120,
           },
 
           tabBarIcon: ({ focused, size, color }) => (
-            <HomeIcon color={color} size={size} outline={focused} />
+            <RNIcon outline={!focused} color="white">
+              <HomeIcon outline={focused} />
+            </RNIcon>
           ),
         }}
       />
@@ -60,13 +64,17 @@ const TabStack: FunctionComponent = () => {
         component={SettingsScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused, size, color }) => <SettingsIcon />,
+          tabBarIcon: ({ focused, size, color }) => (
+            <RNIcon outline={!focused} color="white">
+              <SaveIcon />
+            </RNIcon>
+          ),
         }}
       />
     </Tab.Navigator>
   );
 };
-const RootStack: FunctionComponent = (props) => {
+const RootStack: FunctionComponent = props => {
   return (
     <NavigationContainer>
       <TabStack />
