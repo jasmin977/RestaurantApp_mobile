@@ -2,10 +2,7 @@ import * as React from 'react';
 
 import Svg, { Path } from 'react-native-svg';
 import { FunctionComponent } from 'react';
-
-interface IconProps {
-  outline?: boolean;
-}
+import { IconProps } from './types';
 
 const ClockIcon: FunctionComponent<IconProps> = ({ outline = true }) => {
   return (

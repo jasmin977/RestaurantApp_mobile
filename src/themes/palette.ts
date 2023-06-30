@@ -1,8 +1,8 @@
-import { common, green, red, yellow } from './colors';
+import Colors, { common, green, red, yellow } from './colors';
 
 const darkPalette = {
   common: common,
-  primary: '#FF9900',
+  primary: Colors.primary,
   secondary: '#FCCC4F',
   info: red[600],
   success: green[500],

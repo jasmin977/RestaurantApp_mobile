@@ -1,7 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ScanQRScreen, SettingsScreen } from '../screens';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import { HomeIcon, SaveIcon, SettingsIcon } from '../assets';
 import RestaurantStack from './stacks/Restaurants';
@@ -43,7 +44,7 @@ const TabStack: FunctionComponent = () => {
           },
 
           tabBarIcon: ({ focused, size, color }) => (
-            <RNIcon outline={!focused} color="white">
+            <RNIcon outline={focused} color="white">
               <HomeIcon outline={focused} />
             </RNIcon>
           ),

@@ -2,7 +2,6 @@ import { FunctionComponent } from 'react';
 import {
   StackNavigationProp,
   TransitionPresets,
-  TransitionSpecs,
   createStackNavigator,
 } from '@react-navigation/stack';
 
@@ -13,13 +12,14 @@ import {
   RestaurantReviewsScreen,
 } from '../../screens';
 
-import { MenuIcon, NotifIcon } from '../../assets';
+import { MenuIcon } from '../../assets';
 
 import { Restaurant } from '../../entities';
-import { Greeting } from '../../components/common';
+
 import { useTheme } from '../../hooks';
 import { RNIcon } from '../../components/themed';
 import { View } from 'react-native';
+import Drawer from '../CustomDrawer';
 
 export type RestaurantStackParamList = {
   Home: undefined;
@@ -61,13 +61,11 @@ const RestaurantStack: FunctionComponent = () => {
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         options={{
+          headerShown: false,
           headerStyle: {
             backgroundColor: theme.colors.background,
             height: 120,
           },
-
-          headerTitle: () => <Greeting mainText="Hey!👋" subText="Share your own experiences" />,
-          headerLeft: () => <HeaderLeft />,
         }}
         name="Home"
         component={HomeScreen}

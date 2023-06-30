@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { FunctionComponent } from 'react';
+import { IconProps } from './types';
 
-interface IStarIconProps {
-  outline?: boolean;
-}
-
-const StarIcon: FunctionComponent<IStarIconProps> = ({ outline = false }) => {
+const StarIcon: FunctionComponent<IconProps> = ({ outline = false }) => {
   return (
     <>
       {outline ? (

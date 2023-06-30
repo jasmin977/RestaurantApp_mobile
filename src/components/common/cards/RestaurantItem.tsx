@@ -45,7 +45,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
   };
   const { theme } = useTheme();
   const StyledCard = styled.TouchableOpacity`
-    width: ${ScreenWidth * 0.8}px;
+    width: ${ScreenWidth * 0.7}px;
     background-color: ${theme.colors.card};
     border-radius: 15px;
     margin-right: 20px;

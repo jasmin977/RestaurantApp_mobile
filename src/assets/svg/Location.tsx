@@ -4,12 +4,9 @@ import { FunctionComponent } from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { IconProps } from './types';
 
-const LocationIcon: FunctionComponent<IconProps> = ({ color = 'red', size = 30, outline }) => {
-  const stroke = outline ? color : 'none';
-  const fill = outline ? 'none' : color;
-
+const LocationIcon: FunctionComponent<IconProps> = ({ outline = true }) => {
   return (
-    <Svg fill={fill} strokeWidth={1.5} stroke={stroke} width={size} height={size}>
+    <>
       {outline ? (
         <>
           <Path
@@ -30,7 +27,7 @@ const LocationIcon: FunctionComponent<IconProps> = ({ color = 'red', size = 30, 
           clipRule="evenodd"
         />
       )}
-    </Svg>
+    </>
   );
 };
 
