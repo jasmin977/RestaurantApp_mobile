@@ -42,7 +42,7 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
           }}
           colors={['transparent', 'black']}
         >
-          <RNText>{name}</RNText>
+          <RNText color="white">{name}</RNText>
         </LinearGradient>
       </ImageBackground>
     </TouchableOpacity>

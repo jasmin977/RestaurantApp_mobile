@@ -36,13 +36,17 @@ const ListSection: FunctionComponent<ListSectionProps> = ({
   data,
   header,
   horizontal = true,
-  seeMore = 'see more',
+  seeMore = 'View all',
 }) => {
   return (
     <View>
       <HeaderView>
-        <RNText variant="h5">{header}</RNText>
-        <RNText variant="caption">{seeMore}</RNText>
+        <RNText color="onBackground" variant="h5">
+          {header}
+        </RNText>
+        <RNText color="primary" variant="caption">
+          {seeMore}
+        </RNText>
       </HeaderView>
       <ScrollView horizontal={horizontal}>
         <List>

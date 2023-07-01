@@ -48,13 +48,13 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
               maxWidth: '90%',
             }}
           >
-            <LocationIcon color={theme.colors.text} />
+            <LocationIcon />
             <RNText>{location}</RNText>
           </View>
         </View>
         <RNButton
           children={
-            <RNIcon outline color="white" size={30}>
+            <RNIcon outline color="onPrimary" size={30}>
               <LikeIcon />
             </RNIcon>
           }
@@ -65,7 +65,7 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
         <Review rating={rating} detailled />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-        <RNIcon outline color="white">
+        <RNIcon outline color="primary">
           <ClockIcon />
         </RNIcon>
         <RNText variant="h5">Opened Now</RNText>

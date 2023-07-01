@@ -34,7 +34,7 @@ const MenuCategoryItem: React.FunctionComponent<MenuCategoryItemProps> = ({
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <RNText variant="h5" color={selectedCategory === category ? 'primary' : 'onSurface'}>
+      <RNText variant="subtitle" color={selectedCategory === category ? 'primary' : 'onCard'}>
         {category}
       </RNText>
     </TouchableOpacity>

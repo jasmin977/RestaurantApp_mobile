@@ -23,11 +23,13 @@ const Review: FunctionComponent<RatingProps> = ({ rating, detailled = false, add
         additinalStyle,
       ]}
     >
-      <RNIcon outline={false} color="white" size={15}>
+      <RNIcon outline={false} color="primary" size={15}>
         <StarIcon outline={false} />
       </RNIcon>
 
-      <RNText variant="h5">{(5).toFixed(1)}</RNText>
+      <RNText color="onCard" variant="subtitle">
+        {(5).toFixed(1)}
+      </RNText>
 
       {detailled ? (
         <>

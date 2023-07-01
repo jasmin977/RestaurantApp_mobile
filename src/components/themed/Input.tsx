@@ -13,13 +13,13 @@ const ThemedInputWithLeftIcon: React.FC<ThemedInputWithLeftIconProps> = ({ icon,
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
-      <RNSvg color={theme.colors.primary} size={25} outline={true}>
+      <RNSvg color="primary" size={25} outline={true}>
         {icon}
       </RNSvg>
       <TextInput
         placeholder={placeholder}
-        style={[styles.input, { color: theme.colors.text }]}
-        placeholderTextColor={theme.colors.text}
+        style={[styles.input, { color: theme.colors.onCard }]}
+        placeholderTextColor={theme.colors.onCard}
       />
     </View>
   );

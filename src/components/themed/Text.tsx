@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text as RNText, StyleSheet, TextStyle } from 'react-native';
-import { COLORS, Typography } from '../../themes';
+import { COLORS, Typography, lightPalette } from '../../themes';
+import { useTheme } from '../../hooks';
 
 interface ITextProps {
   style?: TextStyle;
-  color?: keyof typeof COLORS;
+  color?: keyof typeof lightPalette;
   align?: 'auto' | 'left' | 'right' | 'center' | 'justify' | undefined;
   variant?: keyof typeof Typography;
   children: React.ReactNode;
@@ -41,15 +42,16 @@ const spacingStyles = (spacing?: ITextProps['spacing']): TextStyle | undefined =
 
 const Text: React.FC<ITextProps> = ({
   style,
-  color = 'onSurface',
-  variant = 'body1',
+  color = 'onBackground',
+  variant = 'body',
   children,
   align,
   spacing,
 }) => {
+  const { theme } = useTheme();
   const textStyles = StyleSheet.flatten([
     Typography[variant],
-    { color: COLORS[color] },
+    { color: theme.colors[color] },
     spacingStyles(spacing),
     { textAlign: align },
     style,

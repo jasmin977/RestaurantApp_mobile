@@ -62,10 +62,6 @@ const RestaurantStack: FunctionComponent = () => {
       <Stack.Screen
         options={{
           headerShown: false,
-          headerStyle: {
-            backgroundColor: theme.colors.background,
-            height: 120,
-          },
         }}
         name="Home"
         component={HomeScreen}

@@ -63,7 +63,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
       }}
     >
       <StyledView>
-        <RNText variant="h5" color="onSurface" spacing={{ mt: 5 }}>
+        <RNText variant="subtitle" color="onCard" spacing={{ mt: 5 }}>
           {name}
         </RNText>
         <Review rating={rating} />

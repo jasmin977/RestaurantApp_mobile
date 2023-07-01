@@ -14,9 +14,7 @@ const Settings: FunctionComponent<SettingsProps> = () => {
       <CenteredView>
         <View style={{ backgroundColor: theme.colors.card }}>
           <TouchableOpacity onPress={toggleTheme}>
-            <RNText spacing={{ p: 10 }} color="onSurface">
-              {theme.mode}
-            </RNText>
+            <RNText spacing={{ p: 10 }}>{theme.mode}</RNText>
           </TouchableOpacity>
         </View>
       </CenteredView>

@@ -19,10 +19,10 @@ const Greeting: FunctionComponent<GreetingProps> = ({ mainText, subText }) => {
   const { theme } = useTheme();
   return (
     <StyledView>
-      <RNText color="onSurface" variant="h4">
+      <RNText color="onBackground" variant="h4">
         {mainText}
       </RNText>
-      <RNText color="onSurface" variant="caption">
+      <RNText color="onBackground" variant="caption">
         {subText}
       </RNText>
     </StyledView>

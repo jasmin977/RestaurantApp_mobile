@@ -278,18 +278,9 @@ export const yellow = {
 const Colors = {
   common,
   primary: '#FF6C47',
-  secondary: '#FCCC4F',
-  info: red[600],
   success: green[500],
   warning: yellow[200],
   error: red[600],
-  background: '#202128',
-  surface: '#2E2F36',
-  onPrimary: common.white,
-  onSecondary: common.black,
-  onBackground: common.white,
-  onSurface: common.white,
-  onError: common.white,
 };
 
 export default Colors;

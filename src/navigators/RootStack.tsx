@@ -30,8 +30,8 @@ const TabStack: FunctionComponent = () => {
           backgroundColor: theme.colors.background,
           height: 80,
         },
-        tabBarInactiveTintColor: theme.colors.text,
-        tabBarActiveTintColor: theme.colors.text,
+        /*  tabBarInactiveTintColor: theme.colors.primary,
+        tabBarActiveTintColor: theme.colors.primary, */
       }}
     >
       <Tab.Screen
@@ -43,8 +43,8 @@ const TabStack: FunctionComponent = () => {
             height: 120,
           },
 
-          tabBarIcon: ({ focused, size, color }) => (
-            <RNIcon outline={focused} color="white">
+          tabBarIcon: ({ focused }) => (
+            <RNIcon outline={focused} color="onBackground">
               <HomeIcon outline={focused} />
             </RNIcon>
           ),
@@ -65,8 +65,8 @@ const TabStack: FunctionComponent = () => {
         component={SettingsScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ focused, size, color }) => (
-            <RNIcon outline={!focused} color="white">
+          tabBarIcon: ({ focused }) => (
+            <RNIcon outline={!focused} color="onBackground">
               <SaveIcon />
             </RNIcon>
           ),

@@ -2,14 +2,21 @@ import { createContext, useState, ReactNode } from 'react';
 import { darkPalette, lightPalette } from '../themes';
 import { DefaultTheme } from '@react-navigation/native';
 
+interface IThemeCommonColor {
+  black: string;
+  white: string;
+}
+
 interface IThemeColors {
+  [key: string]: string;
   primary: string;
+  onPrimary: string;
   background: string;
+  onBackground: string;
   card: string;
-  text: string;
-  border: string;
-  notification: string;
-  common: string;
+  onCard: string;
+  black: string;
+  white: string;
 }
 
 interface ITheme {
@@ -27,13 +34,16 @@ export const ThemeContext = createContext<ThemeContextProps>({
   theme: {
     mode: 'dark',
     colors: {
+      key: '',
       primary: '',
+      onPrimary: '',
       background: '',
+      onBackground: '',
       card: '',
-      text: '',
-      border: '',
-      notification: '',
-      common: '',
+      onCard: '',
+
+      black: '',
+      white: '',
     },
   },
   isDarkTheme: false,
@@ -51,13 +61,15 @@ const getTheme = (isDarkTheme: boolean): ITheme => {
     mode: isDarkTheme ? 'dark' : 'light',
     colors: {
       ...DefaultTheme.colors,
+      key: isDarkTheme ? 'dark' : 'light',
       primary: chosenTheme.primary,
+      onPrimary: chosenTheme.onPrimary,
       background: chosenTheme.background,
-      card: chosenTheme.surface,
-      text: chosenTheme.onSurface,
-      border: chosenTheme.common.black,
-      notification: chosenTheme.error,
-      common: chosenTheme.common.black,
+      onBackground: chosenTheme.onBackground,
+      card: chosenTheme.card,
+      onCard: chosenTheme.onCard,
+      black: chosenTheme.black,
+      white: chosenTheme.white,
     },
   };
 };

@@ -97,7 +97,9 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           {item.icon}
         </RNIcon>
 
-        <RNText variant="body1">{item.label}</RNText>
+        <RNText color="white" variant="body">
+          {item.label}
+        </RNText>
       </TouchableOpacity>
     );
   };
@@ -124,8 +126,12 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         <ProfileContainer activeOpacity={0.5}>
           <ProfileImage resizeMode="cover" source={AVATAR} />
           <View>
-            <RNText variant="h5">jasmin</RNText>
-            <RNText variant="caption">view your profile</RNText>
+            <RNText color="white" variant="h5">
+              jasmin
+            </RNText>
+            <RNText color="white" variant="caption">
+              view your profile
+            </RNText>
           </View>
         </ProfileContainer>
 
@@ -157,7 +163,9 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
             {logoutItem.icon}
           </RNIcon>
 
-          <RNText variant="body1">{logoutItem.label}</RNText>
+          <RNText color="white" variant="body">
+            {logoutItem.label}
+          </RNText>
         </TouchableOpacity>
       </View>
       <Animated.View
@@ -187,7 +195,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
             }}
             onPress={toggleDrawer}
           >
-            <RNIcon outline color="white" size={30}>
+            <RNIcon outline color="onBackground" size={30}>
               <MenuIcon outline />
             </RNIcon>
           </TouchableOpacity>

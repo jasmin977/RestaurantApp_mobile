@@ -2,11 +2,13 @@ import * as React from 'react';
 import { FunctionComponent, ReactNode } from 'react';
 
 import Svg, { G, Path } from 'react-native-svg';
+import { lightPalette } from '../../themes';
+import { useTheme } from '../../hooks';
 
 interface SvgProps {
   children: ReactNode;
   outline?: boolean;
-  color?: string;
+  color?: keyof typeof lightPalette;
   size?: number;
 }
 
@@ -16,8 +18,9 @@ const RNSvg: FunctionComponent<SvgProps> = ({
   size = 25,
   outline = false,
 }) => {
-  const stroke = outline ? color : 'none';
-  const fill = outline ? 'none' : color;
+  const { theme } = useTheme();
+  const stroke = outline ? theme.colors[color] : 'none';
+  const fill = outline ? 'none' : theme.colors[color];
 
   return (
     <Svg
