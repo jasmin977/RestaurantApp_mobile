@@ -1,13 +1,12 @@
 import { FunctionComponent } from 'react';
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-
 import { ScreenWidth } from '../containers/Backgound';
 import { Restaurant } from '../../../entities';
-import { RestaurantNavigationProps } from '../../../navigators/stacks/Restaurants';
 import Review from '../review/Review';
 import { RNText } from '../../themed';
 import { useTheme } from '../../../hooks';
+import { HomeNavigationProps } from '../../../navigators/stacks/Home';
 
 const StyledView = styled.View`
   align-items: flex-start;
@@ -31,7 +30,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
   id,
   menu,
 }) => {
-  const navigation = useNavigation<RestaurantNavigationProps>();
+  const navigation = useNavigation<HomeNavigationProps['navigation']>();
 
   const restaurantObject: Restaurant = {
     id: id,
@@ -57,8 +56,11 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
     <StyledCard
       activeOpacity={0.5}
       onPress={() => {
-        navigation.navigate('RestaurantProfile', {
-          restoData: restaurantObject,
+        navigation.navigate('RestaurantStack', {
+          screen: 'RestaurantProfile',
+          params: {
+            restoData: restaurantObject,
+          },
         });
       }}
     >

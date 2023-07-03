@@ -1,52 +1,52 @@
-import FontSize from './fontSize';
+import FontSizes from './fontSize';
 import Fonts from './fonts';
 
 const Typography = {
   h1: {
     fontFamily: Fonts.bold,
-    fontSize: 32,
+    fontSize: FontSizes['4xl'],
     lineHeight: 40,
     letterSpacing: 0.5,
   },
   h2: {
     fontFamily: Fonts.bold,
-    fontSize: 28,
+    fontSize: FontSizes['3xl'],
     lineHeight: 36,
     letterSpacing: 0.25,
   },
   h3: {
     fontFamily: Fonts.bold,
-    fontSize: 24,
+    fontSize: FontSizes['2xl'],
     lineHeight: 32,
     letterSpacing: 0,
   },
   h4: {
     fontFamily: Fonts.bold,
-    fontSize: 20,
+    fontSize: FontSizes.xl,
     lineHeight: 28,
     letterSpacing: 0.25,
   },
   h5: {
     fontFamily: Fonts.bold,
-    fontSize: 18,
+    fontSize: FontSizes.lg,
     lineHeight: 24,
     letterSpacing: 0,
   },
   subtitle: {
     fontFamily: Fonts.medium,
-    fontSize: 16,
+    fontSize: FontSizes.md,
     lineHeight: 24,
     letterSpacing: 0.5,
   },
   body: {
     fontFamily: Fonts.regular,
-    fontSize: 14,
+    fontSize: FontSizes.sm,
     lineHeight: 20,
     letterSpacing: 0.25,
   },
   caption: {
     fontFamily: Fonts.regular,
-    fontSize: 12,
+    fontSize: FontSizes.xs,
     lineHeight: 16,
     letterSpacing: 0.4,
   },

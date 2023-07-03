@@ -40,3 +40,9 @@ export { default as ClockIcon } from './svg/Clock';
 export { default as SaveIcon } from './svg/Save';
 export { default as CloseIcon } from './svg/Close';
 export { default as LogoutIcon } from './svg/Logout';
+export { default as NextIcon } from './svg/Next';
+
+//GIFs
+export { default as LoaderGif } from './GIF/fork.gif';
+export { default as ScanGif } from './GIF/scan.gif';
+export { default as ReviewGif } from './GIF/review.gif';

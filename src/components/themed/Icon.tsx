@@ -31,13 +31,7 @@ const RNSvg: FunctionComponent<SvgProps> = ({
       height={size}
       viewBox="0 0 24 24"
     >
-      {outline ? (
-        <G strokeLinecap="round" strokeLinejoin="round">
-          {children}
-        </G>
-      ) : (
-        <G fillRule="evenodd">{children}</G>
-      )}
+      {children}
     </Svg>
   );
 };

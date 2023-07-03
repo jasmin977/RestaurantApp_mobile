@@ -2,17 +2,18 @@ import { styled } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { BackIcon } from '../../assets';
-import { RestaurantStackParamList } from '../../navigators';
+
 import { BackgoundContainer } from '../../components/common';
 import { RestaurantDetails } from '../../components/layout';
 import { useTheme } from '../../hooks';
 import { RNButton, RNIcon } from '../../components/themed';
+import { RootBottomStackParamList } from '../../navigators/RootStack';
 
 interface RestaurantProfileScreenProps {}
 
-type RestaurantProps = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
+type Props = NativeStackScreenProps<RootBottomStackParamList, 'RestaurantProfile'>;
 
-const RestaurantProfileScreen = ({ route, navigation }: RestaurantProps) => {
+const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const restaurantObject = route.params.restoData;
   const { theme } = useTheme();
   const RestaurantImage = styled.Image`
@@ -29,6 +30,7 @@ const RestaurantProfileScreen = ({ route, navigation }: RestaurantProps) => {
     <StyledScrollView>
       <BackgoundContainer>
         <RNButton
+          size="sm"
           style={{
             position: 'absolute',
             top: 40,
@@ -37,7 +39,7 @@ const RestaurantProfileScreen = ({ route, navigation }: RestaurantProps) => {
             backgroundColor: 'rgba(0,0,0,0.2)',
           }}
           onPress={() => navigation.goBack()}
-          children={
+          centerIcon={
             <RNIcon outline={true} color="white">
               <BackIcon />
             </RNIcon>

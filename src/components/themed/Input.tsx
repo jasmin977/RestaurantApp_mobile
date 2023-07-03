@@ -3,12 +3,12 @@ import { TextInput, View, StyleSheet } from 'react-native';
 import { useTheme } from '../../hooks';
 import RNSvg from './Icon';
 
-interface ThemedInputWithLeftIconProps {
+interface RNTextInputProps {
   icon?: React.ReactNode;
   placeholder: string;
 }
 
-const ThemedInputWithLeftIcon: React.FC<ThemedInputWithLeftIconProps> = ({ icon, placeholder }) => {
+const RNTextInput: React.FC<RNTextInputProps> = ({ icon, placeholder }) => {
   const { theme } = useTheme();
 
   return (
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 8,
     flex: 1,
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThemedInputWithLeftIcon;
+export default RNTextInput;

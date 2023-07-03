@@ -1,17 +1,19 @@
-import { FunctionComponent } from "react";
-import { styled } from "styled-components/native";
-import { ViewProps } from "./types";
+import { FunctionComponent, ReactNode } from 'react';
+import { styled } from 'styled-components/native';
 
+import { StyleProp, ViewStyle } from 'react-native';
 export const Centered = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
 `;
 
-const CenteredContainer: FunctionComponent<ViewProps> = ({
-  children,
-  viewStyle,
-}) => {
+interface ViewProps {
+  viewStyle?: StyleProp<ViewStyle>;
+  children: ReactNode;
+}
+
+const CenteredContainer: FunctionComponent<ViewProps> = ({ children, viewStyle }) => {
   return <Centered style={viewStyle}>{children}</Centered>;
 };
 

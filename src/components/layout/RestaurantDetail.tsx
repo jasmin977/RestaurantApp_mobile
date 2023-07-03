@@ -53,8 +53,9 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
           </View>
         </View>
         <RNButton
-          children={
-            <RNIcon outline color="onPrimary" size={30}>
+          size="sm"
+          centerIcon={
+            <RNIcon outline color="onPrimary">
               <LikeIcon />
             </RNIcon>
           }

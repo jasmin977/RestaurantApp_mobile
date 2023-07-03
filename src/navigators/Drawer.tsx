@@ -16,6 +16,9 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../hooks';
 import { styled } from 'styled-components/native';
+import { RootBottomStackParamList } from './RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { HomeStackParamList } from './stacks';
 
 interface DrawerProp {
   children: ReactNode;
@@ -26,13 +29,20 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   const { theme } = useTheme();
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
-  const navigation = useNavigation();
+
+  type RootNavigationProps = NativeStackScreenProps<RootBottomStackParamList>;
+
+  type NavigationProps = NativeStackScreenProps<HomeStackParamList>;
+
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
+
+  const HomeNavigation = useNavigation<NavigationProps['navigation']>();
 
   useEffect(() => {
     navigation.getParent()?.setOptions({
       tabBarStyle: isOpen
         ? { display: 'none' }
-        : { backgroundColor: theme.colors.background, height: 80 },
+        : { backgroundColor: theme.colors.background, height: 90 },
     });
   }, [isOpen]);
 
@@ -63,7 +73,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   `;
 
   interface DrawerItemProp {
-    id: string;
+    id: keyof RootBottomStackParamList;
     label: string;
     icon: ReactNode;
   }
@@ -74,13 +84,33 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
     icon: <LogoutIcon outline />,
   };
   const drawerData: DrawerItemProp[] = [
-    { id: 'home', label: 'Home', icon: <HomeIcon outline /> },
-    { id: 'notification', label: 'Notifications', icon: <NotifIcon outline /> },
-    { id: 'saved', label: 'Saved', icon: <SaveIcon /> },
-    { id: 'favorites', label: 'My Favorites', icon: <LikeIcon outline /> },
-    { id: 'settings', label: 'Settings', icon: <SettingsIcon outline /> },
+    { id: 'Feed', label: 'Home', icon: <HomeIcon outline={false} /> },
+    { id: 'Notifications', label: 'Notifications', icon: <NotifIcon outline /> },
+    { id: 'Saved', label: 'Saved', icon: <SaveIcon /> },
+    { id: 'Liked', label: 'My Favorites', icon: <LikeIcon outline /> },
+    { id: 'Settings', label: 'Settings', icon: <SettingsIcon outline /> },
   ];
 
+  const handleDrawerItemPress = (screenName: keyof RootBottomStackParamList) => {
+    if (screenName === 'Saved') {
+      navigation.navigate('Saved', { screen: 'SavedRestaurants' });
+    }
+    if (screenName === 'Liked') {
+      HomeNavigation.navigate('LikedSatck', { screen: 'LikedRestaurants' });
+    }
+    if (screenName === 'Feed') {
+      navigation.navigate('Feed', { screen: 'Home' });
+    }
+    if (screenName === 'Notifications') {
+      navigation.navigate('Notifications', { screen: 'NotificationsScreen' });
+    }
+    if (screenName === 'Settings') {
+      HomeNavigation.navigate('Settings');
+    }
+    if (screenName === 'Profile') {
+      HomeNavigation.navigate('Profile');
+    }
+  };
   const renderDrawerItem = ({ item }: { item: DrawerItemProp }) => {
     return (
       <TouchableOpacity
@@ -89,9 +119,11 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           alignItems: 'center',
           gap: 5,
           paddingVertical: 10,
-          // ...(item.id === 'logout' ? { position: 'absolute', bottom: 0 } : {}),
         }}
-        onPress={toggleDrawer}
+        onPress={() => {
+          handleDrawerItemPress(item.id);
+          toggleDrawer();
+        }}
       >
         <RNIcon outline color="white" size={25}>
           {item.icon}
@@ -123,7 +155,13 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         </TouchableOpacity>
 
         {/** profile */}
-        <ProfileContainer activeOpacity={0.5}>
+        <ProfileContainer
+          activeOpacity={0.5}
+          onPress={() => {
+            handleDrawerItemPress('Profile');
+            toggleDrawer();
+          }}
+        >
           <ProfileImage resizeMode="cover" source={AVATAR} />
           <View>
             <RNText color="white" variant="h5">

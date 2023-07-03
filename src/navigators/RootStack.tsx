@@ -1,19 +1,36 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { FunctionComponent, useState } from 'react';
+import { NavigationContainer, NavigatorScreenParams } from '@react-navigation/native';
+import React, { FunctionComponent, useContext, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ScanQRScreen, SettingsScreen } from '../screens';
-import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-
-import { HomeIcon, SaveIcon, SettingsIcon } from '../assets';
-import RestaurantStack from './stacks/Restaurants';
+import { MapScreen, NotificationsScreen, ScanQRScreen } from '../screens';
+import { HomeIcon, LocationIcon, NotifIcon, SaveIcon } from '../assets';
 import { ScanQRButton } from '../components/common';
 import { useTheme } from '../hooks';
 import { RNIcon } from '../components/themed';
+import { Restaurant } from '../entities';
+import {
+  HomeStack,
+  HomeStackParamList,
+  IntroductionStack,
+  LikedRestaurantStackParamList,
+  NotificationStackParamList,
+  RestaurantStackParamList,
+  SavedRestaurantStack,
+  SavedRestaurantStackParamList,
+} from './stacks';
+import { InitialContext } from '../context';
 
 export type RootBottomStackParamList = {
-  Feed: undefined;
+  Feed: NavigatorScreenParams<HomeStackParamList>;
+  RestaurantStack: NavigatorScreenParams<RestaurantStackParamList>;
+  Map: undefined;
+  Saved: NavigatorScreenParams<SavedRestaurantStackParamList>;
+  Liked: NavigatorScreenParams<LikedRestaurantStackParamList>;
+  Notifications: NavigatorScreenParams<NotificationStackParamList>;
   Settings: undefined;
+  logout: undefined;
+  Profile: undefined;
   ScanQR: undefined;
+  RestaurantProfile: { restoData: Restaurant };
 };
 
 const Tab = createBottomTabNavigator<RootBottomStackParamList>();
@@ -28,24 +45,33 @@ const TabStack: FunctionComponent = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.colors.background,
-          height: 80,
+          height: 90,
         },
-        /*  tabBarInactiveTintColor: theme.colors.primary,
-        tabBarActiveTintColor: theme.colors.primary, */
+        tabBarInactiveTintColor: theme.colors.primary,
+        tabBarActiveTintColor: theme.colors.primary,
       }}
     >
       <Tab.Screen
         name="Feed"
-        component={RestaurantStack}
+        component={HomeStack}
         options={{
-          headerStyle: {
-            backgroundColor: theme.colors.background,
-            height: 120,
-          },
+          tabBarIcon: ({ focused }) => (
+            <RNIcon outline={!focused} color="onBackground">
+              <HomeIcon outline={focused} />
+            </RNIcon>
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          headerShown: false,
 
           tabBarIcon: ({ focused }) => (
-            <RNIcon outline={focused} color="onBackground">
-              <HomeIcon outline={focused} />
+            <RNIcon outline={!focused} color="onBackground">
+              <LocationIcon outline={!focused} />
             </RNIcon>
           ),
         }}
@@ -61,8 +87,8 @@ const TabStack: FunctionComponent = () => {
       />
 
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Saved"
+        component={SavedRestaurantStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
@@ -72,13 +98,27 @@ const TabStack: FunctionComponent = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <RNIcon outline={!focused} color="onBackground">
+              <NotifIcon />
+            </RNIcon>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
 const RootStack: FunctionComponent = props => {
+  const { isInitialized } = useContext(InitialContext);
+
   return (
     <NavigationContainer>
-      <TabStack />
+      {isInitialized ? <TabStack /> : <IntroductionStack />}
     </NavigationContainer>
   );
 };
