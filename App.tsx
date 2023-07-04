@@ -1,5 +1,5 @@
 import { LoaderScreen } from './src/screens';
-import { InitialProvider, ThemeProvider } from './src/context';
+import { InitialProvider, StateProvider, ThemeProvider } from './src/context';
 import RootStack from './src/navigators/RootStack';
 import { useAssetLoader } from './src/hooks';
 
@@ -12,7 +12,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <InitialProvider>
-        <RootStack />
+        <StateProvider>
+          <RootStack />
+        </StateProvider>
       </InitialProvider>
     </ThemeProvider>
   );

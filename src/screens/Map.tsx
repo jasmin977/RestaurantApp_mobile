@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useRef } from 'react';
 import { BackgoundContainer, CenteredView } from '../components/common';
 import { RNText } from '../components/themed';
 

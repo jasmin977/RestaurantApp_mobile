@@ -18,6 +18,7 @@ import {
   SavedRestaurantStackParamList,
 } from './stacks';
 import { InitialContext } from '../context';
+import ScanStack, { ScanStackParamList } from './stacks/Scan';
 
 export type RootBottomStackParamList = {
   Feed: NavigatorScreenParams<HomeStackParamList>;
@@ -29,8 +30,8 @@ export type RootBottomStackParamList = {
   Settings: undefined;
   logout: undefined;
   Profile: undefined;
-  ScanQR: undefined;
-  RestaurantProfile: { restoData: Restaurant };
+  ScanQR: NavigatorScreenParams<ScanStackParamList>;
+  RestaurantProfile: { id: number };
 };
 
 const Tab = createBottomTabNavigator<RootBottomStackParamList>();
@@ -79,8 +80,9 @@ const TabStack: FunctionComponent = () => {
 
       <Tab.Screen
         name="ScanQR"
-        component={ScanQRScreen}
+        component={ScanStack}
         options={{
+          //tabBarStyle: { display: 'none' },
           headerShown: false,
           tabBarIcon: ({ focused }) => <ScanQRButton />,
         }}
@@ -118,7 +120,7 @@ const RootStack: FunctionComponent = props => {
 
   return (
     <NavigationContainer>
-      {isInitialized ? <TabStack /> : <IntroductionStack />}
+      <TabStack />
     </NavigationContainer>
   );
 };

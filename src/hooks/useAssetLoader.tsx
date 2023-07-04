@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { BOLD, MEDIUM, REGULAR } from '../assets';
 import { useFonts } from 'expo-font';
 import { useColorScheme } from 'react-native';
+import { usePersmissions } from './usePermission';
 
 export function useAssetLoader() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);

@@ -15,6 +15,7 @@ export { default as avocadoToast } from './images/meals/avocado_toast.jpg';
 export { default as pancakes } from './images/meals/pancakes.jpg';
 export { default as salad } from './images/meals/salad.jpg';
 export { default as seafood } from './images/meals/seafood.jpg';
+export { default as RESTAURANT } from './images/restaurants/1.jpg';
 
 //AVATARS
 export { default as AVATAR } from './images/avatars/avatar_1.jpg';
@@ -46,3 +47,13 @@ export { default as NextIcon } from './svg/Next';
 export { default as LoaderGif } from './GIF/fork.gif';
 export { default as ScanGif } from './GIF/scan.gif';
 export { default as ReviewGif } from './GIF/review.gif';
+
+const assets = {
+  lottieFiles: {
+    QRscanner: require('./JSON/scanning-qr-code.json'),
+    QRscanSuccessful: require('./JSON/qr-scan-successful.json'),
+    QRscanIcon: require('./JSON/scan-qr-code.json'),
+    SearchNotFound: require('./JSON/search-not-found.json'),
+  },
+};
+export default assets;

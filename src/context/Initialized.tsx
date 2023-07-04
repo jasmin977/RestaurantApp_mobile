@@ -15,7 +15,7 @@ export const InitialContext = createContext<InitialContextProps>({
   markAppAsInitialized: () => {},
 });
 
-const ThemeProvider = ({ children }: InitialProviderProps) => {
+const InitialProvider = ({ children }: InitialProviderProps) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const markAppAsInitialized = () => {
@@ -29,4 +29,4 @@ const ThemeProvider = ({ children }: InitialProviderProps) => {
   );
 };
 
-export default ThemeProvider;
+export default InitialProvider;

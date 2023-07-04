@@ -17,7 +17,7 @@ import { Restaurant } from '../../entities';
 import { useTheme } from '../../hooks';
 
 export type RestaurantStackParamList = {
-  RestaurantProfile: { restoData: Restaurant };
+  RestaurantProfile: { id: number };
   RestaurantComments: undefined;
   RestaurantReviews: undefined;
 };

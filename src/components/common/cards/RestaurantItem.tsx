@@ -32,16 +32,6 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
 }) => {
   const navigation = useNavigation<HomeNavigationProps['navigation']>();
 
-  const restaurantObject: Restaurant = {
-    id: id,
-    name: name,
-    location: location,
-    img: img,
-    rating: rating,
-    description: description,
-    workingTime: workingTime,
-    menu: menu,
-  };
   const { theme } = useTheme();
   const StyledCard = styled.TouchableOpacity`
     width: ${ScreenWidth * 0.7}px;
@@ -59,7 +49,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
         navigation.navigate('RestaurantStack', {
           screen: 'RestaurantProfile',
           params: {
-            restoData: restaurantObject,
+            id: id,
           },
         });
       }}

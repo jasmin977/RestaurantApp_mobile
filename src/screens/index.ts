@@ -5,7 +5,7 @@ export { default as RestaurantReviewsScreen } from './restaurant/RestaurantRevie
 export { default as SavedRestaurantsScreen } from './restaurant/Saved';
 export { default as LikedRestaurantsScreen } from './restaurant/Liked';
 
-export { default as ScanQRScreen } from './ScanQR';
+export { default as ScanQRScreen } from './scan/scanQRcontainer';
 export { default as HomeScreen } from './Home';
 export { default as SettingsScreen } from './Settings';
 export { default as LoaderScreen } from './Loader';
