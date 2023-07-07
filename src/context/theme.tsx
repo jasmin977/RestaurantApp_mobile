@@ -41,7 +41,6 @@ export const ThemeContext = createContext<ThemeContextProps>({
       onBackground: '',
       card: '',
       onCard: '',
-
       black: '',
       white: '',
     },

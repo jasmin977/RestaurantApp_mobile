@@ -27,11 +27,7 @@ const Settings = ({ route, navigation }: Props) => {
             backgroundColor: 'rgba(0,0,0,0.2)',
           }}
           onPress={() => navigation.goBack()}
-          centerIcon={
-            <RNIcon outline={true} color="white">
-              <BackIcon />
-            </RNIcon>
-          }
+          centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
         />
 
         <RNButton onPress={toggleTheme} title={`${theme.mode}`} />

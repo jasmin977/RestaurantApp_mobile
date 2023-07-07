@@ -6,18 +6,13 @@ import { lightPalette } from '../../themes';
 import { useTheme } from '../../hooks';
 
 interface SvgProps {
-  children: ReactNode;
+  as: ReactNode;
   outline?: boolean;
   color?: keyof typeof lightPalette;
   size?: number;
 }
 
-const RNSvg: FunctionComponent<SvgProps> = ({
-  children,
-  color = 'white',
-  size = 25,
-  outline = false,
-}) => {
+const ICON: FunctionComponent<SvgProps> = ({ as, color = 'white', size = 25, outline = false }) => {
   const { theme } = useTheme();
   const stroke = outline ? theme.colors[color] : 'none';
   const fill = outline ? 'none' : theme.colors[color];
@@ -31,9 +26,9 @@ const RNSvg: FunctionComponent<SvgProps> = ({
       height={size}
       viewBox="0 0 24 24"
     >
-      {children}
+      {as}
     </Svg>
   );
 };
 
-export default RNSvg;
+export default ICON;

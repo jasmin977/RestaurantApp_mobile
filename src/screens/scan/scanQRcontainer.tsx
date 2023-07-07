@@ -47,7 +47,7 @@ export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route })
     }
   }, [isScanned, scannedData]);
 
-  useFocusEffect(
+  /*   useFocusEffect(
     React.useCallback(() => {
       scanQRcode(false);
 
@@ -55,7 +55,7 @@ export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route })
         // scanQRcode(false);
       };
     }, [])
-  );
+  ); */
   return (
     <ScanQRview
       hasPermission={hasPermission}

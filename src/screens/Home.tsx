@@ -6,12 +6,15 @@ import { ListSection } from '../components/layout';
 import { Greeting } from '../components/common';
 import { useTheme } from '../hooks';
 import { RNButton, RNIcon, RNInput } from '../components/themed';
-import { FilterIcon, SearchIcon } from '../assets';
+import { FilterIcon, MenuIcon, SearchIcon } from '../assets';
 import Drawer from '../navigators/Drawer';
+import { TouchableOpacity } from 'react-native';
 
-interface HomeProps {}
+interface HomeProps {
+  toggleDrawer: () => void;
+}
 
-const Home: FunctionComponent<HomeProps> = () => {
+const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
   const { theme, isDarkTheme } = useTheme();
   const HomeContainer = styled.View`
     background-color: ${theme.colors.background};
@@ -47,11 +50,7 @@ const Home: FunctionComponent<HomeProps> = () => {
             <RNInput placeholder="search" icon={<SearchIcon />} />
             <RNButton
               size="sm"
-              centerIcon={
-                <RNIcon outline={true} color="white">
-                  <FilterIcon />
-                </RNIcon>
-              }
+              centerIcon={<RNIcon as={<FilterIcon />} outline={true} color="white" />}
               onPress={() => console.log('filter button pressed')}
             />
           </SearchView>

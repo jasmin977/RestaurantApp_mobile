@@ -13,9 +13,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({ icon, placeholder }) => {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
-      <RNSvg color="primary" size={25} outline={true}>
-        {icon}
-      </RNSvg>
+      <RNSvg color="primary" size={25} outline={true} as={icon} />
       <TextInput
         placeholder={placeholder}
         style={[styles.input, { color: theme.colors.onCard }]}
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 15,
+    borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 8,
     flex: 1,

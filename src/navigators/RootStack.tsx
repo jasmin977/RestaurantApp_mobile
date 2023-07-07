@@ -57,9 +57,7 @@ const TabStack: FunctionComponent = () => {
         component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) => (
-            <RNIcon outline={!focused} color="onBackground">
-              <HomeIcon outline={focused} />
-            </RNIcon>
+            <RNIcon outline={!focused} color="onBackground" as={<HomeIcon outline={focused} />} />
           ),
         }}
       />
@@ -71,9 +69,11 @@ const TabStack: FunctionComponent = () => {
           headerShown: false,
 
           tabBarIcon: ({ focused }) => (
-            <RNIcon outline={!focused} color="onBackground">
-              <LocationIcon outline={!focused} />
-            </RNIcon>
+            <RNIcon
+              outline={!focused}
+              color="onBackground"
+              as={<LocationIcon outline={!focused} />}
+            />
           ),
         }}
       />
@@ -82,7 +82,7 @@ const TabStack: FunctionComponent = () => {
         name="ScanQR"
         component={ScanStack}
         options={{
-          //tabBarStyle: { display: 'none' },
+          //   tabBarStyle: { display: 'none' },
           headerShown: false,
           tabBarIcon: ({ focused }) => <ScanQRButton />,
         }}
@@ -94,9 +94,7 @@ const TabStack: FunctionComponent = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <RNIcon outline={!focused} color="onBackground">
-              <SaveIcon />
-            </RNIcon>
+            <RNIcon outline={!focused} color="onBackground" as={<SaveIcon />} />
           ),
         }}
       />
@@ -106,9 +104,7 @@ const TabStack: FunctionComponent = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <RNIcon outline={!focused} color="onBackground">
-              <NotifIcon />
-            </RNIcon>
+            <RNIcon outline={!focused} color="onBackground" as={<NotifIcon />} />
           ),
         }}
       />

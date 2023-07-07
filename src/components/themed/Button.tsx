@@ -1,8 +1,15 @@
 import React from 'react';
-import { TouchableOpacity, View, StyleSheet, ViewStyle, ActivityIndicator } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+  ActivityIndicator,
+} from 'react-native';
 import { useTheme } from '../../hooks';
 import Text from './Text';
-import { sizes } from '../../themes';
+import { SIZES } from '../../themes';
 
 interface ThemedButtonProps {
   title?: string;
@@ -13,7 +20,7 @@ interface ThemedButtonProps {
   variant?: 'solid' | 'outline';
   isLoading?: boolean;
   disabled?: boolean;
-  size?: keyof typeof sizes;
+  size?: keyof typeof SIZES;
   onPress?: () => void;
   style?: ViewStyle;
 }
@@ -30,42 +37,41 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
   size = 'md',
   style,
   onPress,
+  ...restProps
 }) => {
   const { theme } = useTheme();
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingVertical: sizes[size],
-      paddingHorizontal: sizes[size],
-      borderRadius: 15,
+
+  const renderIcon = (icon: React.ReactNode) => <View style={styles.spinner}>{icon}</View>;
+
+  // Merge the provided `style` prop with the existing styles
+  const containerStyle = [
+    styles.container,
+    {
+      paddingVertical: SIZES[size],
+      paddingHorizontal: SIZES[size],
       backgroundColor: variant === 'solid' ? theme.colors[color] : theme.colors.background,
       borderWidth: variant === 'outline' ? 1 : 0,
       borderColor: theme.colors[color],
       opacity: disabled ? 0.6 : 1,
-      ...style,
     },
-    buttonText: {
-      marginLeft: leftIcon ? 8 : 0,
-      marginRight: rightIcon ? 8 : 0,
-      color: variant === 'solid' ? theme.colors.onPrimary : theme.colors[color],
-      fontWeight: 'bold',
+    style,
+  ];
 
-      fontSize: sizes[size],
-    },
-    spinner: {
-      marginHorizontal: 6,
-    },
-    centerIconContainer: {},
-  });
+  const textStyle: TextStyle = {
+    fontWeight: 'bold',
+    marginLeft: leftIcon ? 8 : 0,
+    marginRight: rightIcon ? 8 : 0,
+    color: variant === 'solid' ? theme.colors.onPrimary : theme.colors[color],
+    fontSize: SIZES[size],
+  };
 
-  const renderIcon = (icon: React.ReactNode) => <View style={styles.spinner}>{icon}</View>;
   return (
     <TouchableOpacity
-      style={styles.container}
+      activeOpacity={0.8}
+      style={containerStyle}
       onPress={onPress}
       disabled={isLoading || !onPress || disabled}
+      {...restProps}
     >
       {leftIcon && renderIcon(leftIcon)}
       {isLoading ? (
@@ -76,12 +82,26 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
       ) : (
         <>
           {centerIcon && <View style={styles.centerIconContainer}>{centerIcon}</View>}
-          {title && <Text style={styles.buttonText}>{title}</Text>}
+          {title && <Text style={textStyle}>{title}</Text>}
         </>
       )}
       {rightIcon && renderIcon(rightIcon)}
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+
+  spinner: {
+    marginHorizontal: 6,
+  },
+  centerIconContainer: {},
+});
 
 export default ThemedButton;

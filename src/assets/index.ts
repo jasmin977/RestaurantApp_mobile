@@ -54,6 +54,8 @@ const assets = {
     QRscanSuccessful: require('./JSON/qr-scan-successful.json'),
     QRscanIcon: require('./JSON/scan-qr-code.json'),
     SearchNotFound: require('./JSON/search-not-found.json'),
+    ScannigCode: require('./JSON/user_scan_qr-code.json'),
+    Loader: require('./JSON/loader.json'),
   },
 };
 export default assets;

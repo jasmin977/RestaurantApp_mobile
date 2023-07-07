@@ -1,3 +1,5 @@
-export { default as useTheme } from './useTheme';
-export { useAssetLoader } from './useAssetLoader';
-export { usePersmissions } from './usePermission';
+import useTheme from './useTheme';
+import useAssetLoader from './useAssetLoader';
+import usePersmissions from './usePermission';
+
+export { useTheme, useAssetLoader, usePersmissions };

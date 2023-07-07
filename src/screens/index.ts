@@ -1,15 +1,33 @@
 //restaurant
-export { default as RestaurantCommentScreen } from './restaurant/RestaurantComments';
-export { default as RestaurantProfileScreen } from './restaurant/RestaurantProfile';
-export { default as RestaurantReviewsScreen } from './restaurant/RestaurantReviews';
-export { default as SavedRestaurantsScreen } from './restaurant/Saved';
-export { default as LikedRestaurantsScreen } from './restaurant/Liked';
+import RestaurantCommentScreen from './restaurant/RestaurantComments';
+import RestaurantProfileScreen from './restaurant/RestaurantProfile';
+import RestaurantReviewsScreen from './restaurant/RestaurantReviews';
+import SavedRestaurantsScreen from './restaurant/Saved';
+import LikedRestaurantsScreen from './restaurant/Liked';
 
-export { default as ScanQRScreen } from './scan/scanQRcontainer';
-export { default as HomeScreen } from './Home';
-export { default as SettingsScreen } from './Settings';
-export { default as LoaderScreen } from './Loader';
-export { default as NotificationsScreen } from './Notifications';
-export { default as MapScreen } from './Map';
-export { default as ProfileScreen } from './Profile';
-export { default as IntroductionScreen } from './IntroductionScreens';
+import ScanQRScreen from './scan/scanQRcontainer';
+import HomeScreen from './Home';
+import SettingsScreen from './Settings';
+import LoaderScreen from './Loader';
+import NotificationsScreen from './Notifications';
+import MapScreen from './Map';
+import ProfileScreen from './Profile';
+import IntroductionScreen from './IntroductionScreens';
+import AddReviewScreen from './restaurant/AddReview';
+
+export {
+  RestaurantProfileScreen,
+  RestaurantCommentScreen,
+  RestaurantReviewsScreen,
+  SavedRestaurantsScreen,
+  LikedRestaurantsScreen,
+  ScanQRScreen,
+  HomeScreen,
+  SettingsScreen,
+  LoaderScreen,
+  NotificationsScreen,
+  MapScreen,
+  ProfileScreen,
+  IntroductionScreen,
+  AddReviewScreen,
+};

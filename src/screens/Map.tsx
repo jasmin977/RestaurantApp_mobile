@@ -1,16 +1,31 @@
 import { FunctionComponent, useEffect, useRef } from 'react';
 import { BackgoundContainer, CenteredView } from '../components/common';
-import { RNText } from '../components/themed';
+import { Box, RNText } from '../components/themed';
+import { ListSection } from '../components/layout';
+import { restaurants } from '../data/restaurants';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootBottomStackParamList } from '../navigators/RootStack';
 
 interface MapProps {}
-
-const Map: FunctionComponent<MapProps> = () => {
+type Props = NativeStackScreenProps<RootBottomStackParamList, 'Map'>;
+const Map: FunctionComponent<Props> = ({ navigation }) => {
   return (
     <BackgoundContainer>
       <CenteredView>
-        <RNText color="onBackground" variant="h4">
-          MAP
-        </RNText>
+        <Box
+          onPress={() =>
+            navigation.navigate('RestaurantStack', {
+              screen: 'RestaurantProfile',
+              params: {
+                id: 1,
+              },
+            })
+          }
+        >
+          <RNText color="onBackground" variant="h4">
+            MZP
+          </RNText>
+        </Box>
       </CenteredView>
     </BackgoundContainer>
   );

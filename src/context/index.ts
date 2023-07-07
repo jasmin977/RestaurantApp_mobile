@@ -1,7 +1,16 @@
-export { InitialContext } from './Initialized';
-export { ThemeContext } from './theme';
-export { StateContext } from './State';
+import { InitialContext } from './Initialized';
+import { ThemeContext } from './theme';
+import { StateContext } from './State';
 
-export { default as ThemeProvider } from './theme';
-export { default as InitialProvider } from './Initialized';
-export { default as StateProvider } from './State';
+import ThemeProvider from './theme';
+import InitialProvider from './Initialized';
+import StateProvider from './State';
+
+export {
+  ThemeProvider,
+  InitialProvider,
+  StateProvider,
+  InitialContext,
+  ThemeContext,
+  StateContext,
+};

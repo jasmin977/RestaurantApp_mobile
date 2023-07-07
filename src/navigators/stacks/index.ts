@@ -10,7 +10,6 @@ export { LikedRestaurantStackParamList } from './Liked';
 export { HomeStackParamList } from './Home';
 
 //STACKS
-
 export { default as RestaurantStack } from './Restaurants';
 export { default as NotificationStack } from './Notifications';
 export { default as SavedRestaurantStack } from './Saved';

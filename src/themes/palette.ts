@@ -1,4 +1,4 @@
-import Colors, { common, green, red, yellow } from './colors';
+import Colors, { common, green, purple, red, yellow } from './colors';
 
 const darkPalette = {
   primary: Colors.primary,
@@ -12,11 +12,13 @@ const darkPalette = {
   onCard: common.white,
   onError: common.white,
   black: common.black,
+
   white: common.white,
 };
 
 const lightPalette = {
   common: common,
+
   primary: Colors.primary,
   success: green[500],
   warning: yellow[200],

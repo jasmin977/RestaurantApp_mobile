@@ -1,7 +1,7 @@
 import { styled } from 'styled-components/native';
 import React, { FunctionComponent, ReactNode } from 'react';
 
-import { Dimensions } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
 import { useTheme } from '../../../hooks';
 
 interface IProps {
@@ -13,6 +13,7 @@ const BackgoundContainer: FunctionComponent<IProps> = ({ children }) => {
 
   const StyledBackgoundContainer = styled.View`
     flex: 1;
+    padding-top: ${StatusBar.currentHeight}px;
     background-color: ${theme.colors.background};
   `;
 

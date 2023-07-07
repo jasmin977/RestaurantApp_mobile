@@ -1,5 +1,7 @@
-export { default as RNText } from './Text';
-export { default as RNIcon } from './Icon';
-export { default as RNButton } from './Button';
-export { default as RNInput } from './Input';
-export { default as Stack } from './Stack';
+import Box from './Box';
+import RNInput from './Input';
+import RNButton from './Button';
+import RNIcon from './Icon';
+import RNText from './Text';
+
+export { Box, RNButton, RNIcon, RNInput, RNText };

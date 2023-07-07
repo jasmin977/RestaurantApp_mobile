@@ -130,9 +130,7 @@ const StepsScreen = () => {
             <RNText align="center" variant="subtitle">
               Next
             </RNText>
-            <RNIcon outline color="white" size={20}>
-              <NextIcon />
-            </RNIcon>
+            <RNIcon outline color="white" size={20} as={<NextIcon />} />
           </TouchableOpacity>
         </View>
       )}

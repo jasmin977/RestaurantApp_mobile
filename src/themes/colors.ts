@@ -224,7 +224,7 @@ const pink = {
   A700: '#c51162',
 };
 
-const purple = {
+export const purple = {
   50: '#f3e5f5',
   100: '#e1bee7',
   200: '#ce93d8',
@@ -277,6 +277,9 @@ export const yellow = {
 
 const Colors = {
   common,
+  grey,
+  blue,
+  purple,
   primary: '#FF6C47',
   success: green[500],
   warning: yellow[200],

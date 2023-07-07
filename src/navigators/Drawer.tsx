@@ -24,13 +24,12 @@ interface DrawerProp {
   children: ReactNode;
 }
 
+export type RootNavigationProps = NativeStackScreenProps<RootBottomStackParamList>;
 const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme } = useTheme();
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
-
-  type RootNavigationProps = NativeStackScreenProps<RootBottomStackParamList>;
 
   type NavigationProps = NativeStackScreenProps<HomeStackParamList>;
 
@@ -125,9 +124,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           toggleDrawer();
         }}
       >
-        <RNIcon outline color="white" size={25}>
-          {item.icon}
-        </RNIcon>
+        <RNIcon as={item.icon} outline color="white" size={25} />
 
         <RNText color="white" variant="body">
           {item.label}
@@ -149,9 +146,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
       >
         {/** close drawer */}
         <TouchableOpacity style={{}} onPress={toggleDrawer}>
-          <RNIcon outline color="white" size={40}>
-            <CloseIcon />
-          </RNIcon>
+          <RNIcon as={<CloseIcon />} outline color="white" size={40} />
         </TouchableOpacity>
 
         {/** profile */}
@@ -197,9 +192,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           }}
           onPress={toggleDrawer}
         >
-          <RNIcon outline color="white" size={25}>
-            {logoutItem.icon}
-          </RNIcon>
+          <RNIcon as={logoutItem.icon} outline color="white" size={25} />
 
           <RNText color="white" variant="body">
             {logoutItem.label}
@@ -233,11 +226,15 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
             }}
             onPress={toggleDrawer}
           >
-            <RNIcon outline color="onBackground" size={30}>
-              <MenuIcon outline />
-            </RNIcon>
+            <RNIcon as={<MenuIcon />} outline color="onBackground" size={30} />
           </TouchableOpacity>
-          {children}
+
+          {/* Pass toggleDrawer as a prop to children */}
+          {React.Children.map(children, child =>
+            React.isValidElement(child)
+              ? React.cloneElement(child as React.ReactElement<any>, { toggleDrawer })
+              : child
+          )}
         </View>
       </Animated.View>
     </View>

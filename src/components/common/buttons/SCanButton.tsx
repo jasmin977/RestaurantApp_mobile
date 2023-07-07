@@ -44,7 +44,7 @@ const ScanButton: FunctionComponent = () => {
           alignItems: 'center',
         }}
       >
-        <RNIcon size={45} children={<QRcodeIcon />} />
+        <RNIcon size={45} as={<QRcodeIcon />} />
       </LinearGradient>
     </View>
   );

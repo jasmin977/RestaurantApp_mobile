@@ -1,3 +1,5 @@
-export { default as Restaurant } from "./Restaurant";
-export { default as Meal } from "./Meal";
-export { default as MenuCategory } from "./MenuCategory";
+import Restaurant from './Restaurant';
+import Meal from './Meal';
+import MenuCategory from './MenuCategory';
+
+export { Restaurant, Meal, MenuCategory };

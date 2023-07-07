@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import LottieView from 'lottie-react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { BackgoundContainer } from '../../components/common';
 import CenteredContainer from '../../components/common/containers/Centered';
-import { RNButton, RNText, Stack } from '../../components/themed';
+import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import { ScreenHeigh, ScreenWidth } from '../../components/common/containers/Backgound';
 
-import assets from '../../assets';
+import assets, { BackIcon } from '../../assets';
 import { useTheme } from '../../hooks';
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, View } from 'react-native';
+import { StateContext } from '../../context';
 
 interface ScanningProps {
   handleBarCodeScanned: (data: any) => void;
@@ -18,6 +20,7 @@ interface ScanningProps {
 
   hasPermission: boolean | null;
 }
+
 const ScanQRview: React.FC<ScanningProps> = ({
   handleBarCodeScanned,
   scanned,
@@ -26,6 +29,7 @@ const ScanQRview: React.FC<ScanningProps> = ({
   isloading,
 }) => {
   const { theme } = useTheme();
+  const { isScanned, scanQRcode } = useContext(StateContext);
   if (hasPermission === null) {
     return (
       <BackgoundContainer>
@@ -81,19 +85,38 @@ const ScanQRview: React.FC<ScanningProps> = ({
       color: theme.colors.white,
     },
   ];
+  const Scannig_color_filters = [
+    {
+      keypath: 'Shape Layer 1',
+      color: theme.colors.background,
+    },
+    {
+      keypath: 'Phone.Shape Layer 5',
+      color: theme.colors.primary,
+    },
+  ];
   return (
     <BackgoundContainer>
-      {/*  {scanned && !isloading ? (
+      {scanned && !isloading ? (
         <CenteredContainer>
-          <Stack>
-            <RNText variant="subtitle">Scan QR Code to access reviews </RNText>
-            <RNText align="center" variant="caption">
-              some text to explain what user can benefits from using the application.
+          <Box gap={10} spacing={{ px: 20 }}>
+            <LottieView
+              autoPlay
+              loop
+              style={{
+                width: ScreenWidth,
+                height: ScreenWidth,
+              }}
+              colorFilters={Scannig_color_filters}
+              source={assets.lottieFiles.ScannigCode}
+            />
+            <RNText align="center" variant="subtitle">
+              Place your phone and Scan the QR code to access reviews.
             </RNText>
-          </Stack>
+            <RNButton onPress={() => scanQRcode(false)} title="Scan" />
+          </Box>
         </CenteredContainer>
-      ) : ( */}
-      <View style={{ flex: 1, backgroundColor: '#000', padding: 0 }}>
+      ) : (
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
@@ -105,18 +128,16 @@ const ScanQRview: React.FC<ScanningProps> = ({
         }} */
         >
           {isloading ? (
-            <Stack spacing={10}>
-              <LottieView
-                autoPlay
-                style={{
-                  width: 300,
-                  height: 300,
-                }}
-                colorFilters={colorFilters}
-                source={assets.lottieFiles.QRscanSuccessful}
-              />
-              <RNText variant="subtitle">Scanned succefully</RNText>
-            </Stack>
+            <LottieView
+              autoPlay
+              duration={1}
+              style={{
+                width: 300,
+                height: 300,
+              }}
+              colorFilters={colorFilters}
+              source={assets.lottieFiles.QRscanSuccessful}
+            />
           ) : (
             <LottieView
               autoPlay
@@ -130,23 +151,15 @@ const ScanQRview: React.FC<ScanningProps> = ({
             />
           )}
         </BarCodeScanner>
-      </View>
+      )}
     </BackgoundContainer>
   );
 };
 const styles = StyleSheet.create({
   cameraContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 0,
-    marginLeft: 0,
-    marginStart: 0,
-    paddingHorizontal: 0,
-    paddingLeft: 0,
-    paddingStart: 0,
-
-    height: '100%',
-    padding: 0,
   },
 });
 

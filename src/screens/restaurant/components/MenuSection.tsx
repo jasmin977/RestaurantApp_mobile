@@ -50,7 +50,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
     return category ? category.items : [];
   };
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>('Most Popular');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>('Burger');
   const handleCategoryPress = (category: string) => {
     setSelectedCategory(category);
   };

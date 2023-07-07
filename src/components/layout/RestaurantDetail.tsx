@@ -8,6 +8,11 @@ import { Restaurant } from '../../entities';
 import { BackgoundContainer } from '../common';
 import { RNButton, RNIcon, RNText } from '../themed';
 import { useTheme } from '../../hooks';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RestaurantStackParamList } from '../../navigators/stacks';
+import { useNavigation } from '@react-navigation/native';
+
+type NavigationProp = NativeStackNavigationProp<RestaurantStackParamList, 'RestaurantProfile'>;
 
 const RestaurantDetails: FunctionComponent<Restaurant> = ({
   name,
@@ -18,6 +23,7 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
   menu,
 }) => {
   const { theme } = useTheme();
+  const navigation = useNavigation<NavigationProp>();
 
   const DetailsContainer = styled.View`
     padding: 20px;
@@ -54,21 +60,21 @@ const RestaurantDetails: FunctionComponent<Restaurant> = ({
         </View>
         <RNButton
           size="sm"
-          centerIcon={
-            <RNIcon outline color="onPrimary">
-              <LikeIcon />
-            </RNIcon>
-          }
+          centerIcon={<RNIcon as={<LikeIcon />} outline color="onPrimary" />}
           onPress={() => console.log('like button pressed')}
         />
       </View>
-      <TouchableOpacity activeOpacity={0.5} style={{ alignItems: 'flex-start' }}>
-        <Review rating={rating} detailled />
+      {/** review */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate('RestaurantReviews')}
+        activeOpacity={0.5}
+        style={{ alignItems: 'flex-start' }}
+      >
+        <Review rating={rating} detailled size={20} />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-        <RNIcon outline color="primary">
-          <ClockIcon />
-        </RNIcon>
+        <RNIcon as={<ClockIcon />} outline color="primary" />
+
         <RNText variant="h5">Opened Now</RNText>
         <RNText>{workingTime}</RNText>
       </View>
