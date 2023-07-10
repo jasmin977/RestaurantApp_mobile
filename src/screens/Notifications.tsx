@@ -1,9 +1,11 @@
+import { Animated, FlatList, View } from 'react-native';
 import { BackgoundContainer, CenteredView } from '../components/common';
-import { ListSection } from '../components/layout';
+
 import { Box, RNText } from '../components/themed';
-import { restaurants } from '../data/restaurants';
+
 import { RootBottomStackParamList } from '../navigators/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
 
 interface NotificationsProps {}
 

@@ -230,11 +230,12 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           </TouchableOpacity>
 
           {/* Pass toggleDrawer as a prop to children */}
-          {React.Children.map(children, child =>
+          {/* {React.Children.map(children, child =>
             React.isValidElement(child)
               ? React.cloneElement(child as React.ReactElement<any>, { toggleDrawer })
               : child
-          )}
+          )} */}
+          {children}
         </View>
       </Animated.View>
     </View>

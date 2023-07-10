@@ -1,14 +1,15 @@
 import { FunctionComponent } from 'react';
 import { styled } from 'styled-components/native';
 import { StatusBar } from 'expo-status-bar';
-import { restaurants } from '../data/restaurants';
-import { ListSection } from '../components/layout';
+
+import { Carousel, ListSection } from '../components/layout';
 import { Greeting } from '../components/common';
 import { useTheme } from '../hooks';
-import { RNButton, RNIcon, RNInput } from '../components/themed';
+import { Box, RNButton, RNIcon, RNInput, RNText } from '../components/themed';
 import { FilterIcon, MenuIcon, SearchIcon } from '../assets';
 import Drawer from '../navigators/Drawer';
 import { TouchableOpacity } from 'react-native';
+import { RESTAURANTS } from '../data';
 
 interface HomeProps {
   toggleDrawer: () => void;
@@ -55,8 +56,22 @@ const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
             />
           </SearchView>
 
-          <ListSection header="Recommended" data={restaurants} />
-          <ListSection header="Popular Near you" data={restaurants} />
+          <Box
+            direction="horizontal"
+            w={'100%'}
+            justifyContent="space-between"
+            spacing={{ px: 20, py: 20 }}
+          >
+            <RNText color="onBackground" variant="h5">
+              Best Restaurants
+            </RNText>
+            <RNText color="primary" variant="caption">
+              View All
+            </RNText>
+          </Box>
+          <Carousel data={RESTAURANTS} />
+
+          <ListSection header="Recommended" data={RESTAURANTS} />
         </HomeContainer>
       </StyledScrollView>
     </Drawer>

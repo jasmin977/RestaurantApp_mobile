@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: 10,
+    flex: 1,
   },
   icon: {
     marginRight: 10,

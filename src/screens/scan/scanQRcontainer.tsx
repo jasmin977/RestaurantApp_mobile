@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route }) => {
-  const { hasPermission } = usePersmissions();
+  const { hasPermission } = usePersmissions('barcode');
   const { isScanned, scanQRcode } = useContext(StateContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scannedData, setScannedData] = useState('');

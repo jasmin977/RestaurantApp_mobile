@@ -1,21 +1,36 @@
 import { styled } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
-import assets, { BackIcon, LikeIcon, NextIcon, RESTAURANT, peperoniPizza } from '../../assets';
+import assets, {
+  BackIcon,
+  ClockIcon,
+  LikeIcon,
+  LocationIcon,
+  NextIcon,
+  RESTAURANT,
+  peperoniPizza,
+} from '../../assets';
 
-import { BackgoundContainer } from '../../components/common';
+import { BackgoundContainer, Review } from '../../components/common';
 import { AnimatdeHeader, RestaurantDetails } from '../../components/layout';
 import { useTheme } from '../../hooks';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
-import { RootBottomStackParamList } from '../../navigators/RootStack';
-import { restaurants } from '../../data/restaurants';
+
 import { Restaurant } from '../../entities';
 import LoaderScreen from '../Loader';
 import { RestaurantStackParamList } from '../../navigators/stacks';
 import LottieView from 'lottie-react-native';
 import CenteredContainer from '../../components/common/containers/Centered';
-import { RatingStars, ReviewCard, StarPercentage } from './components';
+import {
+  LikeButton,
+  LocationMap,
+  MenuSection,
+  RatingStars,
+  ReviewCard,
+  StarPercentage,
+} from './components';
 import { ImageSourcePropType } from 'react-native';
+import { RESTAURANTS } from '../../data';
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
 
@@ -47,6 +62,7 @@ interface ReviewCardProps {
   description?: string;
   img?: ImageSourcePropType;
 }
+
 const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const { id } = route.params;
   const { theme } = useTheme();
@@ -54,7 +70,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const [restaurantObject, setRestaurantObj] = useState<Restaurant>();
 
   const getRestaurantById = (id: number): Restaurant | undefined => {
-    const restaurant = restaurants.find(restaurant => {
+    const restaurant = RESTAURANTS.find(restaurant => {
       return restaurant.id == id;
     });
 
@@ -65,11 +81,25 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   useEffect(() => {
     const fetchRestaurant = () => {
       getRestaurantById(id);
+
       setIsLoading(false);
     };
 
     fetchRestaurant();
   }, [id]);
+  const StyledScrollView = styled.ScrollView`
+    background-color: ${theme.colors.background};
+    flex: 1;
+  `;
+  const DetailsContainer = styled.View`
+    padding: 20px;
+    width: 100%;
+
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    gap: 25px;
+    background-color: ${theme.colors.background};
+  `;
 
   if (isLoading) {
     return <LoaderScreen />;
@@ -106,11 +136,6 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     );
   }
 
-  const StyledScrollView = styled.ScrollView`
-    background-color: ${theme.colors.background};
-    flex: 1;
-  `;
-
   return (
     <AnimatdeHeader
       backgroundImage={restaurantObject.img}
@@ -127,10 +152,33 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
         />
       }
     >
-      <StyledScrollView stickyHeaderIndices={[1]}>
-        <Box h={20}></Box>
-        <RestaurantDetails {...restaurantObject} />
+      <StyledScrollView stickyHeaderIndices={[1, 6]}>
+        {/** restaurant details */}
+        <DetailsContainer>
+          <Box flex={1} w={'100%'} direction="horizontal" justifyContent="space-between">
+            <Box flex={1} alignItems="flex-start">
+              <RNText variant="h3">{restaurantObject.name}</RNText>
+              <Box direction="horizontal" gap={5}>
+                <LocationIcon />
+                <RNText>{restaurantObject.location}</RNText>
+              </Box>
+            </Box>
+            <LikeButton />
+          </Box>
 
+          <Box alignItems="flex-start" onPress={() => navigation.navigate('RestaurantReviews')}>
+            <Review rating={restaurantObject.rating} detailled size={20} />
+          </Box>
+          <Box direction="horizontal" gap={10}>
+            <RNIcon as={<ClockIcon />} outline color="primary" />
+
+            <RNText variant="h5">Opened Now</RNText>
+            <RNText>{restaurantObject.workingTime}</RNText>
+          </Box>
+          <RNText>{restaurantObject.description}</RNText>
+
+          <MenuSection menu={restaurantObject.menu} />
+        </DetailsContainer>
         {/** rating */}
         <Box
           bg="background"
@@ -160,7 +208,6 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
         {/** location */}
         <Box
           bg="background"
-          // onPress={() => navigation.navigate('RestaurantReviews')}
           spacing={{ p: 20 }}
           alignItems="flex-start"
           direction="horizontal"
@@ -169,6 +216,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           <RNText variant="subtitle">Location</RNText>
           <RNIcon outline={true} color="onBackground" as={<NextIcon />} />
         </Box>
+        <LocationMap id={id} />
         <Box h={500}></Box>
       </StyledScrollView>
     </AnimatdeHeader>

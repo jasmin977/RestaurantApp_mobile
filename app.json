@@ -30,7 +30,13 @@
       [
         "expo-barcode-scanner",
         {
-          "cameraPermission": "Allow this application to access camera."
+          "cameraPermission": "Allow JASMIN's application to access camera."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow JASMIN's application to use your location."
         }
       ]
     ]

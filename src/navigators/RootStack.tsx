@@ -112,8 +112,6 @@ const TabStack: FunctionComponent = () => {
   );
 };
 const RootStack: FunctionComponent = props => {
-  const { isInitialized } = useContext(InitialContext);
-
   return (
     <NavigationContainer>
       <TabStack />

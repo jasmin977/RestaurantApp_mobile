@@ -67,7 +67,7 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.9}
       style={containerStyle}
       onPress={onPress}
       disabled={isLoading || !onPress || disabled}
