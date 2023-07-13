@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { ScreenHeigh, ScreenWidth } from '../common/containers/Backgound';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 import { RNIcon } from '.';
 import { CloseIcon } from '../../assets';
 

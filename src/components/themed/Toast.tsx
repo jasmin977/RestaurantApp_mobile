@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface ToastProps {
   title: string;
-  description: string;
+  description?: string;
   duration: number;
   onClose: () => void;
 }
@@ -25,7 +25,7 @@ const RNToast = ({ title, description, duration, onClose }: ToastProps) => {
     <TouchableOpacity style={styles.container} onPress={() => setVisible(false)}>
       <View style={styles.toast}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
+        {description && <Text style={styles.description}>{description}</Text>}
       </View>
     </TouchableOpacity>
   );

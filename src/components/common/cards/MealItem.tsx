@@ -7,7 +7,7 @@ import { Meal } from '../../../entities';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { RNText } from '../../themed';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 
 const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
   const { theme } = useTheme();

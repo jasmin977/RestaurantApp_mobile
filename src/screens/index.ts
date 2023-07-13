@@ -6,14 +6,19 @@ import SavedRestaurantsScreen from './restaurant/Saved';
 import LikedRestaurantsScreen from './restaurant/Liked';
 
 import ScanQRScreen from './scan/scanQRcontainer';
-import HomeScreen from './Home';
-import SettingsScreen from './Settings';
+import HomeScreen from './App/Home';
+import NotificationsScreen from './App/Notifications';
+import ProfileScreen from './App/Profile';
+import SettingsScreen from './App/Settings';
+
 import LoaderScreen from './Loader';
-import NotificationsScreen from './Notifications';
-import MapScreen from './Map';
-import ProfileScreen from './Profile';
-import IntroductionScreen from './IntroductionScreens';
+
+import MapScreen from './Map/Map';
+import IntroductionScreen from './Auth/IntroductionScreens';
 import AddReviewScreen from './restaurant/AddReview';
+
+import LoginScreen from './Auth/Login';
+import RegisterScreen from './Auth/Register';
 
 export {
   RestaurantProfileScreen,
@@ -30,4 +35,6 @@ export {
   ProfileScreen,
   IntroductionScreen,
   AddReviewScreen,
+  LoginScreen,
+  RegisterScreen,
 };

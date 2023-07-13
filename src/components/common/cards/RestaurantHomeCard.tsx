@@ -7,10 +7,11 @@ import { ScreenWidth } from '../containers/Backgound';
 import { Restaurant } from '../../../entities';
 import Review from '../review/Review';
 import { Box, RNIcon, RNText } from '../../themed';
-import { useTheme } from '../../../hooks';
+
 import { HomeNavigationProps } from '../../../navigators/stacks/Home';
 import { LikeIcon } from '../../../assets';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from '../../../context';
 
 interface CarouselProps {
   index: number;

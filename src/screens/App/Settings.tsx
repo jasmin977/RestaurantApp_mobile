@@ -1,17 +1,12 @@
-import { FunctionComponent } from 'react';
-import { BackgoundContainer, CenteredView } from '../components/common';
-import { RNButton, RNIcon, RNText } from '../components/themed';
-import { TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../hooks';
-import { BackIcon } from '../assets';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-import { HomeStackParamList } from '../navigators/stacks/Home';
+import { useTheme } from '../../context';
+import { BackgoundContainer, CenteredView } from '../../components/common';
+import { RNButton, RNIcon } from '../../components/themed';
+import { BackIcon } from '../../assets';
+import { RootNavigationProps } from '../../navigators/RootStack';
 
 interface SettingsProps {}
 
-type Props = NativeStackScreenProps<HomeStackParamList, 'Settings'>;
-const Settings = ({ route, navigation }: Props) => {
+const Settings = ({ route, navigation }: RootNavigationProps) => {
   const { theme, toggleTheme, isDarkTheme } = useTheme();
 
   return (

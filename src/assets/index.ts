@@ -42,6 +42,7 @@ export { default as SaveIcon } from './svg/Save';
 export { default as CloseIcon } from './svg/Close';
 export { default as LogoutIcon } from './svg/Logout';
 export { default as NextIcon } from './svg/Next';
+import EyeIcon from './svg/Eye';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -56,6 +57,11 @@ const assets = {
     SearchNotFound: require('./JSON/search-not-found.json'),
     ScannigCode: require('./JSON/user_scan_qr-code.json'),
     Loader: require('./JSON/loader.json'),
+    Review: require('./JSON/review.json'),
+    ScannigMenu: require('./JSON/scanningMenu.json'),
+    Map: require('./JSON/mapViewer.json'),
   },
 };
 export default assets;
+
+export { EyeIcon };

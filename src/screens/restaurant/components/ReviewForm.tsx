@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState } from 'react';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 import { Box, RNButton, RNInput, RNText } from '../../../components/themed';
 import RateOption from './RateOption';
 

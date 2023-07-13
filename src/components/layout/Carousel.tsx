@@ -73,8 +73,10 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
             colors={['transparent', 'black']}
           >
             <Box alignItems="flex-start" gap={10} spacing={{ pt: 20 }}>
-              <RNText variant="h2">{item.name}</RNText>
-              <RNText>Friends went here</RNText>
+              <RNText color="white" variant="h2">
+                {item.name}
+              </RNText>
+              <RNText color="white">{item.location}</RNText>
             </Box>
           </LinearGradient>
         </RestoImageBackground>
@@ -83,33 +85,47 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
   );
 
   return (
-    <FlatList
-      horizontal
-      data={data}
-      style={{}}
-      contentContainerStyle={{ paddingVertical: 5 }}
-      contentInsetAdjustmentBehavior="never" // ensures that the list doesn't automatically adjust its content insets
-      snapToAlignment="center" //Sets the alignment of the snapped item during scrolling
-      decelerationRate="fast" //Controls the speed at which the scrolling decelerates after the user lifts their finger
-      automaticallyAdjustContentInsets={false}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      scrollEventThrottle={1}
-      snapToInterval={boxWidth} // Sets the interval at which the list snaps to the nearest item during scrolling, based on the boxWidth.
-      contentInset={{
-        left: halfBoxDistance,
-        right: halfBoxDistance,
-      }}
-      contentOffset={{ x: halfBoxDistance * -1, y: 0 }}
-      onLayout={e => {
-        setScrollViewWidth(e.nativeEvent.layout.width);
-      }}
-      onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: pan.x } } }], {
-        useNativeDriver: false,
-      })}
-      keyExtractor={(item, index) => `${index}_${item.name}`}
-      renderItem={renderItem}
-    />
+    <View>
+      <Box
+        direction="horizontal"
+        w={'100%'}
+        justifyContent="space-between"
+        spacing={{ px: 20, py: 20 }}
+      >
+        <RNText color="onBackground" variant="h5">
+          Best Restaurants
+        </RNText>
+        <RNText color="primary" variant="caption">
+          View All
+        </RNText>
+      </Box>
+      <FlatList
+        horizontal
+        data={data}
+        contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 20 }}
+        contentInsetAdjustmentBehavior="never" // ensures that the list doesn't automatically adjust its content insets
+        snapToAlignment="start" //Sets the alignment of the snapped item during scrolling
+        decelerationRate="fast" //Controls the speed at which the scrolling decelerates after the user lifts their finger
+        automaticallyAdjustContentInsets={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={1}
+        snapToInterval={boxWidth} // Sets the interval at which the list snaps to the nearest item during scrolling, based on the boxWidth.
+        contentInset={{
+          left: halfBoxDistance,
+          right: halfBoxDistance,
+        }}
+        contentOffset={{ x: halfBoxDistance * -1, y: 0 }}
+        onLayout={e => {
+          setScrollViewWidth(e.nativeEvent.layout.width);
+        }}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: pan.x } } }], {
+          useNativeDriver: false,
+        })}
+        keyExtractor={(item, index) => `${index}_${item.name}`}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 

@@ -3,7 +3,7 @@ import { FunctionComponent, ReactNode } from 'react';
 
 import Svg, { G, Path } from 'react-native-svg';
 import { lightPalette } from '../../themes';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 
 interface SvgProps {
   as: ReactNode;

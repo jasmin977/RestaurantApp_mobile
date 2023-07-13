@@ -1,7 +1,7 @@
 import { useState, FunctionComponent } from 'react';
 
 import { LikeIcon } from '../../../assets';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 import { RNButton, RNIcon, RNToast } from '../../../components/themed';
 
 interface ButtnProps {}
@@ -16,15 +16,16 @@ const LikeButton: FunctionComponent<ButtnProps> = () => {
   };
   const handleLike = () => {
     setIsLiked(!isLiked);
-    showToast();
+    if (!isLiked) {
+      showToast();
+    }
   };
   const { theme } = useTheme();
   return (
     <>
       {toastVisible && (
         <RNToast
-          title="Account created."
-          description="We've created your account for you."
+          title="You liked this restaurant"
           duration={3000} // Customize the duration for the toast to be visible
           onClose={() => setToastVisible(false)}
         />

@@ -8,10 +8,9 @@ import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import { ScreenHeigh, ScreenWidth } from '../../components/common/containers/Backgound';
 
 import assets, { BackIcon } from '../../assets';
-import { useTheme } from '../../hooks';
 
-import { StyleSheet, View } from 'react-native';
-import { StateContext } from '../../context';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StateContext, useAuth, useTheme } from '../../context';
 
 interface ScanningProps {
   handleBarCodeScanned: (data: any) => void;
@@ -30,11 +29,12 @@ const ScanQRview: React.FC<ScanningProps> = ({
 }) => {
   const { theme } = useTheme();
   const { isScanned, scanQRcode } = useContext(StateContext);
+  const { firstTimeScanned, markFirstTimeScanned } = useAuth();
   if (hasPermission === null) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
-          <RNText>Requesting for camera permission</RNText>
+          <RNText>Requesting...</RNText>
         </CenteredContainer>
       </BackgoundContainer>
     );
@@ -95,9 +95,10 @@ const ScanQRview: React.FC<ScanningProps> = ({
       color: theme.colors.primary,
     },
   ];
+
   return (
     <BackgoundContainer>
-      {scanned && !isloading ? (
+      {!firstTimeScanned ? (
         <CenteredContainer>
           <Box gap={10} spacing={{ px: 20 }}>
             <LottieView
@@ -113,7 +114,7 @@ const ScanQRview: React.FC<ScanningProps> = ({
             <RNText align="center" variant="subtitle">
               Place your phone and Scan the QR code to access reviews.
             </RNText>
-            <RNButton onPress={() => scanQRcode(false)} title="Scan" />
+            <RNButton onPress={markFirstTimeScanned} title="Scan" />
           </Box>
         </CenteredContainer>
       ) : (
@@ -128,7 +129,9 @@ const ScanQRview: React.FC<ScanningProps> = ({
         }} */
         >
           {isloading ? (
-            <LottieView
+            <ActivityIndicator size={'large'} color={theme.colors.primary}></ActivityIndicator>
+          ) : (
+            /* <LottieView
               autoPlay
               duration={1}
               style={{
@@ -137,8 +140,7 @@ const ScanQRview: React.FC<ScanningProps> = ({
               }}
               colorFilters={colorFilters}
               source={assets.lottieFiles.QRscanSuccessful}
-            />
-          ) : (
+            /> */
             <LottieView
               autoPlay
               loop

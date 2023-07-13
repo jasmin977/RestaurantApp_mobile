@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { Text as RNText, StyleSheet, TextStyle } from 'react-native';
 import { COLORS, TYPOGRAPHY, lightPalette } from '../../themes';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 
 interface ITextProps {
   style?: TextStyle;

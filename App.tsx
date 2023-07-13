@@ -1,7 +1,8 @@
 import { LoaderScreen } from './src/screens';
-import { InitialProvider, StateProvider, ThemeProvider } from './src/context';
-import RootStack from './src/navigators/RootStack';
+import { AuthProvider, StateProvider, ThemeProvider } from './src/context';
+
 import { useAssetLoader } from './src/hooks';
+import Root from './src/navigators/StartNavigator';
 
 export default function App() {
   const { isLoading } = useAssetLoader();
@@ -11,11 +12,11 @@ export default function App() {
   }
   return (
     <ThemeProvider>
-      <InitialProvider>
+      <AuthProvider>
         <StateProvider>
-          <RootStack />
+          <Root />
         </StateProvider>
-      </InitialProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

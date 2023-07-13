@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import { View, ViewProps, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { lightPalette } from '../../themes';
-import { useTheme } from '../../hooks';
+
 import { TouchableOpacity } from 'react-native';
+import { useTheme } from '../../context';
 
 interface BoxProps {
   children?: ReactNode;

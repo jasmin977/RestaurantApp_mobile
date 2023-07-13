@@ -2,7 +2,7 @@ import { useState, useEffect, FunctionComponent } from 'react';
 import { Box, RNText } from '../../../components/themed';
 import MapView, { Marker, LatLng } from 'react-native-maps';
 import mapStyle from '../../Map/MapTheme';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 import { RESTAURANTS_LOCATION } from '../../../data';
 import CenteredContainer from '../../../components/common/containers/Centered';
 

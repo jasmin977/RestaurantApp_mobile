@@ -13,37 +13,37 @@ import {
   SaveIcon,
   SettingsIcon,
 } from '../assets';
-import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../hooks';
+import { useNavigation, DrawerActions } from '@react-navigation/native';
+import { useTheme } from '../context';
 import { styled } from 'styled-components/native';
-import { RootBottomStackParamList } from './RootStack';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { HomeStackParamList } from './stacks';
+
+import { useAuth } from '../context';
+
+import { RootNavigationProps } from './ROUTES';
+import { TabNavigationProps } from './RootStack';
 
 interface DrawerProp {
   children: ReactNode;
 }
 
-export type RootNavigationProps = NativeStackScreenProps<RootBottomStackParamList>;
 const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme } = useTheme();
+  const { logout } = useAuth();
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
 
-  type NavigationProps = NativeStackScreenProps<HomeStackParamList>;
+  const rootNavigation = useNavigation<RootNavigationProps['navigation']>();
 
-  const navigation = useNavigation<RootNavigationProps['navigation']>();
+  const tabNavigation = useNavigation<TabNavigationProps['navigation']>();
 
-  const HomeNavigation = useNavigation<NavigationProps['navigation']>();
-
-  useEffect(() => {
+  /*   useEffect(() => {
     navigation.getParent()?.setOptions({
       tabBarStyle: isOpen
         ? { display: 'none' }
         : { backgroundColor: theme.colors.background, height: 90 },
     });
-  }, [isOpen]);
+  }, [isOpen]); */
 
   const toggleDrawer = () => {
     Animated.timing(scale, {
@@ -72,7 +72,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   `;
 
   interface DrawerItemProp {
-    id: keyof RootBottomStackParamList;
+    id: string;
     label: string;
     icon: ReactNode;
   }
@@ -86,28 +86,19 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
     { id: 'Feed', label: 'Home', icon: <HomeIcon outline={false} /> },
     { id: 'Notifications', label: 'Notifications', icon: <NotifIcon outline /> },
     { id: 'Saved', label: 'Saved', icon: <SaveIcon /> },
-    { id: 'Liked', label: 'My Favorites', icon: <LikeIcon outline /> },
+    { id: 'LikedRestaurants', label: 'My Favorites', icon: <LikeIcon outline /> },
     { id: 'Settings', label: 'Settings', icon: <SettingsIcon outline /> },
   ];
 
-  const handleDrawerItemPress = (screenName: keyof RootBottomStackParamList) => {
-    if (screenName === 'Saved') {
-      navigation.navigate('Saved', { screen: 'SavedRestaurants' });
-    }
-    if (screenName === 'Liked') {
-      HomeNavigation.navigate('LikedSatck', { screen: 'LikedRestaurants' });
-    }
-    if (screenName === 'Feed') {
-      navigation.navigate('Feed', { screen: 'Home' });
-    }
-    if (screenName === 'Notifications') {
-      navigation.navigate('Notifications', { screen: 'NotificationsScreen' });
-    }
-    if (screenName === 'Settings') {
-      HomeNavigation.navigate('Settings');
-    }
-    if (screenName === 'Profile') {
-      HomeNavigation.navigate('Profile');
+  const handleDrawerItemPress = (screenName: string) => {
+    if (screenName === 'Notifications' || screenName === 'Feed' || screenName === 'Saved') {
+      tabNavigation.navigate(screenName);
+    } else if (
+      screenName === 'Settings' ||
+      screenName === 'Profile' ||
+      screenName === 'LikedRestaurants'
+    ) {
+      rootNavigation.push(screenName);
     }
   };
   const renderDrawerItem = ({ item }: { item: DrawerItemProp }) => {
@@ -190,7 +181,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
             position: 'absolute',
             bottom: 30,
           }}
-          onPress={toggleDrawer}
+          onPress={logout}
         >
           <RNIcon as={logoutItem.icon} outline color="white" size={25} />
 
@@ -207,36 +198,25 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           right: 0,
           bottom: 0,
           flex: 1,
+
           backgroundColor: theme.colors.background,
           transform: [{ scale: scale }, { translateX: moveToRight }],
           borderRadius: isOpen ? 15 : 0,
         }}
       >
-        <View
+        <TouchableOpacity
           style={{
-            flexDirection: 'row',
-            marginTop: 50,
+            position: 'absolute',
+            top: 50,
+            left: 20,
+            zIndex: 1,
           }}
+          onPress={() => toggleDrawer()}
         >
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              left: 20,
-              zIndex: 1,
-            }}
-            onPress={toggleDrawer}
-          >
-            <RNIcon as={<MenuIcon />} outline color="onBackground" size={30} />
-          </TouchableOpacity>
+          <RNIcon as={<MenuIcon />} outline color="onBackground" size={30} />
+        </TouchableOpacity>
 
-          {/* Pass toggleDrawer as a prop to children */}
-          {/* {React.Children.map(children, child =>
-            React.isValidElement(child)
-              ? React.cloneElement(child as React.ReactElement<any>, { toggleDrawer })
-              : child
-          )} */}
-          {children}
-        </View>
+        {children}
       </Animated.View>
     </View>
   );

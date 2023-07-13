@@ -6,23 +6,23 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import ScanQRview from './scanQRView';
 import { usePersmissions } from '../../hooks';
 import { StateContext } from '../../context';
+import { RootStackParamList } from '../../navigators/ROUTES';
 
-type ScanScreenNavigationProp = StackNavigationProp<ScanStackParamList, 'Scan'>;
-type ScanScreenRouteProp = RouteProp<ScanStackParamList, 'Scan'>;
+type ScanScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   navigation: ScanScreenNavigationProp;
-  route: ScanScreenRouteProp;
 };
 
-export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route }) => {
+export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation }) => {
   const { hasPermission } = usePersmissions('barcode');
-  const { isScanned, scanQRcode } = useContext(StateContext);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [isScanned, setisScanned] = useState(false);
   const [scannedData, setScannedData] = useState('');
 
   const navigateToRestaurantProfile = () => {
-    navigation.navigate('RestaurantStack', {
+    navigation.push('RestaurantStack', {
       screen: 'RestaurantProfile',
       params: {
         id: parseInt(scannedData),
@@ -32,9 +32,10 @@ export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route })
 
   const handleBarCodeScanned = ({ data }: any) => {
     setScannedData(data);
-    scanQRcode(true);
+    setisScanned(true);
+    navigateToRestaurantProfile();
   };
-  useEffect(() => {
+  /*   useEffect(() => {
     if (isScanned) {
       setIsLoading(true);
       const timer = setTimeout(() => {
@@ -46,16 +47,16 @@ export const ScanQRcontainer: FunctionComponent<Props> = ({ navigation, route })
       return () => clearTimeout(timer);
     }
   }, [isScanned, scannedData]);
-
-  /*   useFocusEffect(
+ */
+  useFocusEffect(
     React.useCallback(() => {
-      scanQRcode(false);
+      setisScanned(false);
 
       return () => {
         // scanQRcode(false);
       };
     }, [])
-  ); */
+  );
   return (
     <ScanQRview
       hasPermission={hasPermission}

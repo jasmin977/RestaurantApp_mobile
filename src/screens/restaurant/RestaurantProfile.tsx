@@ -13,7 +13,7 @@ import assets, {
 
 import { BackgoundContainer, Review } from '../../components/common';
 import { AnimatdeHeader, RestaurantDetails } from '../../components/layout';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 
 import { Restaurant } from '../../entities';
@@ -216,7 +216,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           <RNText variant="subtitle">Location</RNText>
           <RNIcon outline={true} color="onBackground" as={<NextIcon />} />
         </Box>
-        <LocationMap id={id} />
+        {/*  <LocationMap id={id} /> */}
         <Box h={500}></Box>
       </StyledScrollView>
     </AnimatdeHeader>

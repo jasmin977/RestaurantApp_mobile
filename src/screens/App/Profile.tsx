@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { BackgoundContainer, CenteredView } from '../components/common';
-import { RNText } from '../components/themed';
+import { BackgoundContainer, CenteredView } from '../../components/common';
+import { RNText } from '../../components/themed';
 
 interface ProfileProps {}
 

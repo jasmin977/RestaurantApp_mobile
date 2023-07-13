@@ -11,12 +11,9 @@ import LikedRestaurantStack, { LikedRestaurantStackParamList } from './Liked';
 export type HomeStackParamList = {
   Home: undefined;
   RestaurantStack: NavigatorScreenParams<RestaurantStackParamList>;
-  LikedSatck: NavigatorScreenParams<LikedRestaurantStackParamList>;
-  Settings: undefined;
-  Profile: undefined;
 };
 
-export type HomeNavigationProps = NativeStackScreenProps<HomeStackParamList, 'RestaurantStack'>;
+export type HomeNavigationProps = NativeStackScreenProps<HomeStackParamList>;
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -35,31 +32,6 @@ const HomeStack: FunctionComponent = () => {
         component={RestaurantStack}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          headerShown: false,
-        }}
-      />
-
-      <Stack.Screen
-        name="LikedSatck"
-        component={LikedRestaurantStack}
-        options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          ...TransitionPresets.SlideFromRightIOS,
           headerShown: false,
         }}
       />

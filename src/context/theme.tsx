@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, useContext, ReactNode } from 'react';
 import { darkPalette, lightPalette } from '../themes';
 import { DefaultTheme } from '@react-navigation/native';
 
@@ -30,7 +30,7 @@ interface ThemeContextProps {
   toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextProps>({
+const ThemeContext = createContext<ThemeContextProps>({
   theme: {
     mode: 'dark',
     colors: {
@@ -89,3 +89,4 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
 };
 
 export default ThemeProvider;
+export const useTheme = () => useContext(ThemeContext);

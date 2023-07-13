@@ -9,23 +9,24 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import { BackIcon, NextIcon, ReviewGif, ScanGif } from '../assets';
-import { BackgoundContainer } from '../components/common';
-import CenteredContainer from '../components/common/containers/Centered';
-import { useTheme } from '../hooks';
-import { RNButton, RNIcon, RNText } from '../components/themed';
-import { InitialContext } from '../context';
+import assets, { NextIcon, ReviewGif, ScanGif } from '../../assets';
+
+import CenteredContainer from '../../components/common/containers/Centered';
+import { useTheme } from '../../context';
+import { RNButton, RNIcon, RNText } from '../../components/themed';
+import { AuthStackProps } from '../../navigators/stacks/Auth';
+import LottieView from 'lottie-react-native';
+import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('window').width;
 
-const StepsScreen = () => {
+const StepsScreen = ({ navigation }: AuthStackProps) => {
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { markAppAsInitialized } = useContext(InitialContext);
 
   const handleNextStep = () => {
     if (currentIndex === 2) {
-      markAppAsInitialized();
+      navigation.navigate('LoginScreen');
     }
     const nextIndex = currentIndex === 0 ? 1 : 2;
     setCurrentIndex(nextIndex);
@@ -33,13 +34,13 @@ const StepsScreen = () => {
   };
 
   const handleSkipStep = () => {
-    markAppAsInitialized();
+    navigation.navigate('LoginScreen');
   };
 
   interface stepsProp {
     title: string;
     description: string;
-    image: ImageSourcePropType;
+    image: any;
   }
 
   const steps: stepsProp[] = [
@@ -47,19 +48,19 @@ const StepsScreen = () => {
       title: 'Scan and Discover',
       description:
         'Unlock restaurant reviews and menu details by scanning QR codes. Explore ratings, reviews, and menu items.',
-      image: ScanGif,
+      image: assets.lottieFiles.ScannigMenu,
     },
     {
       title: 'Find Nearby Restaurants',
       description:
         'Discover restaurants near you on an interactive map. Explore their locations, reviews, and menus.',
-      image: ScanGif,
+      image: assets.lottieFiles.Map,
     },
     {
       title: 'Share Your Reviews',
       description:
         'Leave honest reviews and ratings for dishes you ve tried. Help others make informed choices. Be a trusted voice.',
-      image: ReviewGif,
+      image: assets.lottieFiles.Review,
     },
   ];
   const RenderItem = ({ item }: { item: stepsProp }) => {
@@ -73,7 +74,16 @@ const StepsScreen = () => {
           justifyContent: 'center',
         }}
       >
-        <Image source={item.image} style={{ width: 250, height: 250 }} />
+        <LottieView
+          autoPlay
+          loop
+          style={{
+            width: 200,
+            height: 200,
+          }}
+          source={item.image}
+        />
+
         <RNText align="center" variant="h3">
           {item.title}
         </RNText>
@@ -82,16 +92,17 @@ const StepsScreen = () => {
     );
   };
 
-  const { theme } = useTheme();
+  const { theme, isDarkTheme } = useTheme();
   return (
     <CenteredContainer
       viewStyle={{
-        backgroundColor: theme.colors.primary,
+        backgroundColor: theme.colors.background,
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
       }}
     >
+      <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
       <FlatList
         ref={flatListRef}
         data={steps}

@@ -5,8 +5,9 @@ import { ScreenWidth } from '../containers/Backgound';
 import { Restaurant } from '../../../entities';
 import Review from '../review/Review';
 import { RNText } from '../../themed';
-import { useTheme } from '../../../hooks';
+
 import { HomeNavigationProps } from '../../../navigators/stacks/Home';
+import { useTheme } from '../../../context';
 
 const StyledView = styled.View`
   align-items: flex-start;
@@ -34,10 +35,10 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
 
   const { theme } = useTheme();
   const StyledCard = styled.TouchableOpacity`
-    width: ${ScreenWidth * 0.7}px;
+    width: ${ScreenWidth * 0.9}px;
     background-color: ${theme.colors.card};
     border-radius: 15px;
-    margin-right: 20px;
+    margin-left: 20px;
     overflow: hidden;
     padding: 10px;
   `;
@@ -46,7 +47,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
     <StyledCard
       activeOpacity={0.5}
       onPress={() => {
-        navigation.navigate('RestaurantStack', {
+        navigation.push('RestaurantStack', {
           screen: 'RestaurantProfile',
           params: {
             id: id,
@@ -59,7 +60,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
           {name}
         </RNText>
         <Review rating={rating} />
-        <StyledImage resizeMode="contain" source={img} />
+        <StyledImage resizeMode="cover" source={img} />
       </StyledView>
     </StyledCard>
   );

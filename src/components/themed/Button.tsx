@@ -7,7 +7,7 @@ import {
   ViewStyle,
   ActivityIndicator,
 } from 'react-native';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 import Text from './Text';
 import { SIZES } from '../../themes';
 

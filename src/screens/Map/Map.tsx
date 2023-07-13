@@ -1,26 +1,18 @@
 import { FunctionComponent, useEffect, useState, useRef } from 'react';
-import { BackgoundContainer, CenteredView } from '../components/common';
+import { BackgoundContainer, CenteredView } from '../../components/common';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootBottomStackParamList } from '../navigators/RootStack';
-import {
-  Image,
-  StyleSheet,
-  Animated,
-  View,
-  ScrollView,
-  Platform,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import { Box, RNButton, RNIcon, RNText } from '../components/themed';
+import { RootBottomStackParamList } from '../../navigators/RootStack';
+import { Image, StyleSheet, Animated, ScrollView, FlatList } from 'react-native';
+import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import MapView, { Marker } from 'react-native-maps';
-import { usePersmissions, useTheme } from '../hooks';
-import * as Location from 'expo-location';
-import { AVATAR, BackIcon, StarIcon } from '../assets';
-import { RESTAURANTS, RESTAURANTS_LOCATION } from '../data';
-import { ScreenWidth } from '../components/common/containers/Backgound';
-import { Restaurant } from '../entities';
+import { usePersmissions } from '../../hooks';
+
+import { AVATAR, BackIcon, StarIcon } from '../../assets';
+import { RESTAURANTS, RESTAURANTS_LOCATION } from '../../data';
+import { ScreenWidth } from '../../components/common/containers/Backgound';
+import { Restaurant } from '../../entities';
+import { useTheme } from '../../context';
 interface MapProps {}
 const CARD_HEIGHT = 220;
 const CARD_WIDTH = ScreenWidth * 0.8;
@@ -48,7 +40,7 @@ const Map: FunctionComponent<Props> = ({ navigation }) => {
   const boxDistance = scrollViewWidth - boxWidth;
   const halfBoxDistance = boxDistance / 2;
   const { theme } = useTheme();
-  useEffect(() => {
+  /*   useEffect(() => {
     if (locationPermission) {
       (async () => {
         // Corrected syntax
@@ -66,7 +58,7 @@ const Map: FunctionComponent<Props> = ({ navigation }) => {
       })();
     }
   }, []);
-
+ */
   const mapStyle = [
     {
       elementType: 'geometry',
@@ -184,6 +176,7 @@ const Map: FunctionComponent<Props> = ({ navigation }) => {
       />
       <CenteredView>
         <MapView
+          showsMyLocationButton
           ref={mapRef}
           style={styles.map}
           initialRegion={{

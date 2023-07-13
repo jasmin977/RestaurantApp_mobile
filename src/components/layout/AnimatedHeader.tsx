@@ -4,7 +4,7 @@ import { ScreenWidth } from '../../components/common/containers/Backgound';
 import { Box, RNText } from '../../components/themed';
 import React, { ReactNode, useRef } from 'react';
 import { SafeAreaView, StyleSheet, Image, ImageSourcePropType, Text, Animated } from 'react-native';
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 
 interface animatedHeaderProp {
   children: ReactNode;

@@ -6,7 +6,7 @@ import { MealCard } from '../../../components/common';
 import { FlatList } from 'react-native';
 import { View } from 'react-native';
 import { RNText } from '../../../components/themed';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 
 interface MenuSectionProps {
   menu: MenuCategory[];

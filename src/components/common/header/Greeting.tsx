@@ -3,7 +3,7 @@ import { StyleProp, TextStyle } from 'react-native';
 import { styled } from 'styled-components/native';
 
 import { RNText } from '../../themed';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 
 const StyledView = styled.View`
   flex: 1;

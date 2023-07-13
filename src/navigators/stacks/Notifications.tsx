@@ -22,14 +22,6 @@ const NotificationStack: FunctionComponent = () => {
         name="NotificationsScreen"
         component={NotificationsScreen}
       />
-      <Stack.Screen
-        name="RestaurantStack"
-        component={RestaurantStack}
-        options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-          headerShown: false,
-        }}
-      />
     </Stack.Navigator>
   );
 };

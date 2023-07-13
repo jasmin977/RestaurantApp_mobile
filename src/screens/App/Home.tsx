@@ -2,25 +2,22 @@ import { FunctionComponent } from 'react';
 import { styled } from 'styled-components/native';
 import { StatusBar } from 'expo-status-bar';
 
-import { Carousel, ListSection } from '../components/layout';
-import { Greeting } from '../components/common';
-import { useTheme } from '../hooks';
-import { Box, RNButton, RNIcon, RNInput, RNText } from '../components/themed';
-import { FilterIcon, MenuIcon, SearchIcon } from '../assets';
-import Drawer from '../navigators/Drawer';
+import { Carousel, ListSection } from '../../components/layout';
+import { Greeting } from '../../components/common';
+import { useTheme } from '../../context';
+import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
+import { FilterIcon, MenuIcon, SearchIcon } from '../../assets';
+import Drawer from '../../navigators/Drawer';
 import { TouchableOpacity } from 'react-native';
-import { RESTAURANTS } from '../data';
+import { RESTAURANTS } from '../../data';
 
-interface HomeProps {
-  toggleDrawer: () => void;
-}
+interface HomeProps {}
 
-const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
+const Home: FunctionComponent<HomeProps> = () => {
   const { theme, isDarkTheme } = useTheme();
   const HomeContainer = styled.View`
     background-color: ${theme.colors.background};
     flex: 1;
-    padding-bottom: 50px;
   `;
 
   const StyledScrollView = styled.ScrollView`
@@ -36,7 +33,7 @@ const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
   `;
   const HeaderView = styled.View`
     margin-left: 50px;
-    margin-top: -25px;
+    margin-top: 25px;
     padding: 20px;
   `;
   return (
@@ -48,7 +45,18 @@ const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
             <Greeting mainText="Hey!👋" subText="Share your own experiences" />
           </HeaderView>
           <SearchView>
-            <RNInput placeholder="search" icon={<SearchIcon />} />
+            <Box
+              flex={1}
+              bg="card"
+              justifyContent="flex-start"
+              spacing={{ px: 10 }}
+              rounded={8}
+              direction="horizontal"
+              gap={5}
+            >
+              <RNIcon outline as={<SearchIcon />} color="primary" />
+              <RNText>search for restaurants</RNText>
+            </Box>
             <RNButton
               size="sm"
               centerIcon={<RNIcon as={<FilterIcon />} outline={true} color="white" />}
@@ -56,22 +64,7 @@ const Home: FunctionComponent<HomeProps> = ({ toggleDrawer }) => {
             />
           </SearchView>
 
-          <Box
-            direction="horizontal"
-            w={'100%'}
-            justifyContent="space-between"
-            spacing={{ px: 20, py: 20 }}
-          >
-            <RNText color="onBackground" variant="h5">
-              Best Restaurants
-            </RNText>
-            <RNText color="primary" variant="caption">
-              View All
-            </RNText>
-          </Box>
           <Carousel data={RESTAURANTS} />
-
-          <ListSection header="Recommended" data={RESTAURANTS} />
         </HomeContainer>
       </StyledScrollView>
     </Drawer>

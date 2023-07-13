@@ -2,11 +2,12 @@ import { FunctionComponent } from 'react';
 import { Image, ImageSourcePropType, Text } from 'react-native';
 import { AVATAR, BackIcon, peperoniPizza, vegeterianPizza } from '../../assets';
 import { styled } from 'styled-components/native';
-import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
+
 import { ReviewCard } from './components';
 import { BackgoundContainer } from '../../components/common';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RestaurantStackParamList } from '../../navigators/stacks';
+import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 
 interface RestaurantCommentScreenProps {}
 
@@ -98,7 +99,7 @@ const RestaurantCommentScreen = ({ route, navigation }: Props) => {
               }}
             />
           </Box>
-          <RNInput placeholder="give you feedback" />
+          {/*       <RNInput placeholder="give you feedback"  /> */}
         </Box>
         <Box direction="vertical">
           {reviewData.map((item: ReviewCardProps) => (

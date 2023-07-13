@@ -15,4 +15,3 @@ export { default as NotificationStack } from './Notifications';
 export { default as SavedRestaurantStack } from './Saved';
 export { default as LikedRestaurantStack } from './Liked';
 export { default as HomeStack } from './Home';
-export { default as IntroductionStack } from './Introduction';

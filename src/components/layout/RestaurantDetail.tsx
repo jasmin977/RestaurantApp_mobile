@@ -7,10 +7,11 @@ import { ClockIcon, LikeIcon, LocationIcon } from '../../assets';
 import { Restaurant } from '../../entities';
 import { BackgoundContainer } from '../common';
 import { RNButton, RNIcon, RNText } from '../themed';
-import { useTheme } from '../../hooks';
+
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RestaurantStackParamList } from '../../navigators/stacks';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../../context';
 
 type NavigationProp = NativeStackNavigationProp<RestaurantStackParamList, 'RestaurantProfile'>;
 

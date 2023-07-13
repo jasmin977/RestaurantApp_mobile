@@ -2,9 +2,9 @@ import { FunctionComponent, useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import assets, { QRcodeIcon } from '../../../assets';
-import { useTheme } from '../../../hooks';
+
 import LottieView from 'lottie-react-native';
-import { StateContext } from '../../../context';
+import { StateContext, useTheme } from '../../../context';
 import { RNIcon } from '../../themed';
 
 const ScanButton: FunctionComponent = () => {

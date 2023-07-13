@@ -13,7 +13,7 @@ import {
   vegeterianPizza,
   vegyBurger,
 } from '../../assets';
-import CenteredContainer from '../../components/common/containers/Centered';
+
 import { RatingStars, ReviewCard, ReviewForm, StarPercentage } from './components';
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';

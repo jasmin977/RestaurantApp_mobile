@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../../hooks';
+import { useTheme } from '../../../context';
 import { Box, RNText } from '../../../components/themed';
 
 interface StarPercentage {

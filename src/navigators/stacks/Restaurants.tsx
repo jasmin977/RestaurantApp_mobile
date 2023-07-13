@@ -12,7 +12,7 @@ import {
   RestaurantReviewsScreen,
 } from '../../screens';
 
-import { useTheme } from '../../hooks';
+import { useTheme } from '../../context';
 
 export type RestaurantStackParamList = {
   RestaurantProfile: { id: number };

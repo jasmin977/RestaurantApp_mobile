@@ -17,14 +17,13 @@ import CenteredContainer from '../../components/common/containers/Centered';
 import { RateOption, RatingStars, ReviewCard, ReviewForm, StarPercentage } from './components';
 import { styled } from 'styled-components/native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { RootBottomStackParamList } from '../../navigators/RootStack';
+import { RootBottomStackParamList, RootNavigationProps } from '../../navigators/RootStack';
 import RNModal from '../../components/themed/Modal';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import { TextInput } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { useTheme } from '../../hooks';
-import { RootNavigationProps } from '../../navigators/Drawer';
+import { useTheme } from '../../context';
 import { StatusBar } from 'expo-status-bar';
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'AddReview'>;
