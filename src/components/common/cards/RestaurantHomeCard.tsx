@@ -3,15 +3,15 @@ import { Animated, FlatList, TouchableOpacity, View } from 'react-native';
 
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import { ScreenWidth } from '../containers/Backgound';
+
 import { Restaurant } from '../../../entities';
 import Review from '../review/Review';
 import { Box, RNIcon, RNText } from '../../themed';
 
-import { HomeNavigationProps } from '../../../navigators/stacks/Home';
 import { LikeIcon } from '../../../assets';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../../../context';
+import { RootNavigationProps } from '../../../navigators/ROUTES';
 
 interface CarouselProps {
   index: number;
@@ -26,7 +26,7 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
   const boxWidth = scrollViewWidth * cardWidth;
   const boxDistance = scrollViewWidth - boxWidth;
   const halfBoxDistance = boxDistance / 2;
-  const navigation = useNavigation<HomeNavigationProps['navigation']>();
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   const { theme } = useTheme();
   const RestoImageBackground = styled.ImageBackground`
@@ -35,7 +35,17 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
   `;
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.push('RestaurantStack', {
+          screen: 'RestaurantProfile',
+          params: {
+            id: item.id,
+          },
+        });
+      }}
+      activeOpacity={0.8}
+    >
       <Animated.View
         style={{
           transform: [

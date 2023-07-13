@@ -1,17 +1,20 @@
-//NavigationProps
-export { RestaurantNavigationProps } from './Restaurants';
-export { LikedRestaurantNavigationProps } from './Liked';
+import RestaurantStack, {
+  RestaurantStackParamList,
+  RestaurantNavigationProps,
+} from './Restaurants';
+import AuthStack, { AuthStackProps, AuthStackParamList } from './Auth';
 
-//ParamLists
-export { RestaurantStackParamList } from './Restaurants';
-export { NotificationStackParamList } from './Notifications';
-export { SavedRestaurantStackParamList } from './Saved';
-export { LikedRestaurantStackParamList } from './Liked';
-export { HomeStackParamList } from './Home';
+import OnBoardingStack from './onboarding';
+import TabStack, { RootBottomStackParamList, TabNavigationProps } from './BotoomTab';
 
-//STACKS
-export { default as RestaurantStack } from './Restaurants';
-export { default as NotificationStack } from './Notifications';
-export { default as SavedRestaurantStack } from './Saved';
-export { default as LikedRestaurantStack } from './Liked';
-export { default as HomeStack } from './Home';
+export {
+  RestaurantStack,
+  AuthStack,
+  OnBoardingStack,
+  TabStack,
+  RestaurantStackParamList,
+  RootBottomStackParamList,
+  RestaurantNavigationProps,
+  AuthStackParamList,
+  AuthStackProps,
+};

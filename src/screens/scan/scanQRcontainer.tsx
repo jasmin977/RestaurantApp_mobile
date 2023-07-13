@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useContext, FunctionComponent } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { RouteProp } from '@react-navigation/native';
-import { ScanStackParamList } from '../../navigators/stacks/Scan';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ScanQRview from './scanQRView';
 import { usePersmissions } from '../../hooks';
-import { StateContext } from '../../context';
 import { RootStackParamList } from '../../navigators/ROUTES';
 
 type ScanScreenNavigationProp = StackNavigationProp<RootStackParamList>;

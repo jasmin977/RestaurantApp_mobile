@@ -6,8 +6,8 @@ import { Restaurant } from '../../../entities';
 import Review from '../review/Review';
 import { RNText } from '../../themed';
 
-import { HomeNavigationProps } from '../../../navigators/stacks/Home';
 import { useTheme } from '../../../context';
+import { RootNavigationProps } from '../../../navigators/ROUTES';
 
 const StyledView = styled.View`
   align-items: flex-start;
@@ -31,7 +31,7 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
   id,
   menu,
 }) => {
-  const navigation = useNavigation<HomeNavigationProps['navigation']>();
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   const { theme } = useTheme();
   const StyledCard = styled.TouchableOpacity`

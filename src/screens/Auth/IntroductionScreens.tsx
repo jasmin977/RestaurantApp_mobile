@@ -12,21 +12,22 @@ import {
 import assets, { NextIcon, ReviewGif, ScanGif } from '../../assets';
 
 import CenteredContainer from '../../components/common/containers/Centered';
-import { useTheme } from '../../context';
+import { useAuth, useTheme } from '../../context';
 import { RNButton, RNIcon, RNText } from '../../components/themed';
-import { AuthStackProps } from '../../navigators/stacks/Auth';
+
 import LottieView from 'lottie-react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('window').width;
 
-const StepsScreen = ({ navigation }: AuthStackProps) => {
+const StepsScreen = () => {
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { markAppisInitialized } = useAuth();
 
   const handleNextStep = () => {
     if (currentIndex === 2) {
-      navigation.navigate('LoginScreen');
+      markAppisInitialized();
     }
     const nextIndex = currentIndex === 0 ? 1 : 2;
     setCurrentIndex(nextIndex);
@@ -34,7 +35,7 @@ const StepsScreen = ({ navigation }: AuthStackProps) => {
   };
 
   const handleSkipStep = () => {
-    navigation.navigate('LoginScreen');
+    markAppisInitialized();
   };
 
   interface stepsProp {

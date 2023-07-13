@@ -4,8 +4,13 @@ import { TransitionPresets, createStackNavigator } from '@react-navigation/stack
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RestaurantStack, RestaurantStackParamList } from './stacks';
-import { RootBottomStackParamList, TabStack } from './RootStack';
+import {
+  RestaurantStack,
+  RestaurantStackParamList,
+  RootBottomStackParamList,
+  TabStack,
+} from './stacks';
+
 import { LikedRestaurantsScreen, ProfileScreen, SettingsScreen } from '../screens';
 
 export type RootStackParamList = {

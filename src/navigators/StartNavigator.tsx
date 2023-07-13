@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStack, { FirstAuthStack } from './stacks/Auth';
-import { TabStack } from './RootStack';
 import { useAuth } from '../context';
 import { View, ActivityIndicator } from 'react-native';
 import { useTheme } from '../context';
 import RootStack from './ROUTES';
+import { AuthStack, OnBoardingStack } from './stacks';
 
 const Root: FunctionComponent = props => {
   const { user, isInitialized, isLoading } = useAuth();
@@ -20,7 +19,7 @@ const Root: FunctionComponent = props => {
   }
   return (
     <NavigationContainer>
-      {!isInitialized ? <FirstAuthStack /> : user ? <RootStack /> : <AuthStack />}
+      {!isInitialized ? <OnBoardingStack /> : user ? <RootStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

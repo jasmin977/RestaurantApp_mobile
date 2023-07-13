@@ -3,7 +3,7 @@ import { BackgoundContainer } from '../../components/common';
 import { ScreenWidth } from '../../components/common/containers/Backgound';
 import { Box, RNText } from '../../components/themed';
 import React, { ReactNode, useRef } from 'react';
-import { SafeAreaView, StyleSheet, Image, ImageSourcePropType, Text, Animated } from 'react-native';
+import { StatusBar, StyleSheet, Image, ImageSourcePropType, Text, Animated } from 'react-native';
 import { useTheme } from '../../context';
 
 interface animatedHeaderProp {
@@ -14,7 +14,7 @@ interface animatedHeaderProp {
   backgroundImage: ImageSourcePropType;
 }
 const HEADER_MAX_HEIGHT = 240;
-const HEADER_MIN_HEIGHT = 84;
+const HEADER_MIN_HEIGHT = 95;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const AnimatdeHeader: React.FC<animatedHeaderProp> = ({
   children,
@@ -98,7 +98,7 @@ const AnimatdeHeader: React.FC<animatedHeaderProp> = ({
         style={[
           styles.topBar,
           {
-            transform: [{ scale: titleScale }, { translateY: titleTranslateY }],
+            // transform: [{ translateY: titleTranslateY }],
           },
         ]}
       >
@@ -135,14 +135,15 @@ const styles = StyleSheet.create({
   },
   topBar: {
     flexDirection: 'row',
-    marginTop: 40,
-    height: 50,
+    marginTop: StatusBar.currentHeight,
+
     alignItems: 'center',
     justifyContent: 'space-between',
     position: 'absolute',
-    top: 0,
-    left: 10,
-    right: 10,
+    top: 2,
+
+    left: 20,
+    right: 20,
   },
 });
 

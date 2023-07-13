@@ -17,7 +17,7 @@ import {
 import { RatingStars, ReviewCard, ReviewForm, StarPercentage } from './components';
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import { RootBottomStackParamList } from '../../navigators/RootStack';
+import { RootBottomStackParamList } from '../../navigators/stacks/BotoomTab';
 import RNModal from '../../components/themed/Modal';
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantReviews'>;

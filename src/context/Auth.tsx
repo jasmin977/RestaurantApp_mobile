@@ -13,6 +13,7 @@ type AuthContextType = {
   login: (username: string, password: string) => void;
   logout: () => void;
   markFirstTimeScanned: () => void;
+  markAppisInitialized: () => void;
 
   isLoading: boolean;
 };
@@ -26,6 +27,7 @@ const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   markFirstTimeScanned: () => {},
+  markAppisInitialized: () => {},
   isLoading: false,
   firstTimeScanned: false,
 });
@@ -86,14 +88,15 @@ const AuthProvider = ({ children }: Props) => {
     storage.delete('firstTimeScanned');
     setFirstTimeScanned(false);
 
-    /*   storage.delete('isInitialized');
-    setIsInitialized(false); */
+    storage.delete('isInitialized');
+    setIsInitialized(false);
   };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        markAppisInitialized,
         firstTimeScanned,
         markFirstTimeScanned,
         isInitialized,

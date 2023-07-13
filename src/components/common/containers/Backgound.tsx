@@ -1,23 +1,26 @@
-import { styled } from 'styled-components/native';
 import React, { FunctionComponent, ReactNode } from 'react';
-
-import { Dimensions, StatusBar } from 'react-native';
+import { Dimensions, StatusBar, View } from 'react-native';
 import { useTheme } from '../../../context';
-import Colors from '../../../themes/colors';
-import { darkPalette, lightPalette } from '../../../themes';
+
+import { Box } from '../../themed';
 
 interface IProps {
   children: ReactNode;
 }
 
-const StyledBackgoundContainer = styled.View`
-  flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
-  background-color: ${darkPalette.background};
-`;
-
 const BackgoundContainer: FunctionComponent<IProps> = ({ children }) => {
-  return <StyledBackgoundContainer>{children}</StyledBackgoundContainer>;
+  const { theme } = useTheme();
+  return (
+    <View
+      style={{
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        backgroundColor: theme.colors.background,
+      }}
+    >
+      {children}
+    </View>
+  );
 };
 
 export default BackgoundContainer;

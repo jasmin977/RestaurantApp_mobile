@@ -4,13 +4,13 @@ import LottieView from 'lottie-react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { BackgoundContainer } from '../../components/common';
 import CenteredContainer from '../../components/common/containers/Centered';
-import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
-import { ScreenHeigh, ScreenWidth } from '../../components/common/containers/Backgound';
+import { Box, RNButton, RNText } from '../../components/themed';
+import { ScreenWidth } from '../../components/common/containers/Backgound';
 
 import assets, { BackIcon } from '../../assets';
 
 import { StyleSheet, ActivityIndicator } from 'react-native';
-import { StateContext, useAuth, useTheme } from '../../context';
+import { useAuth, useTheme } from '../../context';
 
 interface ScanningProps {
   handleBarCodeScanned: (data: any) => void;
@@ -28,7 +28,6 @@ const ScanQRview: React.FC<ScanningProps> = ({
   isloading,
 }) => {
   const { theme } = useTheme();
-  const { isScanned, scanQRcode } = useContext(StateContext);
   const { firstTimeScanned, markFirstTimeScanned } = useAuth();
   if (hasPermission === null) {
     return (

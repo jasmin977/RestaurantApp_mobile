@@ -6,14 +6,14 @@ import {
   NotificationsScreen,
   SavedRestaurantsScreen,
   ScanQRScreen,
-} from '../screens';
-import { HomeIcon, LocationIcon, NotifIcon, SaveIcon } from '../assets';
-import { ScanQRButton } from '../components/common';
-import { useTheme } from '../context';
-import { RNIcon } from '../components/themed';
+} from '../../screens';
+import { HomeIcon, LocationIcon, NotifIcon, SaveIcon } from '../../assets';
+import { ScanQRButton } from '../../components/common';
+import { useTheme } from '../../context';
+import { RNIcon } from '../../components/themed';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Drawer from './Drawer';
+import Drawer from '../Drawer';
 
 export type RootBottomStackParamList = {
   Feed: undefined;
@@ -27,7 +27,7 @@ export type TabNavigationProps = NativeStackScreenProps<RootBottomStackParamList
 
 const Tab = createBottomTabNavigator<RootBottomStackParamList>();
 
-export const TabStack: FunctionComponent = () => {
+const TabStack: FunctionComponent = () => {
   const { theme } = useTheme();
   return (
     <Drawer>
@@ -103,3 +103,4 @@ export const TabStack: FunctionComponent = () => {
     </Drawer>
   );
 };
+export default TabStack;

@@ -2,7 +2,7 @@ import { useTheme } from '../../context';
 import { BackgoundContainer, CenteredView } from '../../components/common';
 import { RNButton, RNIcon } from '../../components/themed';
 import { BackIcon } from '../../assets';
-import { RootNavigationProps } from '../../navigators/RootStack';
+import { RootNavigationProps } from '../../navigators/stacks/BotoomTab';
 
 interface SettingsProps {}
 

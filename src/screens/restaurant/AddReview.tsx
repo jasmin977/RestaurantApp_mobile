@@ -1,48 +1,30 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Image, ImageSourcePropType, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import { BackgoundContainer } from '../../components/common';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RestaurantStackParamList } from '../../navigators/stacks';
-import {
-  AVATAR,
-  BackIcon,
-  peperoniPizza,
-  rest_1,
-  salad,
-  vegeterianPizza,
-  vegyBurger,
-} from '../../assets';
-import CenteredContainer from '../../components/common/containers/Centered';
-import { RateOption, RatingStars, ReviewCard, ReviewForm, StarPercentage } from './components';
+import { BackIcon } from '../../assets';
+
+import { RateOption } from './components';
 import { styled } from 'styled-components/native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { RootBottomStackParamList, RootNavigationProps } from '../../navigators/RootStack';
+
 import RNModal from '../../components/themed/Modal';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import { TextInput } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../../context';
-import { StatusBar } from 'expo-status-bar';
 
-type Props = NativeStackScreenProps<RestaurantStackParamList, 'AddReview'>;
+type Props = NativeStackScreenProps<RestaurantStackParamList>;
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
 `;
 
-const AddReviewScreen = ({ route }: Props) => {
+const AddReviewScreen = ({ navigation }: Props) => {
   const { theme } = useTheme();
   const [rating, setRating] = useState(0);
-  const navigation = useNavigation<RootNavigationProps['navigation']>();
-  useFocusEffect(
-    React.useCallback(() => {
-      navigation.getParent()?.setOptions({
-        tabBarStyle: { display: 'none' },
-      });
-    }, [])
-  );
+
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {

@@ -7,7 +7,7 @@ import { Box, RNButton, RNInput, RNText } from '../../components/themed';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../context';
 import { passwordValidator, usernameValidator } from '../../helpers/validators';
-import { AuthStackProps } from '../../navigators/stacks/Auth';
+import { AuthStackProps } from '../../navigators/stacks';
 
 const LoginScreen = ({ navigation }: AuthStackProps) => {
   const { login } = useAuth();

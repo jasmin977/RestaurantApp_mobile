@@ -7,6 +7,8 @@ import { styled } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Review } from '../common';
 import { LikeIcon } from '../../assets';
+import { RootNavigationProps } from '../../navigators/ROUTES';
+import { useNavigation } from '@react-navigation/native';
 
 interface CarouselProps {
   data: Array<Restaurant>;
@@ -25,9 +27,19 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
     height: 400px;
     width: ${boxWidth}px;
   `;
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   const renderItem = ({ item, index }: { item: Restaurant; index: number }) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.push('RestaurantStack', {
+          screen: 'RestaurantProfile',
+          params: {
+            id: item.id,
+          },
+        });
+      }}
+    >
       <Animated.View
         style={{
           transform: [
@@ -50,9 +62,9 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
             <Review
               rating={item.rating}
               additinalStyle={{
-                backgroundColor: 'rgba(255,255,255,0.2)',
+                backgroundColor: 'rgba(0,0,0,0.2)',
                 borderRadius: 100,
-
+                paddingVertical: 5,
                 paddingHorizontal: 10,
               }}
             />

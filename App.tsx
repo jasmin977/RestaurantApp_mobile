@@ -1,5 +1,5 @@
 import { LoaderScreen } from './src/screens';
-import { AuthProvider, StateProvider, ThemeProvider } from './src/context';
+import { AuthProvider, ThemeProvider } from './src/context';
 
 import { useAssetLoader } from './src/hooks';
 import Root from './src/navigators/StartNavigator';
@@ -13,9 +13,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <StateProvider>
-          <Root />
-        </StateProvider>
+        <Root />
       </AuthProvider>
     </ThemeProvider>
   );

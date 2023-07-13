@@ -20,7 +20,7 @@ import { styled } from 'styled-components/native';
 import { useAuth } from '../context';
 
 import { RootNavigationProps } from './ROUTES';
-import { TabNavigationProps } from './RootStack';
+import { TabNavigationProps } from './stacks/BotoomTab';
 
 interface DrawerProp {
   children: ReactNode;

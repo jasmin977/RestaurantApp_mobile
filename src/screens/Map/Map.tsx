@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useState, useRef } from 'react';
 import { BackgoundContainer, CenteredView } from '../../components/common';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootBottomStackParamList } from '../../navigators/RootStack';
+import { RootBottomStackParamList } from '../../navigators/stacks/BotoomTab';
 import { Image, StyleSheet, Animated, ScrollView, FlatList } from 'react-native';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import MapView, { Marker } from 'react-native-maps';
