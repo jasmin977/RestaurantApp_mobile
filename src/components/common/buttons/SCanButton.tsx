@@ -27,9 +27,12 @@ const ScanButton: FunctionComponent = () => {
           borderRadius: 30,
           justifyContent: 'center',
           alignItems: 'center',
+          shadowColor: theme.colors.primary,
+          elevation: 15,
+          shadowRadius: 1,
         }}
       >
-        <RNIcon size={45} as={<QRcodeIcon />} />
+        <RNIcon color="white" size={45} as={<QRcodeIcon />} />
       </LinearGradient>
     </View>
   );

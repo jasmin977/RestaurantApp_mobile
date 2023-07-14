@@ -12,19 +12,19 @@ const darkPalette = {
   onCard: common.white,
   onError: common.white,
   black: common.black,
-
+  grey: Colors.grey,
   white: common.white,
 };
 
 const lightPalette = {
   common: common,
-
+  grey: Colors.grey,
   primary: Colors.primary,
   success: green[500],
   warning: yellow[200],
   error: red[600],
-  background: common.white,
-  card: '#F6F6F6',
+  background: '#F6F6F6',
+  card: common.white,
   onPrimary: common.white,
   onBackground: common.black,
   onCard: common.black,

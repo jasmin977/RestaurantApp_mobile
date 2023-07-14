@@ -2,20 +2,36 @@ import * as React from 'react';
 import { FunctionComponent, ReactNode } from 'react';
 
 import Svg, { G, Path } from 'react-native-svg';
-import { lightPalette } from '../../themes';
+import { COLORS, lightPalette } from '../../themes';
 import { useTheme } from '../../context';
 
 interface SvgProps {
   as: ReactNode;
   outline?: boolean;
-  color?: keyof typeof lightPalette;
+  color?: keyof typeof lightPalette | string;
   size?: number;
 }
-
-const ICON: FunctionComponent<SvgProps> = ({ as, color = 'white', size = 25, outline = false }) => {
+interface IGreyPalette {
+  [key: number]: string;
+}
+const ICON: FunctionComponent<SvgProps> = ({
+  as,
+  color = 'onCard',
+  size = 25,
+  outline = false,
+}) => {
   const { theme } = useTheme();
-  const stroke = outline ? theme.colors[color] : 'none';
-  const fill = outline ? 'none' : theme.colors[color];
+  let resolvedColor: string | undefined;
+  let colorKey: keyof typeof lightPalette;
+  let shadeKey: number | undefined;
+
+  colorKey = color.split('.')[0] as keyof typeof lightPalette;
+  shadeKey = Number(color.split('.')[1]);
+
+  resolvedColor = shadeKey ? theme.colors[colorKey][shadeKey] : theme.colors[colorKey];
+
+  const stroke = outline ? resolvedColor : 'none';
+  const fill = outline ? 'none' : resolvedColor;
 
   return (
     <Svg

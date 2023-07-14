@@ -43,6 +43,11 @@ export { default as CloseIcon } from './svg/Close';
 export { default as LogoutIcon } from './svg/Logout';
 export { default as NextIcon } from './svg/Next';
 import EyeIcon from './svg/Eye';
+import Comment from './svg/reactions/Comment';
+import ThumbUp from './svg/reactions/Thumb-up';
+import ThumbDown from './svg/reactions/Thumb-down';
+import Share from './svg/reactions/Share';
+import EllipsisIcon from './svg/Ellipsis-h';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -64,4 +69,4 @@ const assets = {
 };
 export default assets;
 
-export { EyeIcon };
+export { EyeIcon, Comment, ThumbDown, ThumbUp, Share, EllipsisIcon };

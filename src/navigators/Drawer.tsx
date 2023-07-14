@@ -210,10 +210,13 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
             top: 50,
             left: 20,
             zIndex: 1,
+            backgroundColor: theme.colors.card,
+            borderRadius: 10,
+            padding: 5,
           }}
           onPress={() => toggleDrawer()}
         >
-          <RNIcon as={<MenuIcon />} outline color="onBackground" size={30} />
+          <RNIcon as={<MenuIcon />} outline color="onBackground" size={25} />
         </TouchableOpacity>
 
         {children}

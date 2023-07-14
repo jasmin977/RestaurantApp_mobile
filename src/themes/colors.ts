@@ -3,6 +3,10 @@ export const common = {
   white: '#fff',
 };
 
+interface IColorPalette {
+  [key: number]: string;
+}
+
 const amber = {
   50: '#fff8e1',
   100: '#ffecb3',
@@ -139,7 +143,7 @@ export const green = {
   A700: '#00c853',
 };
 
-const grey = {
+const grey: IColorPalette = {
   50: '#fafafa',
   100: '#f5f5f5',
   200: '#eeeeee',
@@ -150,10 +154,6 @@ const grey = {
   700: '#616161',
   800: '#424242',
   900: '#212121',
-  A100: '#f5f5f5',
-  A200: '#eeeeee',
-  A400: '#bdbdbd',
-  A700: '#616161',
 };
 
 const lightBlue = {
@@ -241,7 +241,7 @@ export const purple = {
   A700: '#aa00ff',
 };
 
-export const red = {
+export const red: IColorPalette = {
   50: '#ffebee',
   100: '#ffcdd2',
   200: '#ef9a9a',
@@ -252,10 +252,6 @@ export const red = {
   700: '#d32f2f',
   800: '#c62828',
   900: '#b71c1c',
-  A100: '#ff8a80',
-  A200: '#ff5252',
-  A400: '#ff1744',
-  A700: '#d50000',
 };
 
 export const yellow = {

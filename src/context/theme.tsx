@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, ReactNode } from 'react';
-import { darkPalette, lightPalette } from '../themes';
+import { COLORS, darkPalette, lightPalette } from '../themes';
 import { DefaultTheme } from '@react-navigation/native';
 
 interface IThemeCommonColor {
@@ -7,8 +7,12 @@ interface IThemeCommonColor {
   white: string;
 }
 
+interface IGreyPalette {
+  [key: number]: string;
+}
+
 interface IThemeColors {
-  [key: string]: string;
+  [key: string]: string | IGreyPalette;
   primary: string;
   onPrimary: string;
   background: string;
@@ -17,6 +21,7 @@ interface IThemeColors {
   onCard: string;
   black: string;
   white: string;
+  grey: IGreyPalette;
 }
 
 interface ITheme {
@@ -43,6 +48,7 @@ const ThemeContext = createContext<ThemeContextProps>({
       onCard: '',
       black: '',
       white: '',
+      grey: COLORS.grey,
     },
   },
   isDarkTheme: false,
@@ -69,6 +75,7 @@ const getTheme = (isDarkTheme: boolean): ITheme => {
       onCard: chosenTheme.onCard,
       black: chosenTheme.black,
       white: chosenTheme.white,
+      grey: COLORS.grey,
     },
   };
 };

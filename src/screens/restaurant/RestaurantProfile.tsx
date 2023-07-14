@@ -1,6 +1,6 @@
 import { styled } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import assets, {
   BackIcon,
   ClockIcon,
@@ -27,11 +27,13 @@ import {
   MenuSection,
   RatingStars,
   ReviewCard,
+  ReviewForm,
   StarPercentage,
 } from './components';
 import { ImageSourcePropType, View } from 'react-native';
 import { RESTAURANTS } from '../../data';
 import { StatusBar } from 'expo-status-bar';
+import BottomSheet, { BottomSheetRefProps } from '../../components/layout/BottomSheet';
 
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
 
@@ -69,6 +71,18 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const { theme, isDarkTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [restaurantObject, setRestaurantObj] = useState<Restaurant>();
+  {
+    /** review model */
+  }
+  const ref = useRef<BottomSheetRefProps>(null);
+  const onPress = useCallback(() => {
+    const isActive = ref?.current?.isActive();
+    if (isActive) {
+      ref?.current?.scrollTo(0);
+    } else {
+      ref?.current?.scrollTo(-200);
+    }
+  }, []);
 
   const getRestaurantById = (id: number): Restaurant | undefined => {
     const restaurant = RESTAURANTS.find(restaurant => {
@@ -222,6 +236,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           <Box h={200}></Box>
         </StyledScrollView>
       </AnimatdeHeader>
+
       <Box
         spacing={{ p: 10 }}
         bg="background"
@@ -233,12 +248,11 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           right: 0,
         }}
       >
-        <RNButton
-          onPress={() => navigation.push('AddReview')}
-          style={{ width: '100%' }}
-          title="Leave a review"
-        />
+        <RNButton onPress={onPress} style={{ width: '100%' }} title="Leave a review" />
       </Box>
+      <BottomSheet ref={ref}>
+        <ReviewForm />
+      </BottomSheet>
     </View>
   );
 };

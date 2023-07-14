@@ -1,14 +1,26 @@
-import { View, Animated, StyleSheet } from 'react-native';
+import { View, Animated, StyleSheet, Image } from 'react-native';
 import React, { useRef, useState, ReactNode } from 'react';
 
 import { SafeAreaView, NativeScrollEvent, FlatList, StatusBar } from 'react-native';
 
 import { useAuth, useTheme } from '../../context';
 import { RESTAURANTS } from '../../data';
-import { RestaurantItem } from '../common';
+import { RestaurantItem, ReviewCard } from '../common';
 import { Box, RNButton, RNIcon, RNText } from '../themed';
-import { FilterIcon, MenuIcon, SearchIcon } from '../../assets';
+import {
+  AVATAR,
+  Comment,
+  FilterIcon,
+  MenuIcon,
+  SearchIcon,
+  Share,
+  ThumbDown,
+  ThumbUp,
+  vegyBurger,
+} from '../../assets';
 import Carousel from './Carousel';
+import { RatingStars } from '../../screens/restaurant/components';
+import FoodCategories from '../../screens/App/componnets/CategoriesList';
 
 const { diffClamp } = Animated;
 const headerHeight = 68 * 2;
@@ -27,6 +39,7 @@ const AnimatedHeader = <T,>({
   data,
 }: AnimatedHeaderProps<T>) => {
   const { user } = useAuth();
+  const { theme } = useTheme();
 
   const refList = useRef<FlatList<any> | null>(null);
   const scrollY = useRef(new Animated.Value(0));
@@ -78,6 +91,7 @@ const AnimatedHeader = <T,>({
     }
   };
 
+  const Categories = [];
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.header, { transform: [{ translateY }] }]}>
@@ -128,13 +142,18 @@ const AnimatedHeader = <T,>({
         style={{ flex: 1 }}
         scrollEventThrottle={16}
         contentContainerStyle={{ paddingTop: headerHeight, gap: 20 }}
-        ListHeaderComponent={<Carousel data={RESTAURANTS} />}
+        ListHeaderComponent={
+          <View>
+            <FoodCategories />
+            <Carousel data={RESTAURANTS} />
+          </View>
+        }
         // ListHeaderComponent={ListHeaderComponent as React.ReactElement<any>}
         onScroll={handleScroll}
         ref={refList}
         onMomentumScrollEnd={handleSnap}
         data={RESTAURANTS}
-        renderItem={({ item }) => <RestaurantItem key={`key_${item.id}_ `} {...item} />}
+        renderItem={({ item }) => <ReviewCard key={`key_${item.id}_ `} {...item} />}
         keyExtractor={(_, index) => `list-item-${index}`}
       />
     </SafeAreaView>

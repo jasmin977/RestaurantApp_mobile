@@ -1,28 +1,29 @@
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import React, { useState } from 'react';
 import { useTheme } from '../../../context';
 import { Box, RNButton, RNInput, RNText } from '../../../components/themed';
 import RateOption from './RateOption';
-
-interface StarPercentage {
-  star: number;
-  percentage: number;
-}
 
 const ReviewForm = () => {
   const { theme } = useTheme();
   const [rating, setRating] = useState(0);
 
   return (
-    <Box alignItems="flex-start" gap={20} spacing={{ px: 10 }}>
+    <Box flex={1} alignItems="flex-start" justifyContent="flex-start" gap={20} spacing={{ p: 20 }}>
       <Box alignItems="flex-start">
         <RNText variant="subtitle">What's your rate?</RNText>
         <RateOption rating={rating} setRating={setRating} />
       </Box>
-
       <Box alignItems="flex-start" w={'100%'} gap={8}>
         <RNText variant="subtitle">Your comment</RNText>
-        <Box spacing={{ p: 10 }} bg="background" rounded={8} w={'100%'} alignItems="flex-start">
+        <Box spacing={{ p: 10 }} bg="card" rounded={8} w={'100%'} alignItems="flex-start">
           <KeyboardAvoidingView
             keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -200}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -40,16 +41,33 @@ const ReviewForm = () => {
       <Box alignItems="flex-start" w={'100%'} gap={8}>
         <RNText variant="subtitle">Upload Photos</RNText>
         <Box
-          bg="background"
+          bg="card"
           rounded={8}
           w={100}
           h={100}
           onPress={() => console.log('img')}
-          style={{ borderWidth: 1, borderColor: theme.colors.background, borderStyle: 'dashed' }}
+          style={{
+            borderWidth: 1,
+            borderColor: theme.colors.card,
+            borderStyle: 'dashed',
+          }}
         ></Box>
       </Box>
 
-      <RNButton title="submit review" style={{ width: '100%' }} />
+      <Box
+        flex={1}
+        spacing={{ py: 10, px: 10 }}
+        bg="background"
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          zIndex: 1,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <RNButton style={{ width: '100%' }} title="submit review" />
+      </Box>
     </Box>
   );
 };

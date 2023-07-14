@@ -1,4 +1,4 @@
-import { Animated, FlatList, TouchableOpacity, View } from 'react-native';
+import { Animated, FlatList, TouchableOpacity, View, Image } from 'react-native';
 
 import React from 'react';
 import { Restaurant } from '../../entities';
@@ -6,7 +6,7 @@ import { Box, RNIcon, RNText } from '../themed';
 import { styled } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Review } from '../common';
-import { LikeIcon } from '../../assets';
+import { AVATAR, LikeIcon } from '../../assets';
 import { RootNavigationProps } from '../../navigators/ROUTES';
 import { useNavigation } from '@react-navigation/native';
 
@@ -84,11 +84,19 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
             }}
             colors={['transparent', 'black']}
           >
-            <Box alignItems="flex-start" gap={10} spacing={{ pt: 20 }}>
-              <RNText color="white" variant="h2">
+            <Box alignItems="flex-start" gap={10} spacing={{ py: 20 }}>
+              <RNText color="white" variant="h3">
                 {item.name}
               </RNText>
-              <RNText color="white">{item.location}</RNText>
+              <RNText color="white">Friends were here</RNText>
+              <Box direction="horizontal" gap={5}>
+                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
+                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
+                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
+                <Box w={35} h={35} rounded={50} bg="card" spacing={{ p: 5 }}>
+                  <RNText variant="caption">15+</RNText>
+                </Box>
+              </Box>
             </Box>
           </LinearGradient>
         </RestoImageBackground>
@@ -107,7 +115,7 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
         <RNText color="onBackground" variant="h5">
           Best Restaurants
         </RNText>
-        <RNText color="primary" variant="caption">
+        <RNText color="primary" variant="caption" style={{ fontWeight: 'bold' }}>
           View All
         </RNText>
       </Box>

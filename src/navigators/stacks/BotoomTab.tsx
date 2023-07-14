@@ -37,11 +37,9 @@ const TabStack: FunctionComponent = () => {
           tabBarShowLabel: false,
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: theme.colors.background,
-            height: 90,
+            backgroundColor: theme.colors.card,
+            height: 80,
           },
-          tabBarInactiveTintColor: theme.colors.primary,
-          tabBarActiveTintColor: theme.colors.primary,
         }}
       >
         <Tab.Screen
@@ -49,7 +47,7 @@ const TabStack: FunctionComponent = () => {
           component={HomeScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <RNIcon outline={!focused} color="onBackground" as={<HomeIcon outline={focused} />} />
+              <RNIcon color={focused ? 'primary' : 'grey.400'} as={<HomeIcon />} />
             ),
           }}
         />
@@ -62,9 +60,8 @@ const TabStack: FunctionComponent = () => {
 
             tabBarIcon: ({ focused }) => (
               <RNIcon
-                outline={!focused}
-                color="onBackground"
-                as={<LocationIcon outline={!focused} />}
+                color={focused ? 'primary' : 'grey.400'}
+                as={<LocationIcon outline={false} />}
               />
             ),
           }}
@@ -85,7 +82,7 @@ const TabStack: FunctionComponent = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <RNIcon outline={!focused} color="onBackground" as={<SaveIcon />} />
+              <RNIcon color={focused ? 'primary' : 'grey.400'} as={<SaveIcon />} />
             ),
           }}
         />
@@ -95,7 +92,7 @@ const TabStack: FunctionComponent = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <RNIcon outline={!focused} color="onBackground" as={<NotifIcon />} />
+              <RNIcon color={focused ? 'primary' : 'grey.400'} as={<NotifIcon />} />
             ),
           }}
         />
