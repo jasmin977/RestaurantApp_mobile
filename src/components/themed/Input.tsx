@@ -8,16 +8,18 @@ import Box from './Box';
 import ICON from './Icon';
 import Text from './Text';
 import { lightPalette } from '../../themes';
+import { RNText } from '.';
 
 interface RNTextInputProps {
   value?: string;
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  placeholder: string;
+  placeholder?: string;
   variant?: 'outline' | 'filled';
   type?: string;
   size?: string;
+  label?: string;
   color?: keyof typeof lightPalette;
   textColor?: string;
   errorText?: string;
@@ -26,10 +28,11 @@ interface RNTextInputProps {
 
 const RNTextInput: React.FC<RNTextInputProps> = ({
   value,
+  label,
   onChangeText,
   leftIcon,
   rightIcon,
-  placeholder,
+  placeholder = 'type here..',
   variant = 'filled',
   type = 'text',
   size,
@@ -47,6 +50,11 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   const inputStyle = [styles.input, { fontSize: size, color: theme.colors.onCard }];
   return (
     <Box gap={5} alignItems="flex-start">
+      {label && (
+        <RNText variant="subtitle" style={{ fontSize: 14 }}>
+          {label}
+        </RNText>
+      )}
       <View style={[inputContainerStyle, { backgroundColor: theme.colors.card }]}>
         {leftIcon && <View style={styles.iconContainer}>{leftIcon}</View>}
         <TextInput

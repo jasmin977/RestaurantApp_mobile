@@ -11,7 +11,7 @@ import {
   TabStack,
 } from './stacks';
 
-import { LikedRestaurantsScreen, ProfileScreen, SettingsScreen } from '../screens';
+import { EditProfile, LikedRestaurantsScreen, ProfileScreen, SettingsScreen } from '../screens';
 
 export type RootStackParamList = {
   TabStack: NavigatorScreenParams<RootBottomStackParamList>;
@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Settings: undefined;
   LikedRestaurants: undefined;
   Profile: undefined;
+  EditProfile: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -60,6 +61,14 @@ const RootStack: FunctionComponent = () => {
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
           headerShown: false,

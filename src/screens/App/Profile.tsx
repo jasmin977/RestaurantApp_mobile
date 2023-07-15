@@ -35,6 +35,7 @@ const Profile = ({ navigation }: Props) => {
           <RNButton
             color="secondary"
             size="sm"
+            onPress={() => navigation.navigate('EditProfile')}
             centerIcon={<RNIcon color="onCard" as={<EditIcon />} />}
           />
         </Box>

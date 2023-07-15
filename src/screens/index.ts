@@ -9,6 +9,7 @@ import ScanQRScreen from './scan/scanQRcontainer';
 import HomeScreen from './App/Home';
 import NotificationsScreen from './App/Notifications';
 import ProfileScreen from './App/Profile';
+import EditProfile from './App/EditProfile';
 import SettingsScreen from './App/Settings';
 
 import LoaderScreen from './Loader';
@@ -37,4 +38,5 @@ export {
   AddReviewScreen,
   LoginScreen,
   RegisterScreen,
+  EditProfile,
 };
