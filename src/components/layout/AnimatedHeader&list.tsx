@@ -100,7 +100,7 @@ const AnimatedHeader = ({ navigation }: RootNavigationProps) => {
 
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => rootNavigation.push('Profile')}
+                  onPress={() => rootNavigation.navigate('Profile')}
                 >
                   <Image source={AVATAR} style={{ width: 45, height: 45, borderRadius: 12 }} />
                 </TouchableOpacity>

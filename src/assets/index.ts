@@ -49,6 +49,13 @@ import ThumbDown from './svg/reactions/Thumb-down';
 import Share from './svg/reactions/Share';
 import EllipsisIcon from './svg/Ellipsis-h';
 import EditIcon from './svg/Edit';
+import MoonIcon from './svg/settings/Moon';
+import GlobeIcon from './svg/settings/Globe';
+import ChevronRightIcon from './svg/settings/Chevron';
+import PaymentIcon from './svg/settings/Payment';
+import BlockIcon from './svg/settings/Block';
+import UserIcon from './svg/settings/User';
+import ShieldCheckIcon from './svg/settings/Shield-check';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -70,4 +77,19 @@ const assets = {
 };
 export default assets;
 
-export { EyeIcon, Comment, ThumbDown, ThumbUp, Share, EllipsisIcon, EditIcon };
+export {
+  EyeIcon,
+  Comment,
+  ThumbDown,
+  ThumbUp,
+  Share,
+  EllipsisIcon,
+  EditIcon,
+  MoonIcon,
+  GlobeIcon,
+  ChevronRightIcon,
+  PaymentIcon,
+  BlockIcon,
+  UserIcon,
+  ShieldCheckIcon,
+};

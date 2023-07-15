@@ -47,7 +47,7 @@ const Typography = {
   caption: {
     fontFamily: Fonts.regular,
     fontSize: FontSizes.xs,
-    lineHeight: 16,
+    // lineHeight: 16,
     letterSpacing: 0.4,
   },
 };
