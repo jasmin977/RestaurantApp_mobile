@@ -49,7 +49,7 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
     {
       paddingVertical: SIZES[size],
       paddingHorizontal: SIZES[size],
-      backgroundColor: variant === 'solid' ? theme.colors[color] : theme.colors.background,
+      backgroundColor: variant === 'solid' ? theme.colors[color] : 'transparent',
       borderWidth: variant === 'outline' ? 1 : 0,
       borderColor: theme.colors[color],
       opacity: disabled ? 0.6 : 1,

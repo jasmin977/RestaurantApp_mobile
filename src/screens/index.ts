@@ -15,7 +15,7 @@ import SettingsScreen from './App/Settings';
 import LoaderScreen from './Loader';
 
 import MapScreen from './Map/Map';
-import IntroductionScreen from './Auth/IntroductionScreens';
+import OnboardingScreen from './Auth/OnboardingScreen';
 import AddReviewScreen from './restaurant/AddReview';
 
 import LoginScreen from './Auth/Login';
@@ -34,7 +34,7 @@ export {
   NotificationsScreen,
   MapScreen,
   ProfileScreen,
-  IntroductionScreen,
+  OnboardingScreen,
   AddReviewScreen,
   LoginScreen,
   RegisterScreen,
