@@ -1,29 +1,22 @@
-import { View, Animated, StyleSheet, Image } from 'react-native';
+import { View, Animated, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React, { useRef, useState, ReactNode } from 'react';
 
 import { SafeAreaView, NativeScrollEvent, FlatList, StatusBar } from 'react-native';
 
 import { useAuth, useTheme } from '../../context';
 import { RESTAURANTS } from '../../data';
-import { RestaurantItem, ReviewCard } from '../common';
+
 import { Box, RNButton, RNIcon, RNText } from '../themed';
-import {
-  AVATAR,
-  Comment,
-  FilterIcon,
-  MenuIcon,
-  SearchIcon,
-  Share,
-  ThumbDown,
-  ThumbUp,
-  vegyBurger,
-} from '../../assets';
+import { AVATAR, FilterIcon, SearchIcon } from '../../assets';
 import Carousel from './Carousel';
-import { RatingStars } from '../../screens/restaurant/components';
+
 import FoodCategories from '../../screens/App/componnets/CategoriesList';
+import ReviewCard from '../../screens/App/componnets/ReviewCard';
+import { RootNavigationProps } from '../../navigators/ROUTES';
+import { useNavigation } from '@react-navigation/native';
 
 const { diffClamp } = Animated;
-const headerHeight = 68 * 2;
+const headerHeight = 110 * 2;
 
 interface AnimatedHeaderProps<T> {
   header?: ReactNode;
@@ -32,12 +25,7 @@ interface AnimatedHeaderProps<T> {
   renderItem?: ReactNode;
 }
 
-const AnimatedHeader = <T,>({
-  header,
-  ListHeaderComponent,
-  renderItem,
-  data,
-}: AnimatedHeaderProps<T>) => {
+const AnimatedHeader = ({ navigation }: RootNavigationProps) => {
   const { user } = useAuth();
   const { theme } = useTheme();
 
@@ -54,7 +42,7 @@ const AnimatedHeader = <T,>({
 
   const translateY = scrollYClamped.interpolate({
     inputRange: [0, headerHeight],
-    outputRange: [0, -(headerHeight / 2)],
+    outputRange: [0, -(headerHeight / 1.35)],
   });
 
   translateY.addListener(({ value }) => {
@@ -90,8 +78,7 @@ const AnimatedHeader = <T,>({
       }
     }
   };
-
-  const Categories = [];
+  const rootNavigation = useNavigation<RootNavigationProps['navigation']>();
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.header, { transform: [{ translateY }] }]}>
@@ -103,17 +90,40 @@ const AnimatedHeader = <T,>({
           ]}
         >
           <Box bg="background">
-            <Animated.View style={[styles.topHeader, { opacity: translateOpacity }]}>
-              <RNIcon outline size={30} as={<MenuIcon />} />
-              <Box alignItems="flex-start" spacing={{ pt: 20 }}>
+            <Animated.View style={[{ opacity: translateOpacity }]}>
+              <Box
+                direction="horizontal"
+                justifyContent="space-between"
+                spacing={{ pt: StatusBar.currentHeight }}
+              >
+                <RNText>{}</RNText>
+
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => rootNavigation.push('Profile')}
+                >
+                  <Image source={AVATAR} style={{ width: 45, height: 45, borderRadius: 12 }} />
+                </TouchableOpacity>
+              </Box>
+
+              <Box spacing={{ py: 15 }}>
                 <RNText color="onBackground" variant="h4">
-                  Hey {user?.username}!👋
-                </RNText>
-                <RNText color="onBackground" variant="caption">
-                  Share your own experiences
+                  Discover{' '}
+                  <RNText color="onBackground" variant="subtitle">
+                    and
+                  </RNText>{' '}
+                  Review{' '}
+                  <RNText color="onBackground" variant="subtitle">
+                    the
+                  </RNText>{' '}
+                  Best Restaurants{' '}
+                  <RNText color="onBackground" variant="subtitle">
+                    Around You!
+                  </RNText>
                 </RNText>
               </Box>
             </Animated.View>
+
             <Box direction="horizontal" spacing={{ px: 20, py: 10 }} gap={10}>
               <Box
                 flex={1}
@@ -169,10 +179,13 @@ const styles = StyleSheet.create({
   },
   topHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     width: '100%',
     gap: 10,
+    paddingTop: StatusBar.currentHeight,
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: 'green',
   },
 
   container: {
