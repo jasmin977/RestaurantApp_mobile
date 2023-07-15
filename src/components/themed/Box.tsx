@@ -34,6 +34,7 @@ interface BoxProps {
     mr?: number | string;
   };
   style?: ViewStyle;
+  [key: string]: any; // Allow any additional props
 }
 
 const spacingStyles = (spacing?: BoxProps['spacing']): ViewStyle | undefined => {

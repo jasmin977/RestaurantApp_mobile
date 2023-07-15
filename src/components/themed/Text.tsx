@@ -22,6 +22,7 @@ interface ITextProps {
     ml?: number;
     mr?: number;
   };
+  [key: string]: any; // Allow any additional props
 }
 const spacingStyles = (spacing?: ITextProps['spacing']): TextStyle | undefined => {
   if (spacing) {
@@ -48,6 +49,7 @@ const Text: React.FC<ITextProps> = ({
   children,
   align,
   spacing,
+  ...restProps
 }) => {
   const { theme } = useTheme();
   const textStyles = StyleSheet.flatten([
@@ -58,7 +60,11 @@ const Text: React.FC<ITextProps> = ({
     style,
   ]);
 
-  return <RNText style={textStyles}>{children}</RNText>;
+  return (
+    <RNText style={textStyles} {...restProps}>
+      {children}
+    </RNText>
+  );
 };
 
 export default Text;
