@@ -6,9 +6,7 @@ import { AVATAR, BackIcon, EditIcon } from '../../assets';
 import { RootStackParamList } from '../../navigators/ROUTES';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '../../context';
-import { RESTAURANTS } from '../../data';
-import ReviewCard from './componnets/ReviewCard';
-import { Restaurant } from '../../entities';
+
 import { useRadioGroup } from '../../hooks';
 
 interface ProfileProps {}
@@ -21,7 +19,6 @@ const EditProfile = ({ navigation }: Props) => {
     defaultValue: 'Male',
     onChange: console.log,
   });
-
   return (
     <BackgoundContainer>
       <ScrollView stickyHeaderIndices={[0]}>
@@ -58,7 +55,7 @@ const EditProfile = ({ navigation }: Props) => {
                 elevation: 10,
               }}
             >
-              <RNIcon color="white" size={20} as={<EditIcon />} />
+              <RNIcon size={20} as={<EditIcon />} />
             </Box>
           </Box>
         </Box>

@@ -80,7 +80,7 @@ const getTheme = (isDarkTheme: boolean): ITheme => {
   };
 };
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(true);
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
   const toggleTheme = () => {
     setIsDarkTheme(prevTheme => !prevTheme);

@@ -7,12 +7,13 @@ import Box from './Box';
 
 import ICON from './Icon';
 import Text from './Text';
-import { lightPalette } from '../../themes';
+import { COLORS, lightPalette } from '../../themes';
 import { RNText } from '.';
 
 interface RNTextInputProps {
   value?: string;
   onChangeText?: (text: string) => void;
+  onBlur?: () => void;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   placeholder?: string;
@@ -22,7 +23,7 @@ interface RNTextInputProps {
   label?: string;
   color?: keyof typeof lightPalette;
   textColor?: string;
-  errorText?: string;
+  errorText?: undefined | string;
   keyBoardType?: 'default' | 'numeric' | 'email-address';
 }
 
@@ -30,6 +31,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   value,
   label,
   onChangeText,
+  onBlur,
   leftIcon,
   rightIcon,
   placeholder = 'type here..',
@@ -43,6 +45,10 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   ...restProps
 }) => {
   const { theme } = useTheme();
+  const [secureText, setSecureText] = useState<boolean>(true);
+  const toggleSecureTextEntry = () => {
+    setSecureText(!secureText);
+  };
 
   const inputContainerStyle =
     variant === 'outline' ? styles.outlineContainer : styles.filledContainer;
@@ -62,16 +68,17 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
           onChangeText={onChangeText}
           style={[inputBorderStyle, inputStyle]}
           placeholder={placeholder}
-          //   secureTextEntry={secureText}
-          placeholderTextColor={theme.colors.onCard}
+          // secureTextEntry={secureText}
+          placeholderTextColor={COLORS.grey[400]}
           keyboardType={keyBoardType}
+          onBlur={onBlur}
           {...restProps}
         />
-        {/*  {type === 'password' && (
+        {type === 'password' && (
           <TouchableOpacity style={styles.iconContainer} onPress={toggleSecureTextEntry}>
             <ICON color="onCard" as={<EyeIcon outline={!secureText} />} />
           </TouchableOpacity>
-        )} */}
+        )}
         {rightIcon && <View style={styles.iconContainer}>{rightIcon}</View>}
       </View>
       {errorText && (

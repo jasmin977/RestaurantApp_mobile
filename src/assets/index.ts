@@ -56,6 +56,7 @@ import PaymentIcon from './svg/settings/Payment';
 import BlockIcon from './svg/settings/Block';
 import UserIcon from './svg/settings/User';
 import ShieldCheckIcon from './svg/settings/Shield-check';
+import EmailIcon from './svg/settings/Email';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -92,4 +93,5 @@ export {
   BlockIcon,
   UserIcon,
   ShieldCheckIcon,
+  EmailIcon,
 };

@@ -10,8 +10,8 @@ interface LoaderProps {}
 
 const LoaderScreen: FunctionComponent<LoaderProps> = () => {
   return (
-    <Box style={{ backgroundColor: '#202128' }} flex={1}>
-      <StatusBar style="light" />
+    <Box style={{ backgroundColor: '#F6F6F6' }} flex={1}>
+      <StatusBar style="dark" />
       <Image source={LoaderGif} style={{ width: 250, height: 250 }} />
     </Box>
   );

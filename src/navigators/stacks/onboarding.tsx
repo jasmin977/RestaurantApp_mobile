@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 import { TransitionPresets, createStackNavigator } from '@react-navigation/stack';
 
-import { IntroductionScreen } from '../../screens';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { OnboardingScreen } from '../../screens';
 
 export type onBoardingStackParamList = {
   IntroductionScreen: undefined;
@@ -19,7 +19,7 @@ const OnBoardingStack: FunctionComponent = () => {
           headerShown: false,
         }}
         name="IntroductionScreen"
-        component={IntroductionScreen}
+        component={OnboardingScreen}
       />
     </Stack.Navigator>
   );
