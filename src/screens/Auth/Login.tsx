@@ -1,71 +1,121 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import { Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '../../context';
 import { BackgoundContainer } from '../../components/common';
-import { Box, RNButton, RNInput, RNText } from '../../components/themed';
+import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../context';
-import { passwordValidator, usernameValidator } from '../../helpers/validators';
 import { AuthStackProps } from '../../navigators/stacks';
-
+import { UserIcon } from '../../assets';
+type FormData = {
+  username: string;
+  password: string;
+};
 const LoginScreen = ({ navigation }: AuthStackProps) => {
   const { login } = useAuth();
-  const { isDarkTheme } = useTheme();
-  const [username, setUsername] = useState({ value: 'yasmin', error: '' });
-  const [password, setPassword] = useState({ value: '123456', error: '' });
+  const { isDarkTheme, theme } = useTheme();
 
-  const [secureText, setSecureText] = useState<boolean>();
-  const toggleSecureTextEntry = () => {
-    setSecureText(!secureText);
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
 
-  const handleLogin = () => {
-    const usernameError = usernameValidator(username.value);
-    const passwordError = passwordValidator(password.value);
-    if (usernameError || passwordError) {
-      setUsername({ ...username, error: usernameError });
-      setPassword({ ...password, error: passwordError });
+  console.log('hey');
 
-      return;
-    }
-
-    login(username.value, password.value);
+  const handleLogin = (data: FormData) => {
+    login(data.username, data.password);
+    console.log(data.username, data.password);
   };
 
   return (
     <BackgoundContainer>
-      <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
-      <Box h={50} />
-      <Box gap={20} spacing={{ px: 50 }}>
-        <RNText variant="h2">Hello Again!</RNText>
-        <RNText align="center" variant="subtitle">
-          Welcome back you've been missed!
-        </RNText>
-      </Box>
-      <Box h={50} />
-      <Box gap={20} alignItems="flex-end" w={'100%'} spacing={{ px: 20 }}>
-        <RNInput
-          placeholder="Username"
-          errorText={username.error}
-          onChangeText={text => setUsername({ value: text, error: '' })}
+      <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+        <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
+        <Box gap={20} spacing={{ px: 50, py: 10 }}>
+          <Image
+            source={require('../../assets/LOGO.png')}
+            style={{
+              width: 100,
+              height: 100,
+            }}
+            resizeMode="contain"
+          />
+
+          <RNText variant="h2">Hello Again!</RNText>
+          <RNText align="center" variant="subtitle">
+            Welcome back you've been missed!
+          </RNText>
+        </Box>
+        <Box gap={20} alignItems="flex-end" w={'100%'} spacing={{ px: 20 }}>
+          <Controller
+            control={control}
+            rules={{
+              required: "Username can't be empty.",
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <RNInput
+                label="Username"
+                placeholder="flen"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                errorText={errors.username?.message}
+                rightIcon={<RNIcon color="grey.400" as={<UserIcon />} />}
+              />
+            )}
+            name="username"
+          />
+
+          <Controller
+            control={control}
+            rules={{
+              required: "Password can't be empty.",
+              maxLength: {
+                value: 10,
+                message: 'Password should not exceed 10 characters.',
+              },
+              minLength: {
+                value: 5,
+                message: 'Password must be at least 5 characters long.',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <RNInput
+                label="Password"
+                value={value}
+                placeholder="********"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                errorText={errors.password?.message}
+                type="password"
+              />
+            )}
+            name="password"
+          />
+
+          <TouchableOpacity>
+            <RNText variant="caption" color="primary">
+              Forget Password?
+            </RNText>
+          </TouchableOpacity>
+        </Box>
+      </ScrollView>
+      <Box spacing={{ px: 20 }} w={'100%'} gap={30} style={{ position: 'absolute', bottom: 50 }}>
+        <RNButton
+          style={{ width: '100%', shadowColor: theme.colors.primary, elevation: 20 }}
+          title="Sign in"
+          onPress={handleSubmit(handleLogin)}
         />
 
-        <RNInput
-          value={password.value}
-          placeholder="Password"
-          onChangeText={text => setPassword({ value: text, error: '' })}
-          errorText={password.error}
-          type="password"
-        />
-        <TouchableOpacity>
-          <RNText variant="caption">Recovery password</RNText>
-        </TouchableOpacity>
-      </Box>
-      <Box spacing={{ px: 20 }} w={'100%'} gap={10} style={{ position: 'absolute', bottom: 50 }}>
-        <RNButton style={{ width: '100%' }} title="Sign in" onPress={handleLogin} />
-
-        <Box direction="horizontal" gap={5}>
+        <Box direction="horizontal" alignItems="baseline" gap={5}>
           <RNText variant="caption">Not a member?</RNText>
           <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
             <RNText color="primary" style={{ fontWeight: 'bold' }} variant="caption">
@@ -74,6 +124,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
           </TouchableOpacity>
         </Box>
       </Box>
+      <Box h={50} />
     </BackgoundContainer>
   );
 };
