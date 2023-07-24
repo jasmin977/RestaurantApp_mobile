@@ -1,8 +1,8 @@
-export interface Meal {
+interface Meal {
   name: string;
   description?: string;
   price?: number;
   rating: number;
-  img: ImageSourcePropType;
+  img: string;
 }
 export default Meal;

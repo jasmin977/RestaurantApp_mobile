@@ -1,13 +1,15 @@
-import { MenuCategory } from "./MenuCategory";
+import { MenuCategory } from './MenuCategory';
+import Coords from './coordinate';
 
-export interface Restaurant {
+interface Restaurant {
   id: number;
   name: string;
   location: string;
-  img: ImageSourcePropType;
+  img: string;
   rating: number;
   description: string;
   workingTime: string;
   menu: MenuCategory[];
+  coordinate: Coords;
 }
 export default Restaurant;
