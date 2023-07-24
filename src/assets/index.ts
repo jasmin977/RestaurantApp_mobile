@@ -57,6 +57,9 @@ import BlockIcon from './svg/settings/Block';
 import UserIcon from './svg/settings/User';
 import ShieldCheckIcon from './svg/settings/Shield-check';
 import EmailIcon from './svg/settings/Email';
+import PhoneIcon from './svg/settings/Phone';
+import CameraIcon from './svg/review/Camera';
+import DirectionIcon from './svg/Direction';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -74,6 +77,7 @@ const assets = {
     Review: require('./JSON/review.json'),
     ScannigMenu: require('./JSON/scanningMenu.json'),
     Map: require('./JSON/mapViewer.json'),
+    MapMarker: require('./JSON/mapMarker.json'),
   },
 };
 export default assets;
@@ -94,4 +98,7 @@ export {
   UserIcon,
   ShieldCheckIcon,
   EmailIcon,
+  PhoneIcon,
+  CameraIcon,
+  DirectionIcon,
 };
