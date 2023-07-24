@@ -1,26 +1,23 @@
 import { styled } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import assets, {
   BackIcon,
   ClockIcon,
-  LikeIcon,
   LocationIcon,
   NextIcon,
-  RESTAURANT,
+  UserIcon,
   peperoniPizza,
+  rest_4,
 } from '../../assets';
 
-import { BackgoundContainer, Review } from '../../components/common';
-import { AnimatdeHeader, RestaurantDetails } from '../../components/layout';
+import { BackButton, BackgoundContainer, Review } from '../../components/common';
+import { AnimatdeHeader } from '../../components/layout';
 import { useTheme } from '../../context';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 
-import { Restaurant } from '../../entities';
-import LoaderScreen from '../Loader';
 import { RestaurantStackParamList } from '../../navigators/stacks';
-import LottieView from 'lottie-react-native';
-import CenteredContainer from '../../components/common/containers/Centered';
+
 import {
   LikeButton,
   LocationMap,
@@ -31,10 +28,12 @@ import {
   StarPercentage,
 } from './components';
 import { ImageSourcePropType, View } from 'react-native';
-import { RESTAURANTS } from '../../data';
-import { StatusBar } from 'expo-status-bar';
-import BottomSheet, { BottomSheetRefProps } from '../../components/layout/BottomSheet';
 
+import BottomSheet from '@gorhom/bottom-sheet';
+import { RestaurantService } from '../../service';
+
+import CenteredContainer from '../../components/common/containers/Centered';
+import LottieView from 'lottie-react-native';
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
 
 const reviewData = [
@@ -68,59 +67,49 @@ interface ReviewCardProps {
 
 const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const { id } = route.params;
+  const { data, isLoading, error } = RestaurantService.useFetchRestaurantByID(id);
+
   const { theme, isDarkTheme } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
-  const [restaurantObject, setRestaurantObj] = useState<Restaurant>();
-  {
-    /** review model */
-  }
-  const ref = useRef<BottomSheetRefProps>(null);
-  const onPress = useCallback(() => {
-    const isActive = ref?.current?.isActive();
-    if (isActive) {
-      ref?.current?.scrollTo(0);
-    } else {
-      ref?.current?.scrollTo(-200);
-    }
+
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['1%', '90%'], []);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+  const handleSnapPress = useCallback((index: number) => {
+    bottomSheetRef.current?.snapToIndex(index);
   }, []);
 
-  const getRestaurantById = (id: number): Restaurant | undefined => {
-    const restaurant = RESTAURANTS.find(restaurant => {
-      return restaurant.id == id;
-    });
-
-    setRestaurantObj(restaurant);
-    return restaurant;
-  };
-
-  useEffect(() => {
-    const fetchRestaurant = () => {
-      getRestaurantById(id);
-
-      setIsLoading(false);
-    };
-
-    fetchRestaurant();
-  }, [id]);
   const StyledScrollView = styled.ScrollView`
     background-color: ${theme.colors.background};
     flex: 1;
   `;
-  const DetailsContainer = styled.View`
-    padding: 20px;
-    width: 100%;
-
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
-    gap: 25px;
-    background-color: ${theme.colors.background};
-  `;
 
   if (isLoading) {
-    return <LoaderScreen />;
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <RNText>loading..</RNText>
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
+  }
+  if (error) {
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <RNText>error..</RNText>
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
   }
 
-  if (!restaurantObject) {
+  if (!data.data) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
@@ -154,47 +143,46 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <AnimatdeHeader
-        backgroundImage={restaurantObject.img}
-        title={restaurantObject.name}
+        backgroundImage={data.data.img ? { uri: data.data.img } : rest_4}
+        title={data.data.name}
         rightIcon={<Box />}
-        leftIcon={
-          <RNButton
-            size="sm"
-            style={{
-              backgroundColor: 'rgba(0,0,0,0.2)',
-            }}
-            onPress={() => navigation.goBack()}
-            centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-          />
-        }
+        leftIcon={<BackButton onPress={() => navigation.goBack()} />}
       >
-        <StyledScrollView stickyHeaderIndices={[1, 6]}>
+        <StyledScrollView style={{ flex: 1 }}>
           {/** restaurant details */}
-          <DetailsContainer>
+          <Box
+            bg="background"
+            spacing={{ p: 20 }}
+            flex={1}
+            gap={25}
+            w={'100%'}
+            alignItems="flex-start"
+          >
             <Box flex={1} w={'100%'} direction="horizontal" justifyContent="space-between">
               <Box flex={1} alignItems="flex-start">
-                <RNText variant="h3">{restaurantObject.name}</RNText>
+                <RNText variant="h3">{data.data.name}</RNText>
                 <Box direction="horizontal" gap={5}>
-                  <LocationIcon />
-                  <RNText>{restaurantObject.location}</RNText>
+                  <RNIcon outline as={<LocationIcon />} />
+
+                  <RNText>{data.data.location}</RNText>
                 </Box>
               </Box>
               <LikeButton />
             </Box>
 
             <Box alignItems="flex-start" onPress={() => navigation.navigate('RestaurantReviews')}>
-              <Review rating={restaurantObject.rating} detailled size={20} />
+              <Review rating={data.data.rating} detailled size={20} />
             </Box>
             <Box direction="horizontal" gap={10}>
               <RNIcon as={<ClockIcon />} outline color="primary" />
 
               <RNText variant="h5">Opened Now</RNText>
-              <RNText>{restaurantObject.workingTime}</RNText>
+              <RNText>{data.data.workingTime}</RNText>
             </Box>
-            <RNText>{restaurantObject.description}</RNText>
+            <RNText>{data.data.description}</RNText>
 
-            <MenuSection menu={restaurantObject.menu} />
-          </DetailsContainer>
+            <MenuSection menu={data.data.menu} />
+          </Box>
           {/** rating */}
           <Box
             bg="background"
@@ -210,7 +198,8 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           <Box w={'90%'} rounded={10} bg="card" spacing={{ p: 20, mx: 20 }}>
             <RatingStars rating={4} />
           </Box>
-          <Box spacing={{ py: 20 }}>
+          <Box spacing={{ py: 20 }} direction="horizontal" gap={5}>
+            <RNIcon outline size={20} as={<UserIcon />} />
             <RNText variant="caption">25 user ratings</RNText>
           </Box>
           <StarPercentage />
@@ -232,7 +221,12 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
             <RNText variant="subtitle">Location</RNText>
             <RNIcon outline={true} color="onBackground" as={<NextIcon />} />
           </Box>
-          {/*  <LocationMap id={id} /> */}
+          <LocationMap id={id} />
+          <Box direction="horizontal" gap={5} spacing={{ py: 20 }}>
+            <RNIcon outline as={<LocationIcon />} />
+
+            <RNText>{data.data.location}</RNText>
+          </Box>
           <Box h={200}></Box>
         </StyledScrollView>
       </AnimatdeHeader>
@@ -243,14 +237,27 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
         style={{
           position: 'absolute',
           bottom: 0,
-          zIndex: 1,
+
           left: 0,
           right: 0,
         }}
       >
-        <RNButton onPress={onPress} style={{ width: '100%' }} title="Leave a review" />
+        <RNButton
+          onPress={() => handleSnapPress(1)}
+          style={{ width: '100%' }}
+          title="Leave a review"
+        />
       </Box>
-      <BottomSheet ref={ref}>
+
+      <BottomSheet
+        backgroundStyle={{ backgroundColor: theme.colors.card }}
+        enablePanDownToClose
+        enableOverDrag
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+      >
         <ReviewForm />
       </BottomSheet>
     </View>

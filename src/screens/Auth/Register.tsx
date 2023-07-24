@@ -9,23 +9,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../context';
 import { emailValidator, passwordValidator, usernameValidator } from '../../helpers/validators';
 import { AuthStackProps } from '../../navigators/stacks';
-import { EmailIcon, UserIcon } from '../../assets';
-
-type RegisterFormData = {
-  username: string;
-  password: string;
-  email: string;
-};
+import { EmailIcon, ShieldCheckIcon, UserIcon } from '../../assets';
+import { user } from '../../entities';
 
 const RegisterScreen = ({ navigation }: AuthStackProps) => {
-  const { login } = useAuth();
   const { isDarkTheme, theme } = useTheme();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormData>({
+  } = useForm<user>({
     defaultValues: {
       username: '',
       password: '',
@@ -33,7 +27,7 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
     },
   });
 
-  const handleRegister = (data: RegisterFormData) => {
+  const handleRegister = (data: user) => {
     console.log(data.username, data.password);
   };
 

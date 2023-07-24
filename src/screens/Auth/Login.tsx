@@ -9,30 +9,30 @@ import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../context';
 import { AuthStackProps } from '../../navigators/stacks';
 import { UserIcon } from '../../assets';
-type FormData = {
-  username: string;
-  password: string;
-};
+import { user } from '../../entities';
+import AuthenticationService from '../../service/Authentication';
+
 const LoginScreen = ({ navigation }: AuthStackProps) => {
-  const { login } = useAuth();
   const { isDarkTheme, theme } = useTheme();
+  const { onLogin, isLoading, error } = AuthenticationService.useLogin();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<user>({
     defaultValues: {
-      username: '',
-      password: '',
+      username: 'johnsmith',
+      password: 'pass123',
     },
   });
 
-  console.log('hey');
-
-  const handleLogin = (data: FormData) => {
-    login(data.username, data.password);
-    console.log(data.username, data.password);
+  const handleLogin = (data: user) => {
+    const loginData = {
+      username: data.username,
+      password: data.password,
+    };
+    onLogin(loginData);
   };
 
   return (
@@ -67,7 +67,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                errorText={errors.username?.message}
+                errorText={errors.username?.message || (error && 'wrong username')}
                 rightIcon={<RNIcon color="grey.400" as={<UserIcon />} />}
               />
             )}
@@ -94,7 +94,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
                 placeholder="********"
                 onBlur={onBlur}
                 onChangeText={onChange}
-                errorText={errors.password?.message}
+                errorText={errors.password?.message || (error && 'wrong password')}
                 type="password"
               />
             )}
@@ -112,6 +112,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
         <RNButton
           style={{ width: '100%', shadowColor: theme.colors.primary, elevation: 20 }}
           title="Sign in"
+          isLoading={isLoading}
           onPress={handleSubmit(handleLogin)}
         />
 

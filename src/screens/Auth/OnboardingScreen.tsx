@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { View, FlatList, Dimensions } from 'react-native';
+import { TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import assets, { BackIcon, ChevronRightIcon } from '../../assets';
 
-import { useAuth, useTheme } from '../../context';
+import { useAppState, useAuth, useTheme } from '../../context';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 
 import LottieView from 'lottie-react-native';
@@ -67,7 +67,7 @@ const RenderItem = ({ item }: { item: stepsProp }) => {
 const OnboardingScreen = () => {
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { markAppisInitialized } = useAuth();
+  const { markAppisInitialized } = useAppState();
 
   const handleNextStep = () => {
     if (currentIndex === 2) {
@@ -115,12 +115,22 @@ const OnboardingScreen = () => {
         />
       )}
       {currentIndex === 2 ? (
-        <RNButton
-          variant="solid"
-          onPress={handleSkipStep}
-          title="Get started"
-          style={{ marginBottom: 60, shadowColor: lightPalette.primary, elevation: 20 }}
-        />
+        <Box spacing={{ mb: 50, px: 20 }} w={'100%'} gap={10}>
+          <RNButton
+            variant="solid"
+            onPress={handleSkipStep}
+            title="Get started"
+            style={{ width: '100%', shadowColor: lightPalette.primary, elevation: 20 }}
+          />
+          <Box direction="horizontal" gap={5}>
+            <RNText variant="caption">Already have an account?</RNText>
+            <TouchableOpacity>
+              <RNText color="primary" style={{ fontWeight: 'bold' }} variant="caption">
+                Sign in
+              </RNText>
+            </TouchableOpacity>
+          </Box>
+        </Box>
       ) : (
         <Box direction="horizontal" justifyContent="space-around" w={'100%'} spacing={{ pb: 60 }}>
           <RNButton

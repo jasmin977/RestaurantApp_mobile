@@ -7,15 +7,18 @@ import { Restaurant } from '../../entities';
 import { RatingStars } from './components';
 import { BackIcon, LikeIcon, SaveIcon } from '../../assets';
 import { RootNavigationProps } from '../../navigators/ROUTES';
+import { RestaurantService } from '../../service';
 
 interface LikedRestaurantsProps {}
 
 const LikedRestaurants: FunctionComponent<RootNavigationProps> = ({ navigation }) => {
+  const { data: restaurantData, isLoading, error } = RestaurantService.useFetchRestaurants();
+
   const renderNotification = ({ item }: { item: Restaurant }) => (
     <Box bg="card" direction="horizontal" flex={1} gap={10} rounded={10} spacing={{ p: 10 }}>
       <Box direction="horizontal" flex={1}>
         <Image
-          source={item.img}
+          source={{ uri: item.img }}
           style={{ flex: 1, width: '100%', height: '100%', aspectRatio: 1, borderRadius: 10 }}
         />
       </Box>
@@ -39,7 +42,17 @@ const LikedRestaurants: FunctionComponent<RootNavigationProps> = ({ navigation }
       </Box>
     </Box>
   );
+  if (isLoading) {
+    <Box>
+      <RNText>Loading..</RNText>
+    </Box>;
+  }
 
+  if (error) {
+    <Box>
+      <RNText>error</RNText>
+    </Box>;
+  }
   return (
     <BackgoundContainer>
       <Box
@@ -68,7 +81,7 @@ const LikedRestaurants: FunctionComponent<RootNavigationProps> = ({ navigation }
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}
-        data={RESTAURANTS}
+        data={restaurantData.data}
         renderItem={renderNotification}
         keyExtractor={item => item.id.toString()}
       />

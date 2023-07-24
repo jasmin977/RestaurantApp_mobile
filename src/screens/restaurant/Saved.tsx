@@ -6,15 +6,17 @@ import { RESTAURANTS } from '../../data';
 import { Restaurant } from '../../entities';
 import { RatingStars } from './components';
 import { SaveIcon } from '../../assets';
+import { RestaurantService } from '../../service';
 
 interface SavedRestaurantsProps {}
 
 const SavedRestaurants: FunctionComponent<SavedRestaurantsProps> = () => {
+  const { data: restaurantData, isLoading, error } = RestaurantService.useFetchRestaurants();
   const renderNotification = ({ item }: { item: Restaurant }) => (
     <Box bg="card" direction="horizontal" flex={1} gap={10} rounded={10} spacing={{ p: 10 }}>
       <Box direction="horizontal" flex={1}>
         <Image
-          source={item.img}
+          source={{ uri: item.img }}
           style={{ flex: 1, width: '100%', height: '100%', aspectRatio: 1, borderRadius: 10 }}
         />
       </Box>
@@ -38,6 +40,21 @@ const SavedRestaurants: FunctionComponent<SavedRestaurantsProps> = () => {
       </Box>
     </Box>
   );
+  if (isLoading) {
+    return (
+      <Box>
+        <RNText>Loading..</RNText>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box>
+        <RNText>error</RNText>
+      </Box>
+    );
+  }
 
   return (
     <BackgoundContainer>
@@ -53,7 +70,7 @@ const SavedRestaurants: FunctionComponent<SavedRestaurantsProps> = () => {
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}
-        data={RESTAURANTS}
+        data={restaurantData.data}
         renderItem={renderNotification}
         keyExtractor={item => item.id.toString()}
       />
