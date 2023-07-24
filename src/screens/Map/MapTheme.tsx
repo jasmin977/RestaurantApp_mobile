@@ -1,6 +1,6 @@
-import { darkPalette } from '../../themes';
+import { darkPalette, lightPalette } from '../../themes';
 
-const mapStyle = [
+const darkStyle = [
   {
     elementType: 'geometry',
     stylers: [
@@ -36,4 +36,29 @@ const mapStyle = [
   },
 ];
 
-export default mapStyle;
+const lightStyle = [
+  {
+    elementType: 'geometry',
+    stylers: [{}],
+  },
+  {
+    elementType: 'labels.text.fill',
+    stylers: [
+      {
+        color: '#eb925e',
+      },
+    ],
+  },
+
+  {
+    featureType: 'administrative.locality',
+    elementType: 'labels.text.fill',
+    stylers: [
+      {
+        color: darkPalette.primary,
+      },
+    ],
+  },
+];
+
+export { darkStyle, lightStyle };
