@@ -14,7 +14,7 @@ export type AuthStackProps = NativeStackScreenProps<AuthStackParamList>;
 
 const AuthStack: FunctionComponent = () => {
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
+    <Stack.Navigator initialRouteName="RegisterScreen">
       <Stack.Screen
         options={{
           ...TransitionPresets.SlideFromRightIOS,
