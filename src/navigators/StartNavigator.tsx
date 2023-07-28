@@ -1,13 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { useAuth } from '../context';
+import { useAppState, useAuth } from '../context';
 import { View, ActivityIndicator } from 'react-native';
 import { useTheme } from '../context';
 import RootStack from './ROUTES';
 import { AuthStack, OnBoardingStack } from './stacks';
 
 const Root: FunctionComponent = props => {
-  const { user, isInitialized, isLoading } = useAuth();
+  const { user, isLoading } = useAuth();
+  console.log('🚀 ~ file: StartNavigator.tsx:11 ~ user:', user);
+  const { isInitialized } = useAppState();
+
   const { theme } = useTheme();
 
   if (isLoading) {
