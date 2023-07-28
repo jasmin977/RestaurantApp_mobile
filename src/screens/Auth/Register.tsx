@@ -11,9 +11,11 @@ import { emailValidator, passwordValidator, usernameValidator } from '../../help
 import { AuthStackProps } from '../../navigators/stacks';
 import { EmailIcon, ShieldCheckIcon, UserIcon } from '../../assets';
 import { user } from '../../entities';
+import AuthenticationService from '../../service/Authentication';
 
 const RegisterScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
+  const { onRegister, isLoading } = AuthenticationService.register();
 
   const {
     control,
@@ -28,7 +30,12 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
   });
 
   const handleRegister = (data: user) => {
-    console.log(data.username, data.password);
+    const registerData = {
+      username: data.username,
+      password: data.password,
+      email: data.email,
+    };
+    onRegister(registerData);
   };
 
   return (
@@ -116,6 +123,7 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
       </ScrollView>
       <Box spacing={{ px: 20 }} w={'100%'} gap={30} style={{ position: 'absolute', bottom: 50 }}>
         <RNButton
+          isLoading={isLoading}
           style={{ width: '100%', shadowColor: theme.colors.primary, elevation: 20 }}
           title="Sign in"
           onPress={handleSubmit(handleRegister)}
