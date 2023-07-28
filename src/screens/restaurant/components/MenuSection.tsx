@@ -56,7 +56,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   };
 
   return (
-    <View>
+    <>
       <FlatList
         data={[{ category: 'Most Popular' }, ...menu]}
         horizontal
@@ -82,7 +82,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
             />
           ))}
       </MenuItemsContainer>
-    </View>
+    </>
   );
 };
 
