@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image } from 'react-native';
-import { Box, RNButton, RNIcon } from '../../../../components/themed';
+import { Avatar, Box, RNButton, RNIcon } from '../../../../components/themed';
 import { AVATAR, MenuIcon } from '../../../../assets';
 import { RootNavigationProps } from '../../../../navigators/ROUTES';
 import { useAppState, useAuth } from '../../../../context';
@@ -24,10 +24,7 @@ const HeaderComponent = ({ rootNavigation }: HeaderComponentProps) => {
       <MenuButton />
       <Box />
       <TouchableOpacity activeOpacity={0.8} onPress={() => rootNavigation.navigate('Profile')}>
-        <Image
-          source={user?.profileImg ? { uri: user.profileImg } : AVATAR}
-          style={{ width: 45, height: 45, borderRadius: 12 }}
-        />
+        <Avatar src={user?.profileImg} size={45} />
       </TouchableOpacity>
     </Box>
   );

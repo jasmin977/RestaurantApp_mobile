@@ -2,7 +2,7 @@ import { View, Text, SectionList, Image } from 'react-native';
 import React from 'react';
 
 import { BackgoundContainer } from '../../components/common';
-import { Box, RNIcon, RNText } from '../../components/themed';
+import { Avatar, Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import { AVATAR, Comment, LikeIcon, ThumbDown, ThumbUp } from '../../assets';
 import { timeDifference } from '../../helpers';
 
@@ -193,15 +193,23 @@ const Notifications = () => {
   const renderNotification = ({ item }: { item: Notification }) => (
     <Box direction="horizontal" w={'100%'} gap={5} onPress={() => console.log('notif')}>
       <Box direction="horizontal" w={'20%'}>
-        <Image source={AVATAR} style={{ width: 50, height: 50, borderRadius: 50 }} />
-        <Box
-          bg="background"
-          spacing={{ p: 5 }}
-          rounded={50}
-          style={{ position: 'absolute', bottom: 0, right: 0, shadowColor: 'grey', elevation: 10 }}
-        >
-          {getIconByType(item.type)}
-        </Box>
+        <Avatar />
+        {getIconByType(item.type) && (
+          <Box
+            bg="background"
+            spacing={{ p: 5 }}
+            rounded={50}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              shadowColor: 'grey',
+              elevation: 10,
+            }}
+          >
+            {getIconByType(item.type)}
+          </Box>
+        )}
       </Box>
 
       <Box alignItems="flex-start" w={'80%'}>
@@ -228,6 +236,12 @@ const Notifications = () => {
   return (
     <BackgoundContainer>
       <Box spacing={{ py: 20 }}>
+        {/* <RNButton
+        size="sm"
+        color="card"
+        centerIcon={<RNIcon as={<MenuIcon />} outline color="onBackground" size={25} />}
+        onPress={() => setIsDrawerOpen(true)}
+      /> */}
         <RNText variant="subtitle" style={{ fontSize: 22 }}>
           Notification
         </RNText>

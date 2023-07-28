@@ -4,4 +4,6 @@ import RNButton from './Button';
 import RNIcon from './Icon';
 import RNText from './Text';
 import RNToast from './Toast';
-export { Box, RNButton, RNIcon, RNInput, RNText, RNToast };
+import Avatar from './Avatar';
+import AvatarGroup from './AvatarGroup';
+export { Box, RNButton, RNIcon, RNInput, RNText, RNToast, Avatar, AvatarGroup };

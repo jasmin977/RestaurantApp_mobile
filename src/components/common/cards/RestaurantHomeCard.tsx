@@ -63,7 +63,7 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
           ],
         }}
       >
-        <RestoImageBackground imageStyle={{ borderRadius: 20 }} source={item.img}>
+        <RestoImageBackground imageStyle={{ borderRadius: 20 }} source={{ uri: item.img }}>
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
             <Review
               rating={item.rating}
