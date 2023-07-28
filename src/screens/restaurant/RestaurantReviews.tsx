@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Image, ImageSourcePropType, Text, TouchableOpacity } from 'react-native';
-import { BackgoundContainer } from '../../components/common';
+import { BackButton, BackgoundContainer } from '../../components/common';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RestaurantStackParamList } from '../../navigators/stacks';
@@ -98,14 +98,7 @@ const RestaurantReviewsScreen = ({ route, navigation }: Props) => {
           justifyContent="space-between"
           //  style={{ position: 'absolute', top: 40 }}
         >
-          <RNButton
-            size="sm"
-            style={{
-              backgroundColor: 'rgba(0,0,0,0.2)',
-            }}
-            onPress={() => navigation.goBack()}
-            centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-          />
+          <BackButton onPress={() => navigation.goBack()} />
           <RNText variant="subtitle">Ratings&Reviews</RNText>
           <Box></Box>
         </Box>

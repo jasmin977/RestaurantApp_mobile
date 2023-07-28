@@ -1,5 +1,5 @@
 import { useTheme } from '../../context';
-import { BackgoundContainer, CenteredView } from '../../components/common';
+import { BackButton, BackgoundContainer, CenteredView } from '../../components/common';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import {
   BackIcon,
@@ -154,14 +154,7 @@ const Settings = ({ route, navigation }: RootNavigationProps) => {
         justifyContent="space-between"
         spacing={{ px: 20, py: 10 }}
       >
-        <RNButton
-          size="sm"
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.2)',
-          }}
-          onPress={() => navigation.goBack()}
-          centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-        />
+        <BackButton onPress={() => navigation.goBack()} />
         <RNText variant="subtitle" style={{ fontSize: 22 }}>
           Settings
         </RNText>

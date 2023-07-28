@@ -5,7 +5,7 @@ import MapView, { Marker, PROVIDER_GOOGLE, Geojson, Region } from 'react-native-
 import LottieView from 'lottie-react-native';
 import { RatingStars } from '../restaurant/components';
 import assets, { AVATAR, DirectionIcon } from '../../assets';
-import { CenteredView } from '../../components/common';
+import { CenteredView, MenuButton } from '../../components/common';
 import { darkStyle, lightStyle } from './MapTheme';
 import { Coords, Restaurant } from '../../entities';
 import { COLORS } from '../../themes';
@@ -49,6 +49,9 @@ const MapPresentation = ({
   mapRef,
 }: MapPresentationProps) => (
   <View style={{ flex: 1 }}>
+    <Box style={{ position: 'absolute', top: 40, left: 20, zIndex: 1 }}>
+      <MenuButton />
+    </Box>
     <Box gap={5} style={{ position: 'absolute', top: 40, right: 20, zIndex: 1 }}>
       <TouchableOpacity onPress={goToMyPosition}>
         <Image source={AVATAR} style={{ width: 50, height: 50, borderRadius: 10 }} />
