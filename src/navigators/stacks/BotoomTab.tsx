@@ -14,6 +14,7 @@ import { RNIcon } from '../../components/themed';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Drawer from '../Drawer';
+import { verticalScale } from '../../helpers';
 
 export type RootBottomStackParamList = {
   Feed: undefined;
@@ -38,7 +39,7 @@ const TabStack: FunctionComponent = () => {
           headerShown: false,
           tabBarStyle: {
             backgroundColor: theme.colors.card,
-            height: 80,
+            height: verticalScale(80),
           },
         }}
       >
@@ -57,7 +58,7 @@ const TabStack: FunctionComponent = () => {
           component={MapScreen}
           options={{
             headerShown: false,
-
+            tabBarStyle: { display: 'none' },
             tabBarIcon: ({ focused }) => (
               <RNIcon
                 color={focused ? 'primary' : 'grey.400'}

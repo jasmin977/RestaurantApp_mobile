@@ -8,14 +8,22 @@ import { RootNavigationProps } from '../../../../navigators/ROUTES';
 import { Restaurant } from '../../../../entities';
 import FoodCategories from './CategoriesList';
 
+import { useAuth } from '../../../../context';
+import { scale } from '../../../../helpers';
+
 interface ListHeaderComponentProps {
   rootNavigation: RootNavigationProps['navigation'];
   restaurantData: Restaurant[];
 }
 const ListHeaderComponent = ({ rootNavigation, restaurantData }: ListHeaderComponentProps) => {
+  const { user } = useAuth();
+
   return (
     <View>
       <Box alignItems="flex-start" spacing={{ py: 10, px: 20, pt: 30 }}>
+        <RNText variant="body" style={{ fontSize: scale(18) }}>
+          Hi {user?.username}
+        </RNText>
         <RNText color="onBackground" variant="h4">
           Discover{' '}
           <RNText color="onBackground" variant="subtitle">

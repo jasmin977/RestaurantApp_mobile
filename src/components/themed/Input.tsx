@@ -9,6 +9,7 @@ import ICON from './Icon';
 import Text from './Text';
 import { COLORS, lightPalette } from '../../themes';
 import { RNText } from '.';
+import { scale } from '../../helpers';
 
 interface RNTextInputProps {
   value?: string;
@@ -55,12 +56,8 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   const inputBorderStyle = variant === 'outline' ? styles.outlineInput : styles.filledInput;
   const inputStyle = [styles.input, { fontSize: size, color: theme.colors.onCard }];
   return (
-    <Box gap={5} alignItems="flex-start">
-      {label && (
-        <RNText variant="subtitle" style={{ fontSize: 14 }}>
-          {label}
-        </RNText>
-      )}
+    <Box gap={5} alignItems="flex-start" flex={1}>
+      {label && <RNText variant="subtitle">{label}</RNText>}
       <View style={[inputContainerStyle, { backgroundColor: theme.colors.card }]}>
         {leftIcon && <View style={styles.iconContainer}>{leftIcon}</View>}
         <TextInput
@@ -68,7 +65,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
           onChangeText={onChangeText}
           style={[inputBorderStyle, inputStyle]}
           placeholder={placeholder}
-          // secureTextEntry={secureText}
+          secureTextEntry={type === 'password' ? secureText : false}
           placeholderTextColor={COLORS.grey[400]}
           keyboardType={keyBoardType}
           onBlur={onBlur}
@@ -76,7 +73,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
         />
         {type === 'password' && (
           <TouchableOpacity style={styles.iconContainer} onPress={toggleSecureTextEntry}>
-            <ICON color="onCard" as={<EyeIcon outline={!secureText} />} />
+            <ICON color="grey.400" as={<EyeIcon outline={!secureText} />} />
           </TouchableOpacity>
         )}
         {rightIcon && <View style={styles.iconContainer}>{rightIcon}</View>}

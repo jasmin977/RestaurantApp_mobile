@@ -4,6 +4,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import Svg, { G, Path } from 'react-native-svg';
 import { COLORS, lightPalette } from '../../themes';
 import { useTheme } from '../../context';
+import { scale } from '../../helpers';
 
 interface SvgProps {
   as: ReactNode;
@@ -38,8 +39,8 @@ const ICON: FunctionComponent<SvgProps> = ({
       fill={fill}
       strokeWidth={1.5}
       stroke={stroke}
-      width={size}
-      height={size}
+      width={scale(size)}
+      height={scale(size)}
       viewBox="0 0 24 24"
     >
       {as}

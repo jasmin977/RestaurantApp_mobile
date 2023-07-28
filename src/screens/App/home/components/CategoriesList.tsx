@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import { Box, RNText } from '../../../components/themed';
-import { useTheme } from '../../../context';
+import { FlatList } from 'react-native';
+import { Box, RNText } from '../../../../components/themed';
+import { useTheme } from '../../../../context';
+import { moderateScale, scale } from '../../../../helpers';
 
 const categories = [
   { id: 1, name: 'Fast Food' },
@@ -40,7 +41,7 @@ const FoodCategories = () => {
     >
       <RNText
         variant="subtitle"
-        style={{ fontSize: 14 }}
+        style={{ fontSize: scale(14) }}
         color={selectedCategory && selectedCategory.id === item.id ? 'white' : 'onCard'}
       >
         {item.name}
@@ -51,7 +52,7 @@ const FoodCategories = () => {
   return (
     <Box>
       <FlatList
-        contentContainerStyle={{ gap: 10, paddingHorizontal: 20 }}
+        contentContainerStyle={{ gap: scale(10), paddingHorizontal: moderateScale(20) }}
         data={categories}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}

@@ -10,13 +10,15 @@ import {
 import { useTheme } from '../../context';
 import Text from './Text';
 import { SIZES } from '../../themes';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
+import { RNText } from '.';
 
 interface ThemedButtonProps {
   title?: string;
   centerIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'card';
   variant?: 'solid' | 'outline';
   isLoading?: boolean;
   disabled?: boolean;
@@ -47,8 +49,8 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
   const containerStyle = [
     styles.container,
     {
-      paddingVertical: SIZES[size],
-      paddingHorizontal: SIZES[size],
+      paddingVertical: moderateVerticalScale(SIZES[size]),
+      paddingHorizontal: moderateScale(SIZES[size]),
       backgroundColor: variant === 'solid' ? theme.colors[color] : 'transparent',
       borderWidth: variant === 'outline' ? 1 : 0,
       borderColor: theme.colors[color],
@@ -62,7 +64,7 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
     marginLeft: leftIcon ? 8 : 0,
     marginRight: rightIcon ? 8 : 0,
     color: variant === 'solid' ? theme.colors.onPrimary : theme.colors[color],
-    fontSize: SIZES[size],
+    fontSize: scale(SIZES[size]),
   };
 
   return (
@@ -82,7 +84,7 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
       ) : (
         <>
           {centerIcon && <View style={styles.centerIconContainer}>{centerIcon}</View>}
-          {title && <Text style={textStyle}>{title}</Text>}
+          {title && <RNText style={textStyle}>{title}</RNText>}
         </>
       )}
       {rightIcon && renderIcon(rightIcon)}

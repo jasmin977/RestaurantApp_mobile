@@ -4,11 +4,12 @@ import { lightPalette } from '../../themes';
 
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from '../../context';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
 
 interface BoxProps {
   children?: ReactNode;
   bg?: keyof typeof lightPalette;
-  rounded?: number | string;
+  rounded?: number;
   gap?: number;
   h?: number | string;
   w?: number | string;
@@ -18,20 +19,20 @@ interface BoxProps {
   justifyContent?: StyleProp<ViewStyle['justifyContent']>;
   direction?: 'horizontal' | 'vertical';
   spacing?: {
-    p?: number | string;
-    m?: number | string;
-    px?: number | string;
-    py?: number | string;
-    mx?: number | string;
-    my?: number | string;
-    pt?: number | string;
-    pb?: number | string;
-    pl?: number | string;
-    pr?: number | string;
-    mt?: number | string;
-    mb?: number | string;
-    ml?: number | string;
-    mr?: number | string;
+    p?: number;
+    m?: number;
+    px?: number;
+    py?: number;
+    mx?: number;
+    my?: number;
+    pt?: number;
+    pb?: number;
+    pl?: number;
+    pr?: number;
+    mt?: number;
+    mb?: number;
+    ml?: number;
+    mr?: number;
   };
   style?: ViewStyle;
   [key: string]: any; // Allow any additional props
@@ -39,16 +40,34 @@ interface BoxProps {
 
 const spacingStyles = (spacing?: BoxProps['spacing']): ViewStyle | undefined => {
   if (spacing) {
-    const { p, m, pt, pb, pl, pr, mt, mb, ml, mr, px, py, mx, my } = spacing;
+    const {
+      p = 0,
+      m = 0,
+      pt = 0,
+      pb = 0,
+      pl = 0,
+      pr = 0,
+      mt = 0,
+      mb = 0,
+      ml = 0,
+      mr = 0,
+      px = 0,
+      py = 0,
+      mx = 0,
+      my = 0,
+    } = spacing;
     return {
-      paddingTop: pt || py || p,
-      paddingBottom: pb || py || p,
-      paddingLeft: pl || px || p,
-      paddingRight: pr || px || p,
-      marginTop: mt || my || m,
-      marginBottom: mb || my || m,
-      marginLeft: ml || mx || m,
-      marginRight: mr || mx || m,
+      paddingTop:
+        moderateVerticalScale(pt) || moderateVerticalScale(py) || moderateVerticalScale(p),
+      paddingBottom:
+        moderateVerticalScale(pb) || moderateVerticalScale(py) || moderateVerticalScale(p),
+      paddingLeft: moderateScale(pl) || moderateScale(px) || moderateScale(p),
+      paddingRight: moderateScale(pr) || moderateScale(px) || moderateScale(p),
+      marginTop: moderateVerticalScale(mt) || moderateVerticalScale(my) || moderateVerticalScale(m),
+      marginBottom:
+        moderateVerticalScale(mb) || moderateVerticalScale(my) || moderateVerticalScale(m),
+      marginLeft: moderateScale(ml) || moderateScale(mx) || moderateScale(m),
+      marginRight: moderateScale(mr) || moderateScale(mx) || moderateScale(m),
     };
   }
   return undefined;
@@ -58,9 +77,9 @@ const Box = ({
   children,
   flex,
   bg,
-  rounded,
+  rounded = 0,
   spacing,
-  gap,
+  gap = 0,
   h,
   w,
   alignItems = 'center',
@@ -73,12 +92,12 @@ const Box = ({
   const { theme } = useTheme();
   const boxStyle = StyleSheet.flatten([
     { backgroundColor: theme.colors[bg] },
-    { gap: gap },
+    { gap: scale(gap) },
     { flex: flex },
-    { borderRadius: rounded },
+    { borderRadius: scale(rounded) },
     spacingStyles(spacing),
-    { height: h },
-    { width: w },
+    { height: typeof h === 'number' ? verticalScale(h) : h },
+    { width: typeof w === 'number' ? scale(w) : w },
     { flexDirection: direction === 'horizontal' ? 'row' : 'column' },
     { alignItems },
     { justifyContent },
