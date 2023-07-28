@@ -2,7 +2,7 @@ import { Animated, FlatList, TouchableOpacity, View, Image } from 'react-native'
 
 import React from 'react';
 import { Restaurant } from '../../entities';
-import { Box, RNIcon, RNText } from '../themed';
+import { Avatar, AvatarGroup, Box, RNIcon, RNText } from '../themed';
 import { styled } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Review } from '../common';
@@ -57,12 +57,17 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
           ],
         }}
       >
-        <RestoImageBackground imageStyle={{ borderRadius: 20 }} source={item.img}>
+        <RestoImageBackground
+          imageStyle={{ borderRadius: 20 }}
+          source={{
+            uri: item.img,
+          }}
+        >
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
             <Review
               rating={item.rating}
               additinalStyle={{
-                backgroundColor: 'rgba(0,0,0,0.2)',
+                backgroundColor: 'rgba(255,255,255,0.7)',
                 borderRadius: 100,
                 paddingVertical: 5,
                 paddingHorizontal: 10,
@@ -89,14 +94,22 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
                 {item.name}
               </RNText>
               <RNText color="white">Friends were here</RNText>
-              <Box direction="horizontal" gap={5}>
+              <AvatarGroup size={35} max={3}>
+                <Avatar />
+                <Avatar />
+                <Avatar />
+                <Avatar />
+                <Avatar />
+                <Avatar />
+              </AvatarGroup>
+              {/* <Box direction="horizontal" gap={5}>
                 <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
                 <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
                 <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
                 <Box w={35} h={35} rounded={50} bg="card" spacing={{ p: 5 }}>
                   <RNText variant="caption">15+</RNText>
                 </Box>
-              </Box>
+              </Box> */}
             </Box>
           </LinearGradient>
         </RestoImageBackground>
