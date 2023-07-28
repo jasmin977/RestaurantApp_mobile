@@ -1,11 +1,11 @@
 import { UseMutateFunction, useMutation, useQuery } from 'react-query';
-interface IUseMutationReq {
+export interface IUseMutationReq {
   data: any;
   isLoading: boolean;
   error: any;
   mutate: UseMutateFunction<any, any, any, any>;
 }
-interface IUseQueryReq {
+export interface IUseQueryReq {
   data: any;
   isLoading: boolean;
   error: any;
