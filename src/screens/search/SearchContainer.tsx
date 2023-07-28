@@ -11,6 +11,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import SearchCardItem from './components/SearchItemCard';
 import SearchHistoryCache from '../../cache/searchHistoryCache';
+import { scale } from '../../helpers';
 
 interface SeachContainerProps {}
 
@@ -94,7 +95,7 @@ const SeachContainer: React.FC<SeachContainerProps> = () => {
       >
         <BackButton onPress={() => navigation.goBack()} />
 
-        <RNText variant="subtitle" style={{ fontSize: 22 }}>
+        <RNText variant="subtitle" style={{ fontSize: scale(22) }}>
           Search
         </RNText>
         <RNButton style={{ opacity: 0 }} size="xs" centerIcon={<RNIcon as={<BackIcon />} />} />

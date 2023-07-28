@@ -1,4 +1,4 @@
-import { Animated, FlatList, TouchableOpacity, View, Image } from 'react-native';
+import { Animated, FlatList, TouchableOpacity, View, ImageBackground } from 'react-native';
 
 import React from 'react';
 import { Restaurant } from '../../entities';
@@ -9,6 +9,7 @@ import { Review } from '../common';
 import { AVATAR, LikeIcon } from '../../assets';
 import { RootNavigationProps } from '../../navigators/ROUTES';
 import { useNavigation } from '@react-navigation/native';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
 
 interface CarouselProps {
   data: Array<Restaurant>;
@@ -23,10 +24,6 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
   const boxDistance = scrollViewWidth - boxWidth;
   const halfBoxDistance = boxDistance / 2;
 
-  const RestoImageBackground = styled.ImageBackground`
-    height: 400px;
-    width: ${boxWidth}px;
-  `;
   const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   const renderItem = ({ item, index }: { item: Restaurant; index: number }) => (
@@ -57,8 +54,9 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
           ],
         }}
       >
-        <RestoImageBackground
-          imageStyle={{ borderRadius: 20 }}
+        <ImageBackground
+          style={{ height: verticalScale(400), width: scale(250) }}
+          imageStyle={{ borderRadius: scale(20) }}
           source={{
             uri: item.img,
           }}
@@ -82,10 +80,10 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
               bottom: 0,
               position: 'absolute',
               width: '100%',
-              paddingVertical: 10,
-              paddingHorizontal: 20,
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
+              paddingVertical: moderateVerticalScale(10),
+              paddingHorizontal: moderateScale(20),
+              borderBottomLeftRadius: scale(20),
+              borderBottomRightRadius: scale(20),
             }}
             colors={['transparent', 'black']}
           >
@@ -102,17 +100,9 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
                 <Avatar />
                 <Avatar />
               </AvatarGroup>
-              {/* <Box direction="horizontal" gap={5}>
-                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
-                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
-                <Image source={AVATAR} style={{ width: 35, height: 35, borderRadius: 50 }} />
-                <Box w={35} h={35} rounded={50} bg="card" spacing={{ p: 5 }}>
-                  <RNText variant="caption">15+</RNText>
-                </Box>
-              </Box> */}
             </Box>
           </LinearGradient>
-        </RestoImageBackground>
+        </ImageBackground>
       </Animated.View>
     </TouchableOpacity>
   );

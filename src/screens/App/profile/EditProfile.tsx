@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Image, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import { BackButton, BackgoundContainer, CenteredView } from '../../../components/common';
-import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
+import { Avatar, Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
 import { AVATAR, BackIcon, EditIcon, EmailIcon, PhoneIcon, UserIcon } from '../../../assets';
 import { RootStackParamList } from '../../../navigators/ROUTES';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -9,6 +9,7 @@ import { useTheme } from '../../../context';
 import { useForm, Controller } from 'react-hook-form';
 
 import { user } from '../../../entities';
+import { scale } from '../../../helpers';
 
 interface ProfileProps {}
 type Props = NativeStackScreenProps<RootStackParamList, 'EditProfile'>;
@@ -49,7 +50,8 @@ const EditProfile = ({ navigation }: Props) => {
 
         <Box>
           <Box w={110}>
-            <Image source={AVATAR} style={{ width: 100, height: 100, borderRadius: 100 }} />
+            <Avatar size={80} />
+
             <Box
               bg="background"
               spacing={{ p: 8 }}
@@ -100,7 +102,7 @@ const EditProfile = ({ navigation }: Props) => {
           />
 
           <Box alignItems="flex-start" gap={5} flex={1}>
-            <RNText variant="subtitle" style={{ fontSize: 14 }}>
+            <RNText variant="subtitle" style={{ fontSize: scale(14) }}>
               Gender
             </RNText>
 

@@ -11,6 +11,7 @@ import { AuthStackProps } from '../../navigators/stacks';
 import { UserIcon } from '../../assets';
 import { user } from '../../entities';
 import AuthenticationService from '../../service/Authentication';
+import { scale, verticalScale } from '../../helpers';
 
 const LoginScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
@@ -39,18 +40,18 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
     <BackgoundContainer>
       <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
         <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
-        <Box gap={20} spacing={{ px: 50, py: 10 }}>
+        <Box gap={5} spacing={{ px: 50, py: 30 }}>
           <Image
             source={require('../../assets/LOGO.png')}
             style={{
-              width: 100,
-              height: 100,
+              width: scale(100),
+              height: verticalScale(100),
             }}
             resizeMode="contain"
           />
 
-          <RNText variant="h2">Hello Again!</RNText>
-          <RNText align="center" variant="subtitle">
+          <RNText variant="h5">Hello Again!</RNText>
+          <RNText align="center" variant="caption">
             Welcome back you've been missed!
           </RNText>
         </Box>
@@ -108,7 +109,12 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
           </TouchableOpacity>
         </Box>
       </ScrollView>
-      <Box spacing={{ px: 20 }} w={'100%'} gap={30} style={{ position: 'absolute', bottom: 50 }}>
+      <Box
+        spacing={{ px: 20 }}
+        w={'100%'}
+        gap={10}
+        style={{ position: 'absolute', bottom: verticalScale(20) }}
+      >
         <RNButton
           style={{ width: '100%', shadowColor: theme.colors.primary, elevation: 20 }}
           title="Sign in"

@@ -24,7 +24,7 @@ export type RootStackParamList = {
   RestaurantStack: NavigatorScreenParams<RestaurantStackParamList>;
   Settings: undefined;
   LikedRestaurants: undefined;
-  Profile?: { id: number };
+  Profile?: { id: number | undefined };
   EditProfile: undefined;
   Search: undefined;
 };

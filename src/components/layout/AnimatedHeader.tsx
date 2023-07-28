@@ -5,6 +5,7 @@ import { Box, RNText } from '../../components/themed';
 import React, { ReactNode, useRef } from 'react';
 import { StatusBar, StyleSheet, Image, ImageSourcePropType, Text, Animated } from 'react-native';
 import { useTheme } from '../../context';
+import { scale, verticalScale } from '../../helpers';
 
 interface animatedHeaderProp {
   children: ReactNode;
@@ -13,8 +14,8 @@ interface animatedHeaderProp {
   title?: string;
   backgroundImage: ImageSourcePropType;
 }
-const HEADER_MAX_HEIGHT = 240;
-const HEADER_MIN_HEIGHT = 95;
+const HEADER_MAX_HEIGHT = verticalScale(240);
+const HEADER_MIN_HEIGHT = verticalScale(95);
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 const AnimatdeHeader: React.FC<animatedHeaderProp> = ({
   children,
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
     right: 0,
     width: ScreenWidth,
     height: HEADER_MAX_HEIGHT,
-    borderBottomRightRadius: 30,
-    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: scale(30),
+    borderBottomLeftRadius: scale(30),
     resizeMode: 'cover',
   },
   topBar: {

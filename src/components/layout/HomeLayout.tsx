@@ -13,6 +13,7 @@ import { BackgoundContainer } from '../common';
 
 import { useTheme } from '../../context';
 import { StatusBar as STATUSBAR } from 'expo-status-bar';
+import { moderateVerticalScale, verticalScale } from '../../helpers';
 
 interface HomeLayoutProps {
   headerHeight: number;
@@ -88,7 +89,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({
           <View
             style={[
               {
-                height: HEADERHEIGHT,
+                height: verticalScale(HEADERHEIGHT),
               },
             ]}
           >
@@ -99,7 +100,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({
         <Animated.FlatList
           style={{ flex: 1 }}
           scrollEventThrottle={16}
-          contentContainerStyle={{ paddingTop: HEADERHEIGHT, gap: 20 }}
+          contentContainerStyle={{ paddingTop: moderateVerticalScale(HEADERHEIGHT), gap: 20 }}
           ListHeaderComponent={<View>{ListHeaderComponent}</View>}
           maxToRenderPerBatch={5}
           onScroll={handleScroll}
@@ -121,17 +122,6 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 1,
   },
-  topHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    gap: 10,
-    paddingTop: StatusBar.currentHeight,
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    backgroundColor: 'green',
-  },
-
   container: {
     flex: 1,
   },

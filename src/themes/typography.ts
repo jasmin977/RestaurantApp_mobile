@@ -1,4 +1,4 @@
-import { scale } from '../helpers/scalingUtils';
+import { scale, verticalScale } from '../helpers';
 import FontSizes from './fontSize';
 import Fonts from './fonts';
 
@@ -36,7 +36,7 @@ const Typography = {
   subtitle: {
     fontFamily: Fonts.medium,
     fontSize: scale(FontSizes.md),
-    lineHeight: 24,
+
     letterSpacing: 0.5,
   },
   body: {

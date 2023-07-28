@@ -1,5 +1,5 @@
 import { FunctionComponent, useState, useRef } from 'react';
-import { Animated, FlatList, TouchableOpacity, View } from 'react-native';
+import { Animated, ImageBackground, TouchableOpacity, View } from 'react-native';
 
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import { LikeIcon } from '../../../assets';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../../../context';
 import { RootNavigationProps } from '../../../navigators/ROUTES';
+import { scale, verticalScale } from '../../../helpers';
 
 interface CarouselProps {
   index: number;
@@ -29,10 +30,6 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
   const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   const { theme } = useTheme();
-  const RestoImageBackground = styled.ImageBackground`
-    height: 400px;
-    width: ${boxWidth}px;
-  `;
 
   return (
     <TouchableOpacity
@@ -63,7 +60,11 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
           ],
         }}
       >
-        <RestoImageBackground imageStyle={{ borderRadius: 20 }} source={{ uri: item.img }}>
+        <ImageBackground
+          style={{ height: verticalScale(400), width: scale(boxWidth) }}
+          imageStyle={{ borderRadius: 20 }}
+          source={{ uri: item.img }}
+        >
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
             <Review
               rating={item.rating}
@@ -95,7 +96,7 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
               <RNText>Friends went here</RNText>
             </Box>
           </LinearGradient>
-        </RestoImageBackground>
+        </ImageBackground>
       </Animated.View>
     </TouchableOpacity>
   );

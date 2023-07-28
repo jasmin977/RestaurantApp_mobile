@@ -34,6 +34,7 @@ import { RestaurantService } from '../../service';
 
 import CenteredContainer from '../../components/common/containers/Centered';
 import LottieView from 'lottie-react-native';
+import { scale, verticalScale } from '../../helpers';
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
 
 const reviewData = [
@@ -113,24 +114,13 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     return (
       <BackgoundContainer>
         <CenteredContainer>
-          <RNButton
-            size="sm"
-            style={{
-              position: 'absolute',
-              top: 40,
-              left: 20,
-              zIndex: 1,
-              backgroundColor: 'rgba(0,0,0,0.2)',
-            }}
-            onPress={() => navigation.goBack()}
-            centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-          />
+          <BackButton onPress={() => navigation.goBack()} />
           <LottieView
             autoPlay
             loop
             style={{
-              width: 100,
-              height: 100,
+              width: scale(100),
+              height: verticalScale(100),
             }}
             source={assets.lottieFiles.SearchNotFound}
           />
@@ -143,7 +133,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <AnimatdeHeader
-        backgroundImage={data.data.img ? { uri: data.data.img } : rest_4}
+        backgroundImage={{ uri: data.data.img }}
         title={data.data.name}
         rightIcon={<Box />}
         leftIcon={<BackButton onPress={() => navigation.goBack()} />}

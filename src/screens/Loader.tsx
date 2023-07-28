@@ -6,6 +6,7 @@ import { Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Box } from '../components/themed';
 import LottieView from 'lottie-react-native';
+import { scale } from '../helpers';
 
 interface LoaderProps {}
 
@@ -17,8 +18,8 @@ const LoaderScreen: FunctionComponent<LoaderProps> = () => {
         autoPlay
         loop
         style={{
-          width: 250,
-          height: 250,
+          width: scale(250),
+          height: scale(250),
         }}
         source={assets.lottieFiles.Loader}
       />

@@ -12,6 +12,7 @@ import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/them
 import RateOption from './RateOption';
 import { COLORS } from '../../../themes';
 import { CameraIcon } from '../../../assets';
+import { scale, verticalScale } from '../../../helpers';
 
 const ReviewForm = () => {
   const { theme } = useTheme();
@@ -49,7 +50,7 @@ const ReviewForm = () => {
           h={100}
           onPress={() => console.log('img')}
           style={{
-            borderWidth: 1,
+            borderWidth: scale(1),
             borderColor: COLORS.grey[400],
             borderStyle: 'dashed',
           }}
@@ -75,16 +76,10 @@ const ReviewForm = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 8,
-  },
   textArea: {
-    fontSize: 16,
+    fontSize: scale(16),
     textAlignVertical: 'top',
-    minHeight: 100,
-    padding: 0,
+    minHeight: verticalScale(100),
   },
 });
 export default ReviewForm;

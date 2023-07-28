@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
 import { RNText } from '../../themed';
 import { useTheme } from '../../../context';
+import { moderateVerticalScale, scale, verticalScale } from '../../../helpers';
 
 const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
   const { theme } = useTheme();
@@ -15,8 +16,8 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
     <TouchableOpacity activeOpacity={0.5}>
       <ImageBackground
         resizeMode="cover"
-        imageStyle={{ borderRadius: 20 }}
-        style={{ width: ScreenWidth * 0.4, height: 150 }}
+        imageStyle={{ borderRadius: scale(10) }}
+        style={{ width: ScreenWidth * 0.4, height: verticalScale(150) }}
         source={{ uri: img }}
       >
         <Review
@@ -26,8 +27,8 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
             borderRadius: 100,
             width: '50%',
             paddingHorizontal: 5,
-            top: 10,
-            left: 10,
+            top: verticalScale(10),
+            left: scale(10),
           }}
         />
         <LinearGradient
@@ -35,10 +36,10 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
             bottom: 0,
             position: 'absolute',
             width: '100%',
-            padding: 10,
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-            paddingBottom: 5,
+            padding: scale(10),
+            borderBottomLeftRadius: scale(10),
+            borderBottomRightRadius: scale(10),
+            paddingBottom: moderateVerticalScale(5),
           }}
           colors={['transparent', 'black']}
         >

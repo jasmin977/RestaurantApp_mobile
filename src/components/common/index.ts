@@ -7,7 +7,6 @@ export { default as Greeting } from './header/Greeting';
 //cards
 export { default as MealCard } from './cards/MealItem';
 export { default as RestaurantItem } from './cards/RestaurantItem';
-import ReviewCard from './cards/ReviewCard';
 
 //containers
 export { default as BackgoundContainer } from './containers/Backgound';
@@ -15,5 +14,6 @@ export { default as CenteredView } from './containers/Centered';
 
 //review item
 export { default as Review } from './review/Review';
-
-export { ReviewCard };
+import BackButton from './buttons/BackButton';
+import MenuButton from './buttons/MenuButton';
+export { BackButton, MenuButton };

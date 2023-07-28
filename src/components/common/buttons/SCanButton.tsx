@@ -5,18 +5,24 @@ import { QRcodeIcon } from '../../../assets';
 
 import { useTheme } from '../../../context';
 import { Box, RNIcon } from '../../themed';
+import { scale } from '../../../helpers';
 
 const ScanButton: FunctionComponent = () => {
   const { theme } = useTheme();
 
   return (
-    <Box w={60} h={60}>
+    <View
+      style={{
+        width: scale(60),
+        height: scale(60),
+      }}
+    >
       <LinearGradient
         colors={[theme.colors.primary, theme.colors.primary]}
         style={{
           width: '100%',
           height: '100%',
-          borderRadius: 30,
+          borderRadius: scale(30),
           justifyContent: 'center',
           alignItems: 'center',
           shadowColor: theme.colors.primary,
@@ -26,7 +32,7 @@ const ScanButton: FunctionComponent = () => {
       >
         <RNIcon color="white" size={45} as={<QRcodeIcon />} />
       </LinearGradient>
-    </Box>
+    </View>
   );
 };
 

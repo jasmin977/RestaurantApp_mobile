@@ -14,7 +14,7 @@ import { RNIcon } from '../../components/themed';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Drawer from '../Drawer';
-import { verticalScale } from '../../helpers';
+import { moderateVerticalScale, verticalScale } from '../../helpers';
 
 export type RootBottomStackParamList = {
   Feed: undefined;

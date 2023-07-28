@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../../../context';
 import { RootNavigationProps } from '../../../../navigators/ROUTES';
 import { Review } from '../../../../entities';
-import { Box, RNIcon, RNText } from '../../../../components/themed';
-import { timeDifference } from '../../../../helpers';
+import { Avatar, Box, RNIcon, RNText } from '../../../../components/themed';
+import { timeDifference, verticalScale } from '../../../../helpers';
 import { Comment, EllipsisIcon, ThumbDown, ThumbUp, Share, AVATAR } from '../../../../assets';
 import { RatingStars } from '../../../restaurant/components';
 
@@ -30,10 +30,7 @@ export default function ReviewCard(item: Review) {
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile', { id: item.reviewedBy.id })}
           >
-            <Image
-              source={item.reviewedBy.profileImg ? { uri: item.reviewedBy.profileImg } : AVATAR}
-              style={{ width: 40, height: 40, borderRadius: 100 }}
-            />
+            <Avatar src={item.reviewedBy.profileImg} />
           </TouchableOpacity>
           <Box alignItems="flex-start" spacing={{ px: 10 }}>
             <TouchableOpacity
@@ -70,7 +67,7 @@ export default function ReviewCard(item: Review) {
           <Image
             source={{ uri: item.img }}
             resizeMode="cover"
-            style={{ width: '100%', height: 200, borderRadius: 8 }}
+            style={{ width: '100%', height: verticalScale(200), borderRadius: 8 }}
           />
         )}
         <Box

@@ -11,6 +11,7 @@ import assets, { BackIcon } from '../../assets';
 
 import { StyleSheet, ActivityIndicator } from 'react-native';
 import { useAppState, useAuth, useTheme } from '../../context';
+import { scale } from '../../helpers';
 
 interface ScanningProps {
   handleBarCodeScanned: (data: any) => void;
@@ -78,18 +79,18 @@ const ScanQRview: React.FC<ScanningProps> = ({
     <BackgoundContainer>
       {!firstTimeScanned ? (
         <CenteredContainer>
-          <Box gap={10} spacing={{ px: 20 }}>
+          <Box gap={5} spacing={{ px: 20 }}>
             <LottieView
               autoPlay
               loop
               style={{
-                width: ScreenWidth,
-                height: ScreenWidth,
+                width: scale(300),
+                height: scale(300),
               }}
               colorFilters={Scannig_color_filters}
               source={assets.lottieFiles.ScannigCode}
             />
-            <RNText align="center" variant="subtitle">
+            <RNText align="center" variant="caption">
               Place your phone and Scan the QR code to access reviews.
             </RNText>
             <RNButton onPress={markFirstTimeScanned} title="Scan" />

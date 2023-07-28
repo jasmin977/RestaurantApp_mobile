@@ -36,7 +36,7 @@ const AvatarGroup: FunctionComponent<AvatarGroupProps> = ({ size = 50, max = 3, 
           borderRadius: scale(20),
         }}
       >
-        <RNText variant="caption">+{avatars.length - max}</RNText>
+        <RNText>+{avatars.length - max}</RNText>
       </View>
     </View>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 import { BackgoundContainer } from '../../components/common';
 import { Avatar, Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import { AVATAR, Comment, LikeIcon, ThumbDown, ThumbUp } from '../../assets';
-import { timeDifference } from '../../helpers';
+import { moderateScale, moderateVerticalScale, scale, timeDifference } from '../../helpers';
 
 interface Notification {
   id: number;
@@ -236,13 +236,7 @@ const Notifications = () => {
   return (
     <BackgoundContainer>
       <Box spacing={{ py: 20 }}>
-        {/* <RNButton
-        size="sm"
-        color="card"
-        centerIcon={<RNIcon as={<MenuIcon />} outline color="onBackground" size={25} />}
-        onPress={() => setIsDrawerOpen(true)}
-      /> */}
-        <RNText variant="subtitle" style={{ fontSize: 22 }}>
+        <RNText variant="subtitle" style={{ fontSize: scale(22) }}>
           Notification
         </RNText>
       </Box>
@@ -250,9 +244,9 @@ const Notifications = () => {
         sections={sections}
         contentContainerStyle={{
           gap: 40,
-          paddingHorizontal: 20,
-          paddingTop: 20,
-          paddingBottom: 50,
+          paddingHorizontal: moderateScale(20),
+          paddingTop: moderateVerticalScale(20),
+          paddingBottom: moderateVerticalScale(50),
         }}
         data={notificationData}
         renderSectionHeader={renderSectionHeader}

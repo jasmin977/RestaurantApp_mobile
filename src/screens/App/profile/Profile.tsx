@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Image, FlatList, View, ScrollView } from 'react-native';
 import { BackButton, BackgoundContainer } from '../../../components/common';
-import { Box, RNButton, RNIcon, RNText } from '../../../components/themed';
+import { Avatar, Box, RNButton, RNIcon, RNText } from '../../../components/themed';
 import { AVATAR, BackIcon, EditIcon } from '../../../assets';
 import { RootStackParamList } from '../../../navigators/ROUTES';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -103,10 +103,8 @@ const Profile = ({ navigation, route }: Props) => {
         ListHeaderComponent={
           <View style={{ paddingVertical: 10 }}>
             <Box gap={10}>
-              <Image
-                source={userData.profileImg ? { uri: userData.profileImg } : AVATAR}
-                style={{ width: 100, height: 100, borderRadius: 100 }}
-              />
+              <Avatar src={userData.profileImg} size={80} />
+
               <RNText variant="h4">{userData.username}</RNText>
               <RNText align="center" variant="caption">
                 {userData.email}

@@ -7,15 +7,13 @@ import React, {
   ReactElement,
 } from 'react';
 import { View, Text, TouchableOpacity, Animated, FlatList, ViewStyle } from 'react-native';
-import { Box, RNIcon, RNText } from '../components/themed';
+import { Avatar, Box, RNIcon, RNText } from '../components/themed';
 import {
   AVATAR,
-  ClockIcon,
   CloseIcon,
   HomeIcon,
   LikeIcon,
   LogoutIcon,
-  MenuIcon,
   NotifIcon,
   SaveIcon,
   SettingsIcon,
@@ -30,6 +28,7 @@ import { RootNavigationProps } from './ROUTES';
 import { TabNavigationProps } from './stacks/BotoomTab';
 import AuthenticationService from '../service/Authentication';
 import UserCache from '../cache/userCache';
+import { moderateScale, moderateVerticalScale, verticalScale } from '../helpers';
 
 interface DrawerProp {
   children: ReactNode;
@@ -38,7 +37,7 @@ interface DrawerProp {
 const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   const { isDrawerOpen, setIsDrawerOpen } = useAppState();
   const { theme } = useTheme();
-  const { setUser } = useAuth();
+  const { setUser, user } = useAuth();
 
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
@@ -53,6 +52,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   const logout = () => {
     UserCache.clearUserData();
     setUser(null);
+    setIsDrawerOpen(false);
   };
 
   const toggleDrawer = () => {
@@ -62,7 +62,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
       useNativeDriver: true,
     }).start();
     Animated.timing(moveToRight, {
-      toValue: !isDrawerOpen ? 0 : 230,
+      toValue: !isDrawerOpen ? 0 : moderateScale(230),
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -106,13 +106,11 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
   };
   const renderDrawerItem = ({ item }: { item: DrawerItemProp }) => {
     return (
-      <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 5,
-          paddingVertical: 10,
-        }}
+      <Box
+        direction="horizontal"
+        justifyContent="flex-start"
+        gap={5}
+        spacing={{ py: 10 }}
         onPress={() => {
           handleDrawerItemPress(item.id);
           setIsDrawerOpen(!isDrawerOpen);
@@ -123,49 +121,48 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         <RNText color="white" variant="body">
           {item.label}
         </RNText>
-      </TouchableOpacity>
+      </Box>
     );
   };
 
   return (
     <View style={{ flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: theme.colors.primary,
-          paddingHorizontal: 30,
-          paddingTop: 50,
-          gap: 10,
-        }}
+      <Box
+        flex={1}
+        spacing={{ px: 20, pt: 50 }}
+        gap={10}
+        bg="primary"
+        justifyContent="flex-start"
+        alignItems="flex-start"
       >
         {/** close drawer */}
-        <TouchableOpacity style={{}} onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
+        <TouchableOpacity onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
           <RNIcon as={<CloseIcon />} outline color="white" size={40} />
         </TouchableOpacity>
 
         {/** profile */}
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 7,
-          }}
+        <Box
+          direction="horizontal"
+          justifyContent="flex-start"
+          gap={5}
+          spacing={{ py: 10 }}
           activeOpacity={0.5}
           onPress={() => {
             handleDrawerItemPress('Profile');
             setIsDrawerOpen(!isDrawerOpen);
           }}
         >
-          <ProfileImage resizeMode="cover" source={AVATAR} />
+          <Avatar />
+
           <View>
             <RNText color="white" variant="h5">
-              jasmin
+              {user?.username}
             </RNText>
             <RNText color="white" variant="caption">
-              view your profile
+              {user?.email}
             </RNText>
           </View>
-        </TouchableOpacity>
+        </Box>
 
         {/** drawer items */}
         <FlatList
@@ -173,21 +170,20 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           renderItem={renderDrawerItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
-            paddingVertical: 20,
-            paddingHorizontal: 16,
-            gap: 10,
+            paddingVertical: moderateVerticalScale(20),
+            paddingHorizontal: moderateScale(16),
+            gap: moderateScale(10),
           }}
         />
 
-        <TouchableOpacity
+        <Box
+          direction="horizontal"
+          justifyContent="flex-start"
+          gap={5}
+          spacing={{ py: 10, px: 40 }}
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
-            paddingHorizontal: 50,
-
             position: 'absolute',
-            bottom: 30,
+            bottom: verticalScale(30),
           }}
           onPress={logout}
         >
@@ -196,8 +192,8 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           <RNText color="white" variant="body">
             {logoutItem.label}
           </RNText>
-        </TouchableOpacity>
-      </View>
+        </Box>
+      </Box>
       <Animated.View
         style={{
           position: 'absolute',
@@ -212,21 +208,6 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
           borderRadius: isDrawerOpen ? 15 : 0,
         }}
       >
-        {/*  <TouchableOpacity
-          style={{
-            position: 'absolute',
-            top: 50,
-            left: 20,
-            zIndex: 1,
-            backgroundColor: theme.colors.card,
-            borderRadius: 10,
-            padding: 5,
-          }}
-          onPress={() => toggleDrawer()}
-        >
-          <RNIcon as={<MenuIcon />} outline color="onBackground" size={25} />
-        </TouchableOpacity>
- */}
         {children}
       </Animated.View>
     </View>

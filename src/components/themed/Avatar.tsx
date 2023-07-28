@@ -18,6 +18,7 @@ const Avatar: FunctionComponent<Props> = ({ src, size = 50 }) => {
   return (
     <Image
       source={src ? { uri: src } : AVATAR}
+      resizeMode="cover"
       style={{
         width: scale(size),
         height: scale(size),

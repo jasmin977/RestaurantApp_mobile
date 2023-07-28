@@ -9,7 +9,7 @@ import ICON from './Icon';
 import Text from './Text';
 import { COLORS, lightPalette } from '../../themes';
 import { RNText } from '.';
-import { scale } from '../../helpers';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
 
 interface RNTextInputProps {
   value?: string;
@@ -20,7 +20,7 @@ interface RNTextInputProps {
   placeholder?: string;
   variant?: 'outline' | 'filled';
   type?: string;
-  size?: string;
+  size?: number;
   label?: string;
   color?: keyof typeof lightPalette;
   textColor?: string;
@@ -38,7 +38,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   placeholder = 'type here..',
   variant = 'filled',
   type = 'text',
-  size,
+  size = 14,
   color = 'onCard',
   textColor = 'white',
   keyBoardType = 'default',
@@ -54,7 +54,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   const inputContainerStyle =
     variant === 'outline' ? styles.outlineContainer : styles.filledContainer;
   const inputBorderStyle = variant === 'outline' ? styles.outlineInput : styles.filledInput;
-  const inputStyle = [styles.input, { fontSize: size, color: theme.colors.onCard }];
+  const inputStyle = [styles.input, { fontSize: scale(size), color: theme.colors.onCard }];
   return (
     <Box gap={5} alignItems="flex-start" flex={1}>
       {label && <RNText variant="subtitle">{label}</RNText>}
@@ -91,38 +91,38 @@ const styles = StyleSheet.create({
   outlineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: scale(8),
 
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 2,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateVerticalScale(8),
+    borderWidth: scale(2),
     borderColor: 'black',
   },
   filledContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    borderRadius: scale(8),
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateVerticalScale(8),
     backgroundColor: 'black',
   },
   outlineInput: {
-    marginLeft: 10,
+    marginLeft: moderateScale(10),
     flex: 1,
     color: 'black',
   },
   filledInput: {
-    marginLeft: 10,
+    marginLeft: moderateScale(10),
     flex: 1,
     color: 'white',
   },
   iconContainer: {
-    marginHorizontal: 8,
+    marginHorizontal: moderateScale(8),
   },
   input: {
-    marginLeft: 10,
+    marginLeft: moderateScale(10),
     flex: 1,
-    height: 30,
+    height: verticalScale(30),
   },
 });
 

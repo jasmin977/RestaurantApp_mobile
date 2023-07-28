@@ -12,6 +12,7 @@ import { AuthStackProps } from '../../navigators/stacks';
 import { EmailIcon, ShieldCheckIcon, UserIcon } from '../../assets';
 import { user } from '../../entities';
 import AuthenticationService from '../../service/Authentication';
+import { verticalScale } from '../../helpers';
 
 const RegisterScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
@@ -43,9 +44,9 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
       <ScrollView style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
         <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
 
-        <Box gap={20} spacing={{ px: 20, py: 30 }}>
-          <RNText variant="h2">Create an account!</RNText>
-          <RNText align="center" variant="subtitle">
+        <Box gap={5} spacing={{ px: 20, py: 30 }}>
+          <RNText variant="h5">Create an account!</RNText>
+          <RNText align="center" variant="caption">
             Sign up now and unlock exclusive access!
           </RNText>
         </Box>
@@ -121,7 +122,12 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
           />
         </Box>
       </ScrollView>
-      <Box spacing={{ px: 20 }} w={'100%'} gap={30} style={{ position: 'absolute', bottom: 50 }}>
+      <Box
+        spacing={{ px: 20 }}
+        w={'100%'}
+        gap={10}
+        style={{ position: 'absolute', bottom: verticalScale(20) }}
+      >
         <RNButton
           isLoading={isLoading}
           style={{ width: '100%', shadowColor: theme.colors.primary, elevation: 20 }}

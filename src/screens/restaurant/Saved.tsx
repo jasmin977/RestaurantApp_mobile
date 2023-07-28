@@ -7,6 +7,7 @@ import { Restaurant } from '../../entities';
 import { RatingStars } from './components';
 import { SaveIcon } from '../../assets';
 import { RestaurantService } from '../../service';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
 
 interface SavedRestaurantsProps {}
 
@@ -32,7 +33,7 @@ const SavedRestaurants: FunctionComponent<SavedRestaurantsProps> = () => {
           </TouchableOpacity>
         </Box>
 
-        <RNText variant="subtitle" style={{ fontSize: 15 }}>
+        <RNText variant="subtitle" style={{ fontSize: scale(13) }}>
           {item.location}
         </RNText>
         <RNText variant="caption">saved 2 weeks ago</RNText>
@@ -59,16 +60,16 @@ const SavedRestaurants: FunctionComponent<SavedRestaurantsProps> = () => {
   return (
     <BackgoundContainer>
       <Box spacing={{ py: 20 }}>
-        <RNText variant="subtitle" style={{ fontSize: 22 }}>
+        <RNText variant="subtitle" style={{ fontSize: scale(22) }}>
           Saved
         </RNText>
       </Box>
 
       <FlatList
         contentContainerStyle={{
-          gap: 20,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
+          gap: verticalScale(20),
+          paddingHorizontal: moderateScale(20),
+          paddingVertical: moderateVerticalScale(20),
         }}
         data={restaurantData.data}
         renderItem={renderNotification}

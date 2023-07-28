@@ -1,8 +1,9 @@
 import { View, Image, ImageSourcePropType } from 'react-native';
 import React, { FunctionComponent } from 'react';
-import { Box, RNText } from '../../../components/themed';
+import { Avatar, Box, RNText } from '../../../components/themed';
 import { AVATAR, vegyBurger } from '../../../assets';
 import { Review } from '../../../components/common';
+import { scale, verticalScale } from '../../../helpers';
 
 interface ReviewCardProps {
   id: number;
@@ -16,8 +17,8 @@ const ReviewCard: FunctionComponent<ReviewCardProps> = ({ date, reviewedBy, desc
   return (
     <Box flex={1} direction="horizontal" alignItems="flex-start" spacing={{ p: 20 }} gap={10}>
       <Box>
-        <Image source={AVATAR} style={{ width: 50, height: 50, borderRadius: 100 }} />
-        <Box h={'100%'} w={5} bg="card"></Box>
+        <Avatar size={40} />
+        <Box h={'100%'} w={7} bg="card"></Box>
       </Box>
       <Box flex={1} alignItems="stretch" gap={5} bg="card" rounded={8} spacing={{ p: 10, mt: -25 }}>
         <Box direction="horizontal" justifyContent="space-between" flex={1}>
@@ -30,7 +31,7 @@ const ReviewCard: FunctionComponent<ReviewCardProps> = ({ date, reviewedBy, desc
           <Image
             source={img}
             resizeMode="stretch"
-            style={{ width: '100%', height: 150, borderRadius: 10 }}
+            style={{ width: '100%', height: verticalScale(150), borderRadius: scale(10) }}
           />
         )}
       </Box>
