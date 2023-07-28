@@ -41,7 +41,7 @@ const RateOption: React.FC<RateOptionProps> = ({ rating, setRating }) => {
         <TouchableOpacity onPress={() => handlePress(1)}>
           <RNIcon
             outline={false}
-            color={rating >= 1 ? 'primary' : 'card'}
+            color={rating >= 1 ? 'primary' : 'grey.300'}
             size={35}
             as={<StarIcon />}
           />
@@ -49,7 +49,7 @@ const RateOption: React.FC<RateOptionProps> = ({ rating, setRating }) => {
         <TouchableOpacity onPress={() => handlePress(2)}>
           <RNIcon
             outline={false}
-            color={rating >= 2 ? 'primary' : 'card'}
+            color={rating >= 2 ? 'primary' : 'grey.300'}
             size={35}
             as={<StarIcon />}
           />
@@ -57,7 +57,7 @@ const RateOption: React.FC<RateOptionProps> = ({ rating, setRating }) => {
         <TouchableOpacity onPress={() => handlePress(3)}>
           <RNIcon
             outline={false}
-            color={rating >= 3 ? 'primary' : 'card'}
+            color={rating >= 3 ? 'primary' : 'grey.300'}
             size={35}
             as={<StarIcon />}
           />
@@ -65,7 +65,7 @@ const RateOption: React.FC<RateOptionProps> = ({ rating, setRating }) => {
         <TouchableOpacity onPress={() => handlePress(4)}>
           <RNIcon
             outline={false}
-            color={rating >= 4 ? 'primary' : 'card'}
+            color={rating >= 4 ? 'primary' : 'grey.300'}
             size={35}
             as={<StarIcon />}
           />
@@ -73,13 +73,13 @@ const RateOption: React.FC<RateOptionProps> = ({ rating, setRating }) => {
         <TouchableOpacity onPress={() => handlePress(5)}>
           <RNIcon
             outline={false}
-            color={rating >= 5 ? 'primary' : 'card'}
+            color={rating >= 5 ? 'primary' : 'grey.300'}
             size={35}
             as={<StarIcon />}
           />
         </TouchableOpacity>
       </Box>
-      <RNText color="card" variant="subtitle">
+      <RNText color="primary" variant="subtitle">
         {text}
       </RNText>
     </Box>
