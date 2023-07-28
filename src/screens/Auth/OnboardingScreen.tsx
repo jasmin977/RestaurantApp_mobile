@@ -8,6 +8,9 @@ import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import LottieView from 'lottie-react-native';
 import { StatusBar } from 'expo-status-bar';
 import { lightPalette } from '../../themes';
+import AppDataCache from '../../cache/appData';
+import { scale, verticalScale } from '../../helpers';
+import { BackButton } from '../../components/common';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -49,8 +52,8 @@ const RenderItem = ({ item }: { item: stepsProp }) => {
         autoPlay
         loop
         style={{
-          width: 200,
-          height: 200,
+          width: scale(200),
+          height: verticalScale(200),
         }}
         source={item.image}
       />
@@ -67,11 +70,12 @@ const RenderItem = ({ item }: { item: stepsProp }) => {
 const OnboardingScreen = () => {
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { markAppisInitialized } = useAppState();
+  const { setIsInitialized } = useAppState();
 
   const handleNextStep = () => {
     if (currentIndex === 2) {
-      markAppisInitialized();
+      setIsInitialized(true);
+      AppDataCache.storeAppData({ isInitialized: true });
     }
     const nextIndex = currentIndex === 0 ? 1 : 2;
     setCurrentIndex(nextIndex);
@@ -85,7 +89,8 @@ const OnboardingScreen = () => {
   };
 
   const handleSkipStep = () => {
-    markAppisInitialized();
+    setIsInitialized(true);
+    AppDataCache.storeAppData({ isInitialized: true });
   };
 
   return (
@@ -102,20 +107,18 @@ const OnboardingScreen = () => {
         renderItem={RenderItem}
       />
       {currentIndex !== 0 && (
-        <RNButton
-          size="sm"
+        <Box
           style={{
-            backgroundColor: 'rgba(0,0,0,0.2)',
             position: 'absolute',
             top: 60,
             left: 20,
           }}
-          onPress={handlePreviousStep}
-          centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-        />
+        >
+          <BackButton onPress={handlePreviousStep} />
+        </Box>
       )}
       {currentIndex === 2 ? (
-        <Box spacing={{ mb: 50, px: 20 }} w={'100%'} gap={10}>
+        <Box spacing={{ mb: 50, px: 20 }} w={'80%'} gap={10}>
           <RNButton
             variant="solid"
             onPress={handleSkipStep}

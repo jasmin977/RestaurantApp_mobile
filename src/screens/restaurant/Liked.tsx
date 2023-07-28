@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { BackgoundContainer, CenteredView, Review } from '../../components/common';
+import { BackButton, BackgoundContainer, CenteredView, Review } from '../../components/common';
 import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
 import { FlatList, Image, TouchableOpacity } from 'react-native';
 import { RESTAURANTS } from '../../data';
@@ -61,14 +61,8 @@ const LikedRestaurants: FunctionComponent<RootNavigationProps> = ({ navigation }
         justifyContent="space-between"
         spacing={{ px: 20, py: 10 }}
       >
-        <RNButton
-          size="sm"
-          style={{
-            backgroundColor: 'rgba(0,0,0,0.2)',
-          }}
-          onPress={() => navigation.goBack()}
-          centerIcon={<RNIcon outline={true} color="white" as={<BackIcon />} />}
-        />
+        <BackButton onPress={() => navigation.goBack()} />
+
         <RNText variant="subtitle" style={{ fontSize: 22 }}>
           My Favourites
         </RNText>
