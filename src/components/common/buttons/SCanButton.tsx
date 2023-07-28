@@ -4,21 +4,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { QRcodeIcon } from '../../../assets';
 
 import { useTheme } from '../../../context';
-import { RNIcon } from '../../themed';
+import { Box, RNIcon } from '../../themed';
 
 const ScanButton: FunctionComponent = () => {
   const { theme } = useTheme();
 
   return (
-    <View
-      style={{
-        width: 60,
-        height: 60,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <Box w={60} h={60}>
       <LinearGradient
         colors={[theme.colors.primary, theme.colors.primary]}
         style={{
@@ -34,7 +26,7 @@ const ScanButton: FunctionComponent = () => {
       >
         <RNIcon color="white" size={45} as={<QRcodeIcon />} />
       </LinearGradient>
-    </View>
+    </Box>
   );
 };
 

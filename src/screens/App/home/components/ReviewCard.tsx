@@ -1,23 +1,14 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 
-import {
-  AVATAR,
-  Comment,
-  EllipsisIcon,
-  MenuIcon,
-  Share,
-  ThumbDown,
-  ThumbUp,
-  vegyBurger,
-} from '../../../assets';
-import { RatingStars } from '../../../screens/restaurant/components';
-import { useTheme } from '../../../context';
-import { Restaurant, Review } from '../../../entities';
-import { Box, RNIcon, RNText } from '../../../components/themed';
-import { timeDifference } from '../../../helpers';
 import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProps } from '../../../navigators/ROUTES';
+import { useTheme } from '../../../../context';
+import { RootNavigationProps } from '../../../../navigators/ROUTES';
+import { Review } from '../../../../entities';
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+import { timeDifference } from '../../../../helpers';
+import { Comment, EllipsisIcon, ThumbDown, ThumbUp, Share, AVATAR } from '../../../../assets';
+import { RatingStars } from '../../../restaurant/components';
 
 export default function ReviewCard(item: Review) {
   const { theme } = useTheme();
