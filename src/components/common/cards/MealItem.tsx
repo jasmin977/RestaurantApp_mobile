@@ -17,7 +17,7 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
         resizeMode="cover"
         imageStyle={{ borderRadius: 20 }}
         style={{ width: ScreenWidth * 0.4, height: 150 }}
-        source={img}
+        source={{ uri: img }}
       >
         <Review
           rating={rating}
