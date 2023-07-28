@@ -11,15 +11,22 @@ import {
   TabStack,
 } from './stacks';
 
-import { EditProfile, LikedRestaurantsScreen, ProfileScreen, SettingsScreen } from '../screens';
+import {
+  EditProfile,
+  LikedRestaurantsScreen,
+  ProfileScreen,
+  SearchScreen,
+  SettingsScreen,
+} from '../screens';
 
 export type RootStackParamList = {
   TabStack: NavigatorScreenParams<RootBottomStackParamList>;
   RestaurantStack: NavigatorScreenParams<RestaurantStackParamList>;
   Settings: undefined;
   LikedRestaurants: undefined;
-  Profile: undefined;
+  Profile?: { id: number };
   EditProfile: undefined;
+  Search: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -71,6 +78,14 @@ const RootStack: FunctionComponent = () => {
         component={EditProfile}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          ...TransitionPresets.ModalTransition,
           headerShown: false,
         }}
       />
