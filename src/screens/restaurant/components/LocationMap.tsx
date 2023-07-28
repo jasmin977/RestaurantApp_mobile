@@ -1,17 +1,18 @@
 import { useState, useEffect, FunctionComponent } from 'react';
 import { Box, RNText } from '../../../components/themed';
-import MapView, { Marker, LatLng } from 'react-native-maps';
-import mapStyle from '../../Map/MapTheme';
+import MapView, { Marker, LatLng, PROVIDER_GOOGLE } from 'react-native-maps';
+
 import { useTheme } from '../../../context';
 import { RESTAURANTS_LOCATION } from '../../../data';
 import CenteredContainer from '../../../components/common/containers/Centered';
+import { darkStyle, lightStyle } from '../../Map/MapTheme';
 
 interface Props {
   id: number;
 }
 
 const LocationMap: FunctionComponent<Props> = ({ id }) => {
-  const { theme } = useTheme();
+  const { theme, isDarkTheme } = useTheme();
   const [location, setLocation] = useState<LatLng | undefined>();
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const LocationMap: FunctionComponent<Props> = ({ id }) => {
   return (
     <Box h={400} spacing={{ px: 20 }}>
       <MapView
+        provider={PROVIDER_GOOGLE}
         style={{ width: '100%', height: '100%', borderRadius: 10 }}
         initialRegion={{
           latitude: location?.latitude ?? 0,
@@ -41,7 +43,7 @@ const LocationMap: FunctionComponent<Props> = ({ id }) => {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-        customMapStyle={mapStyle}
+        customMapStyle={isDarkTheme ? darkStyle : lightStyle}
       >
         <Marker
           coordinate={{
