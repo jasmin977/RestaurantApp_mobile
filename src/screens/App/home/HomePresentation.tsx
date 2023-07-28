@@ -9,14 +9,12 @@ import ListHeaderComponent from './components/ListHeaderComp';
 import ReviewCard from './components/ReviewCard';
 
 interface HomePresentationProps {
-  toggleDrawer: () => void;
   reviewData: Review[];
   restaurantData: Restaurant[];
   rootNavigation: RootNavigationProps['navigation'];
 }
 
 const HomePresentation = ({
-  toggleDrawer,
   reviewData,
   restaurantData,
   rootNavigation,
@@ -33,9 +31,7 @@ const HomePresentation = ({
       ListHeaderComponent={
         <ListHeaderComponent rootNavigation={rootNavigation} restaurantData={restaurantData} />
       }
-      HeaderComponent={
-        <HeaderComponent toggleDrawer={toggleDrawer} rootNavigation={rootNavigation} />
-      }
+      HeaderComponent={<HeaderComponent rootNavigation={rootNavigation} />}
     />
   );
 };

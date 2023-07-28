@@ -6,11 +6,8 @@ import { RootNavigationProps } from '../../../navigators/ROUTES';
 import { RNText } from '../../../components/themed';
 import CenteredContainer from '../../../components/common/containers/Centered';
 import HomePresentation from './HomePresentation';
-interface HomeScreenProps {
-  toggleDrawer: () => void;
-}
 
-const Home: React.FC<HomeScreenProps> = ({ toggleDrawer }) => {
+const Home = () => {
   const {
     data: restaurantData,
     isLoading: restaurantIsLoading,
@@ -47,7 +44,6 @@ const Home: React.FC<HomeScreenProps> = ({ toggleDrawer }) => {
 
   return (
     <HomePresentation
-      toggleDrawer={toggleDrawer}
       reviewData={reviewData.data}
       restaurantData={restaurantData.data}
       rootNavigation={rootNavigation}
