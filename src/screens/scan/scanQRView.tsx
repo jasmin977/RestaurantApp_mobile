@@ -10,25 +10,30 @@ import { ScreenWidth } from '../../components/common/containers/Backgound';
 import assets, { BackIcon } from '../../assets';
 
 import { StyleSheet, ActivityIndicator } from 'react-native';
-import { useAuth, useTheme } from '../../context';
+import { useAppState, useAuth, useTheme } from '../../context';
 
 interface ScanningProps {
   handleBarCodeScanned: (data: any) => void;
+  markFirstTimeScanned: () => void;
+  setisScanned: (s: boolean) => void;
   scanned: boolean;
+  firstTimeScanned: boolean;
   isloading: boolean;
-
   hasPermission: boolean | null;
 }
 
 const ScanQRview: React.FC<ScanningProps> = ({
   handleBarCodeScanned,
+  markFirstTimeScanned,
+  firstTimeScanned,
   scanned,
-
+  setisScanned,
   hasPermission,
   isloading,
 }) => {
   const { theme } = useTheme();
-  const { firstTimeScanned, markFirstTimeScanned } = useAuth();
+
+  console.log('🚀 ~ file: scanQRView.tsx:20 ~ scanned:', scanned);
   if (hasPermission === null) {
     return (
       <BackgoundContainer>
@@ -47,32 +52,6 @@ const ScanQRview: React.FC<ScanningProps> = ({
       </BackgoundContainer>
     );
   }
-  const colorFilters = [
-    {
-      keypath: 'Circle 2',
-      color: theme.colors.primary,
-    },
-    {
-      keypath: 'Circle 1',
-      color: '#f74b20',
-    },
-    {
-      keypath: 'QR Scanner frame',
-      color: theme.colors.white,
-    },
-    {
-      keypath: 'Code information.QR Code 2',
-      color: theme.colors.primary,
-    },
-    {
-      keypath: 'Red line',
-      color: theme.colors.primary,
-    },
-    {
-      keypath: 'Scanned Code.QR Code - scanned',
-      color: theme.colors.white,
-    },
-  ];
 
   const Scannig_qr_code_color_filters = [
     {
@@ -118,28 +97,12 @@ const ScanQRview: React.FC<ScanningProps> = ({
         </CenteredContainer>
       ) : (
         <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          onBarCodeScanned={scanned ? () => setisScanned(false) : handleBarCodeScanned}
           style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
-          /*   style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: ScreenWidth,
-          height: ScreenHeigh,
-        }} */
         >
           {isloading ? (
             <ActivityIndicator size={'large'} color={theme.colors.primary}></ActivityIndicator>
           ) : (
-            /* <LottieView
-              autoPlay
-              duration={1}
-              style={{
-                width: 300,
-                height: 300,
-              }}
-              colorFilters={colorFilters}
-              source={assets.lottieFiles.QRscanSuccessful}
-            /> */
             <LottieView
               autoPlay
               loop
@@ -151,6 +114,7 @@ const ScanQRview: React.FC<ScanningProps> = ({
               source={assets.lottieFiles.QRscanner}
             />
           )}
+          {scanned && <RNButton title={'Tap to Scan Again'} onPress={() => setisScanned(false)} />}
         </BarCodeScanner>
       )}
     </BackgoundContainer>
