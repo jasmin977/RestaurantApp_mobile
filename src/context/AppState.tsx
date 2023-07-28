@@ -5,10 +5,11 @@ import AppDataCache from '../cache/appData';
 type AppStateContextType = {
   isInitialized: boolean;
   firstTimeScanned: boolean;
+  isDrawerOpen: boolean;
 
-  markFirstTimeScanned: () => void;
+  setFirstTimeScanned: (s: boolean) => void;
   setIsInitialized: (s: boolean) => void;
-  markAppisInitialized: () => void;
+  setIsDrawerOpen: (s: boolean) => void;
 };
 interface Props {
   children: ReactNode;
@@ -17,14 +18,16 @@ interface Props {
 const AppStateContext = createContext<AppStateContextType>({
   isInitialized: false,
   firstTimeScanned: false,
+  isDrawerOpen: false,
   setIsInitialized: () => {},
-  markFirstTimeScanned: () => {},
-  markAppisInitialized: () => {},
+  setIsDrawerOpen: () => {},
+  setFirstTimeScanned: () => {},
 });
 
 const AppStateProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [firstTimeScanned, setFirstTimeScanned] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const getSotredData = () => {
     const isInitializedApp = AppDataCache.getAppData()?.isInitialized;
@@ -42,24 +45,15 @@ const AppStateProvider = ({ children }: Props) => {
     getSotredData();
   }, []);
 
-  const markFirstTimeScanned = () => {
-    AppDataCache.storeAppData({ firstTimeScanned: true });
-    setFirstTimeScanned(true);
-  };
-  const markAppisInitialized = () => {
-    AppDataCache.storeAppData({ isInitialized: true });
-
-    setIsInitialized(true);
-  };
-
   return (
     <AppStateContext.Provider
       value={{
-        markAppisInitialized,
         firstTimeScanned,
-        markFirstTimeScanned,
+        setFirstTimeScanned,
         isInitialized,
         setIsInitialized,
+        isDrawerOpen,
+        setIsDrawerOpen,
       }}
     >
       {children}

@@ -1,6 +1,13 @@
-import React, { useState, useRef, useEffect, ReactNode, FunctionComponent } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ReactNode,
+  FunctionComponent,
+  ReactElement,
+} from 'react';
 import { View, Text, TouchableOpacity, Animated, FlatList, ViewStyle } from 'react-native';
-import { RNIcon, RNText } from '../components/themed';
+import { Box, RNIcon, RNText } from '../components/themed';
 import {
   AVATAR,
   ClockIcon,
@@ -14,22 +21,25 @@ import {
   SettingsIcon,
 } from '../assets';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
-import { useTheme } from '../context';
+import { useAppState, useTheme } from '../context';
 import { styled } from 'styled-components/native';
 
 import { useAuth } from '../context';
 
 import { RootNavigationProps } from './ROUTES';
 import { TabNavigationProps } from './stacks/BotoomTab';
+import AuthenticationService from '../service/Authentication';
+import UserCache from '../cache/userCache';
 
 interface DrawerProp {
   children: ReactNode;
 }
 
 const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isDrawerOpen, setIsDrawerOpen } = useAppState();
   const { theme } = useTheme();
-  const { logout } = useAuth();
+  const { setUser } = useAuth();
+
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
 
@@ -37,38 +47,31 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
 
   const tabNavigation = useNavigation<TabNavigationProps['navigation']>();
 
-  /*   useEffect(() => {
-    navigation.getParent()?.setOptions({
-      tabBarStyle: isOpen
-        ? { display: 'none' }
-        : { backgroundColor: theme.colors.background, height: 90 },
-    });
-  }, [isOpen]); */
+  useEffect(() => {
+    toggleDrawer();
+  }, [isDrawerOpen]);
+  const logout = () => {
+    UserCache.clearUserData();
+    setUser(null);
+  };
 
   const toggleDrawer = () => {
     Animated.timing(scale, {
-      toValue: isOpen ? 1 : 0.8,
+      toValue: !isDrawerOpen ? 1 : 0.8,
       duration: 300,
       useNativeDriver: true,
     }).start();
     Animated.timing(moveToRight, {
-      toValue: isOpen ? 0 : 230,
+      toValue: !isDrawerOpen ? 0 : 230,
       duration: 300,
       useNativeDriver: true,
     }).start();
-    setIsOpen(!isOpen);
   };
 
   const ProfileImage = styled.Image`
     width: 65px;
     height: 65px;
     border-radius: 20px;
-  `;
-
-  const ProfileContainer = styled.TouchableOpacity`
-    flex-direction: row;
-    gap: 7px;
-    align-items: center;
   `;
 
   interface DrawerItemProp {
@@ -112,7 +115,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         }}
         onPress={() => {
           handleDrawerItemPress(item.id);
-          toggleDrawer();
+          setIsDrawerOpen(!isDrawerOpen);
         }}
       >
         <RNIcon as={item.icon} outline color="white" size={25} />
@@ -136,16 +139,21 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         }}
       >
         {/** close drawer */}
-        <TouchableOpacity style={{}} onPress={toggleDrawer}>
+        <TouchableOpacity style={{}} onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
           <RNIcon as={<CloseIcon />} outline color="white" size={40} />
         </TouchableOpacity>
 
         {/** profile */}
-        <ProfileContainer
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 7,
+          }}
           activeOpacity={0.5}
           onPress={() => {
             handleDrawerItemPress('Profile');
-            toggleDrawer();
+            setIsDrawerOpen(!isDrawerOpen);
           }}
         >
           <ProfileImage resizeMode="cover" source={AVATAR} />
@@ -157,7 +165,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
               view your profile
             </RNText>
           </View>
-        </ProfileContainer>
+        </TouchableOpacity>
 
         {/** drawer items */}
         <FlatList
@@ -201,10 +209,10 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
 
           backgroundColor: theme.colors.background,
           transform: [{ scale: scale }, { translateX: moveToRight }],
-          borderRadius: isOpen ? 15 : 0,
+          borderRadius: isDrawerOpen ? 15 : 0,
         }}
       >
-        <TouchableOpacity
+        {/*  <TouchableOpacity
           style={{
             position: 'absolute',
             top: 50,
@@ -218,7 +226,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
         >
           <RNIcon as={<MenuIcon />} outline color="onBackground" size={25} />
         </TouchableOpacity>
-
+ */}
         {children}
       </Animated.View>
     </View>
