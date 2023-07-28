@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 
 import {
@@ -13,13 +13,17 @@ import {
 } from '../../../assets';
 import { RatingStars } from '../../../screens/restaurant/components';
 import { useTheme } from '../../../context';
-import { Restaurant } from '../../../entities';
+import { Restaurant, Review } from '../../../entities';
 import { Box, RNIcon, RNText } from '../../../components/themed';
+import { timeDifference } from '../../../helpers';
+import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProps } from '../../../navigators/ROUTES';
 
-export default function ReviewCard(item: Restaurant) {
+export default function ReviewCard(item: Review) {
   const { theme } = useTheme();
   const [isLike, setLike] = useState(false);
   const [isDilLike, setisDilLike] = useState(false);
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
 
   return (
     <Box bg="card" rounded={10} spacing={{ mx: 20 }}>
@@ -32,10 +36,24 @@ export default function ReviewCard(item: Restaurant) {
         style={{ borderBottomWidth: 1, borderColor: theme.colors.background }}
       >
         <Box direction="horizontal">
-          <Image source={AVATAR} style={{ width: 40, height: 40, borderRadius: 100 }} />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile', { id: item.reviewedBy.id })}
+          >
+            <Image
+              source={item.reviewedBy.profileImg ? { uri: item.reviewedBy.profileImg } : AVATAR}
+              style={{ width: 40, height: 40, borderRadius: 100 }}
+            />
+          </TouchableOpacity>
           <Box alignItems="flex-start" spacing={{ px: 10 }}>
-            <RNText variant="h5">yasmine ab</RNText>
-            <RNText variant="caption">25 min ago</RNText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Profile', { id: item.reviewedBy.id })}
+            >
+              <RNText variant="h5">{item.reviewedBy.username}</RNText>
+            </TouchableOpacity>
+
+            <RNText variant="caption">
+              {timeDifference(new Date(), new Date(item.reviewedAt))}
+            </RNText>
           </Box>
         </Box>
         <RNIcon color="onCard" outline as={<EllipsisIcon />} />
@@ -43,31 +61,42 @@ export default function ReviewCard(item: Restaurant) {
 
       {/** CARD CONTAINER */}
       <Box gap={15} w={'100%'} spacing={{ py: 15, px: 15 }}>
-        <RNText variant="h4">Restaurant name</RNText>
-        <RatingStars size={35} rating={4} />
-        <RNText variant="body">
-          i'm very happy with the services. ithink this is the best cafe in tunisia{' '}
-        </RNText>
-        <Image
-          source={vegyBurger}
-          resizeMode="cover"
-          style={{ width: '100%', height: 100, borderRadius: 8 }}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.push('RestaurantStack', {
+              screen: 'RestaurantProfile',
+              params: {
+                id: item.restaurantId.id,
+              },
+            });
+          }}
+        >
+          <RNText variant="h4">{item.restaurantId.name}</RNText>
+        </TouchableOpacity>
+        <RatingStars size={35} rating={item.rate} />
+        <RNText variant="body">{item.caption}</RNText>
+        {item.img && (
+          <Image
+            source={{ uri: item.img }}
+            resizeMode="cover"
+            style={{ width: '100%', height: 200, borderRadius: 8 }}
+          />
+        )}
         <Box
           w={'100%'}
           direction="horizontal"
           justifyContent="space-between"
           bg="background"
           rounded={8}
-          spacing={{ p: 10 }}
+          spacing={{ px: 10, py: 5 }}
         >
-          <Box alignItems="flex-start">
+          <Box alignItems="flex-start" w={'50%'}>
             <RNText variant="subtitle">Gategory</RNText>
             <RNText variant="caption">Food & Drink</RNText>
           </Box>
-          <Box alignItems="flex-start">
+          <Box alignItems="flex-start" w={'50%'}>
             <RNText variant="subtitle">Location</RNText>
-            <RNText variant="caption">Hammem sousse</RNText>
+            <RNText variant="caption">{item.restaurantId.location}</RNText>
           </Box>
         </Box>
         <Box w={'100%'} direction="horizontal" justifyContent="space-around">
