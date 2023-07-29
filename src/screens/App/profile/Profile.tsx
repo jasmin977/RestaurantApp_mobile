@@ -9,31 +9,12 @@ import { useAuth, useTheme } from '../../../context';
 import { Review, user } from '../../../entities';
 
 import UserService from '../../../service/Users';
-import { useLazyLoading } from '../../../hooks';
+import { usePagination } from '../../../hooks';
 import { ReviewService } from '../../../service';
 import ReviewCard from './../home/components/ReviewCard';
 
-interface ProfileProps {}
-const renderHeader = (num: number) => {
-  return (
-    <Box
-      bg="background"
-      direction="horizontal"
-      justifyContent="space-between"
-      spacing={{ px: 20, py: 20 }}
-    >
-      <Box direction="horizontal" gap={5}>
-        <RNText variant="h5">My Reviews</RNText>
-        <RNText variant="caption">{num} </RNText>
-      </Box>
-      <RNText style={{ fontWeight: 'bold' }} color="primary">
-        See All
-      </RNText>
-    </Box>
-  );
-};
 const renderItem = ({ item }: { item: Review }) => {
-  return <ReviewCard key={`Profile_${item._id}_ `} {...item} />;
+  return <ReviewCard {...item} />;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
@@ -42,13 +23,9 @@ const Profile = ({ navigation, route }: Props) => {
   const id = route.params?.id;
   const { theme } = useTheme();
   const { user } = useAuth();
-  const { documentData, loading, refreshing, retrieveMore } = useLazyLoading<Review>({
-    initialLimit: 9,
-    fetchDataAction: ReviewService.useFetchReviews(),
-    sortField: '_id', // Sort by '_id' field of the Restaurant model
-  });
 
-  console.log('🚀 ~ file: Profile.tsx:22 ~ Profile ~ user:', user);
+  const { loadPage, data } = usePagination(ReviewService.useFetchReviewByPage);
+
   let userData = null;
   if (id) {
     const {
@@ -75,7 +52,13 @@ const Profile = ({ navigation, route }: Props) => {
       </BackgoundContainer>
     );
   }
-
+  if (!data) {
+    return (
+      <BackgoundContainer>
+        <RNText>no data</RNText>
+      </BackgoundContainer>
+    );
+  }
   return (
     <BackgoundContainer>
       <Box
@@ -97,9 +80,9 @@ const Profile = ({ navigation, route }: Props) => {
       </Box>
 
       <FlatList
-        data={documentData}
+        data={data}
         renderItem={renderItem}
-        keyExtractor={item => String(item._id + 'PROFILe' + item.caption)}
+        keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
         ListHeaderComponent={
           <View style={{ paddingVertical: 10 }}>
             <Box gap={10}>
@@ -155,7 +138,7 @@ const Profile = ({ navigation, route }: Props) => {
             >
               <Box direction="horizontal" gap={5}>
                 <RNText variant="h5">My Reviews</RNText>
-                <RNText variant="caption">({documentData.length}) </RNText>
+                <RNText variant="caption">({data.length}) </RNText>
               </Box>
               <RNText style={{ fontWeight: 'bold' }} color="primary">
                 See All
@@ -164,9 +147,8 @@ const Profile = ({ navigation, route }: Props) => {
           </View>
         }
         contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
-        onEndReached={retrieveMore}
+        onEndReached={loadPage}
         onEndReachedThreshold={0}
-        refreshing={refreshing}
       />
     </BackgoundContainer>
   );

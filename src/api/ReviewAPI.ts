@@ -1,5 +1,9 @@
 import { RequestHandler } from '../config';
 
+interface ReviwDTO {
+  page: number;
+  limit: number;
+}
 class ReviewsAPI {
   public static async fetchReviews() {
     return RequestHandler({
@@ -10,6 +14,13 @@ class ReviewsAPI {
   public static async fetchReviewById(id: number) {
     return RequestHandler({
       url: `/reviews/${id}`,
+      method: 'GET',
+    });
+  }
+
+  public static async fetchReviewByPage(reviwDTO: ReviwDTO) {
+    return RequestHandler({
+      url: `/reviews?_page=${reviwDTO.page}&_limit=${reviwDTO.limit} `,
       method: 'GET',
     });
   }

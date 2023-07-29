@@ -2,6 +2,6 @@ import useAssetLoader from './useAssetLoader';
 import usePersmissions from './usePermission';
 
 import useCurrentPosition from './useCurrentPosition';
-import useLazyLoading from './useLazyLoading';
+import usePagination from './usePagination ';
 
-export { useAssetLoader, usePersmissions, useCurrentPosition, useLazyLoading };
+export { useAssetLoader, usePersmissions, useCurrentPosition, usePagination };

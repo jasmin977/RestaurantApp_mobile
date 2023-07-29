@@ -1,6 +1,7 @@
-import { useQueryReq } from '../hooks/useRequest';
+import { useMutationReq, useQueryReq } from '../hooks/useRequest';
 import ReviewsAPI from '../api/ReviewAPI';
-import { Review } from '../entities';
+
+import { AxiosError } from 'axios';
 
 class ReviewService {
   public static useFetchReviews() {
@@ -15,13 +16,16 @@ class ReviewService {
     const { data, ...rest } = useQueryReq({
       queryKey: `useFetchRestaurantByID`,
       request: () => ReviewsAPI.fetchReviewById(id),
-      /*  onSuccess:({data})=>{
-        data.map((item:Review)=>{
-          const{reviewedBy,restaurantId}=data
-
-        })
-      } */
     });
+  }
+  public static useFetchReviewByPage() {
+    const { mutate, ...rest } = useMutationReq({
+      queryKey: `useFetchRestaurantByPage`,
+      request: ReviewsAPI.fetchReviewByPage,
+      onSuccess: ({ data }) => console.log('onSuccess', data),
+      onError: (err: AxiosError) => console.log('onError', err.response?.data),
+    });
+    return { mutate, ...rest };
   }
 }
 
