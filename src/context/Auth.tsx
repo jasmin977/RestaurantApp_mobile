@@ -6,39 +6,24 @@ import { user } from '../entities';
 type AuthContextType = {
   user: user | null;
   setUser: (user: user | null) => void;
-  isLoading: boolean;
 };
 interface Props {
   children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType>({
-  user: null,
+  user: UserCache.getUserData(),
   setUser: () => {},
-  isLoading: false,
 });
 
 const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<user | null>(null);
-  const [isLoading, setisloading] = useState(false);
-
-  const isLoggedIn = () => {
-    const cachedUser = UserCache.getUserData();
-    if (cachedUser) {
-      setUser(cachedUser);
-    }
-  };
-
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  const [user, setUser] = useState<user | null>(UserCache.getUserData());
 
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
-        isLoading,
       }}
     >
       {children}

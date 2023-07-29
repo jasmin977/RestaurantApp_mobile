@@ -20,7 +20,7 @@ const HomePresentation = ({
   rootNavigation,
 }: HomePresentationProps) => {
   const renderItem = (item: Review) => {
-    return <ReviewCard key={`key_${item._id}_ `} {...item} />;
+    return <ReviewCard key={`key_${item.id}_ `} {...item} />;
   };
 
   return (

@@ -7,19 +7,12 @@ import RootStack from './ROUTES';
 import { AuthStack, OnBoardingStack } from './stacks';
 
 const Root: FunctionComponent = props => {
-  const { user, isLoading } = useAuth();
+  const { user } = useAuth();
 
   const { isInitialized } = useAppState();
 
   const { theme } = useTheme();
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size={'large'} color={theme.colors.primary}></ActivityIndicator>
-      </View>
-    );
-  }
   return (
     <NavigationContainer>
       {!isInitialized ? <OnBoardingStack /> : user ? <RootStack /> : <AuthStack />}

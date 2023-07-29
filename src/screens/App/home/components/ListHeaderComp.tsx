@@ -17,7 +17,6 @@ interface ListHeaderComponentProps {
 }
 const ListHeaderComponent = ({ rootNavigation, restaurantData }: ListHeaderComponentProps) => {
   const { user } = useAuth();
-
   return (
     <View>
       <Box alignItems="flex-start" spacing={{ py: 10, px: 20, pt: 30 }}>

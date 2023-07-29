@@ -16,7 +16,11 @@ class AuthenticationService {
       queryKey: 'useLogin',
       request: AuthenticationAPI.login,
       onSuccess: ({ data }) => {
-        const loggedInUser = data;
+        const loggedInUser = data[0];
+        console.log(
+          '🚀 ~ file: Authentication.ts:20 ~ AuthenticationService ~ useLogin ~ data:',
+          data
+        );
 
         setUser(loggedInUser);
         UserCache.storeUserData(loggedInUser);
@@ -42,7 +46,7 @@ class AuthenticationService {
       queryKey: 'register',
       request: AuthenticationAPI.register,
       onSuccess: ({ data }) => {
-        const newUser = data;
+        const newUser = data[0];
         setUser(newUser);
         UserCache.storeUserData(newUser);
         setIsInitialized(true);
