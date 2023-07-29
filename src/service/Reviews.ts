@@ -22,8 +22,8 @@ class ReviewService {
     const { mutate, ...rest } = useMutationReq({
       queryKey: `useFetchRestaurantByPage`,
       request: ReviewsAPI.fetchReviewByPage,
-      onSuccess: ({ data }) => console.log('onSuccess', data),
-      onError: (err: AxiosError) => console.log('onError', err.response?.data),
+      /*   onSuccess: ({ data }) => console.log('onSuccess', data),
+      onError: (err: AxiosError) => console.log('onError', err.response?.data), */
     });
     return { mutate, ...rest };
   }

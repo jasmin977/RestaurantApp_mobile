@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { IUseMutationReq } from './useRequest';
 
 const usePagination = (service: () => IUseMutationReq) => {
-  const { data: res, mutate } = service();
+  const { data: res, isLoading, mutate } = service();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<any[]>([]);
 
@@ -22,7 +22,7 @@ const usePagination = (service: () => IUseMutationReq) => {
     setPage(v => v + 1);
   };
 
-  return { loadPage, data, page };
+  return { loadPage, data, page, isLoading };
 };
 
 export default usePagination;

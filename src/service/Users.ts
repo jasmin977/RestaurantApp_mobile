@@ -10,7 +10,7 @@ class UserService {
       request: () => UserAPI.getUsers(),
     });
   }
-  public static useFetchUserByID(id: number) {
+  public static useFetchUserByID(id: number | string) {
     return useQueryReq({
       queryKey: `useFetchUserByID`,
       request: () => UserAPI.getUserById(id),

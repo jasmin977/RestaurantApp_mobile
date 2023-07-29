@@ -7,7 +7,7 @@ class UserAPI {
       method: 'GET',
     });
   }
-  public static async getUserById(id: number) {
+  public static async getUserById(id: number | string) {
     return RequestHandler({
       url: `/users/${id}`,
       method: 'GET',
