@@ -11,7 +11,6 @@ import { useTheme } from '../../context';
 import Text from './Text';
 import { SIZES } from '../../themes';
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
-import { RNText } from '.';
 
 interface ThemedButtonProps {
   title?: string;
@@ -84,7 +83,7 @@ const ThemedButton: React.FC<ThemedButtonProps> = ({
       ) : (
         <>
           {centerIcon && <View style={styles.centerIconContainer}>{centerIcon}</View>}
-          {title && <RNText style={textStyle}>{title}</RNText>}
+          {title && <Text style={textStyle}>{title}</Text>}
         </>
       )}
       {rightIcon && renderIcon(rightIcon)}

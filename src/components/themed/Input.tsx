@@ -8,7 +8,7 @@ import Box from './Box';
 import ICON from './Icon';
 import Text from './Text';
 import { COLORS, lightPalette } from '../../themes';
-import { RNText } from '.';
+
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
 
 interface RNTextInputProps {
@@ -57,7 +57,7 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   const inputStyle = [styles.input, { fontSize: scale(size), color: theme.colors.onCard }];
   return (
     <Box gap={5} alignItems="flex-start" flex={1}>
-      {label && <RNText variant="subtitle">{label}</RNText>}
+      {label && <Text variant="subtitle">{label}</Text>}
       <View style={[inputContainerStyle, { backgroundColor: theme.colors.card }]}>
         {leftIcon && <View style={styles.iconContainer}>{leftIcon}</View>}
         <TextInput

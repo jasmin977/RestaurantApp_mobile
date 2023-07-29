@@ -1,9 +1,10 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Avatar from './Avatar';
-import { RNText } from '.';
+
 import { scale, verticalScale } from '../../helpers';
 import { useTheme } from '../../context';
+import Text from './Text';
 
 interface AvatarData {
   name: string;
@@ -36,7 +37,7 @@ const AvatarGroup: FunctionComponent<AvatarGroupProps> = ({ size = 50, max = 3, 
           borderRadius: scale(20),
         }}
       >
-        <RNText>+{avatars.length - max}</RNText>
+        <Text>+{avatars.length - max}</Text>
       </View>
     </View>
   );
