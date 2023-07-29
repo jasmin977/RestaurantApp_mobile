@@ -248,7 +248,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
       >
-        <ReviewForm />
+        <ReviewForm restaurant={data.data} handleSnapPress={handleSnapPress} />
       </BottomSheet>
     </View>
   );

@@ -8,7 +8,7 @@ import { AuthStack, OnBoardingStack } from './stacks';
 
 const Root: FunctionComponent = props => {
   const { user, isLoading } = useAuth();
-  console.log('🚀 ~ file: StartNavigator.tsx:11 ~ user:', user);
+
   const { isInitialized } = useAppState();
 
   const { theme } = useTheme();

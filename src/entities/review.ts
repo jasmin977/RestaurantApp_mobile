@@ -2,12 +2,12 @@ import Restaurant from './restaurant';
 import user from './user';
 
 interface Review {
-  _id: number;
+  id?: number;
   caption: string;
   reviewedBy: user;
   restaurantId: Restaurant;
   reviewedAt: Date;
-  img: string;
+  img?: string;
   rate: number;
 }
 export default Review;

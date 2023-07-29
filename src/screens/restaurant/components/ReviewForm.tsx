@@ -7,16 +7,41 @@ import {
   Platform,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useTheme } from '../../../context';
+import { useAuth, useTheme } from '../../../context';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
 import RateOption from './RateOption';
 import { COLORS } from '../../../themes';
 import { CameraIcon } from '../../../assets';
 import { scale, verticalScale } from '../../../helpers';
+import { Restaurant } from '../../../entities';
+import { RestaurantService } from '../../../service';
 
-const ReviewForm = () => {
+interface IreviewProp {
+  restaurant: Restaurant;
+  handleSnapPress: (idx: number) => void;
+}
+const ReviewForm = ({ restaurant, handleSnapPress }: IreviewProp) => {
   const { theme } = useTheme();
   const [rating, setRating] = useState(0);
+  const [caption, setCaption] = useState('');
+  const { user } = useAuth();
+  console.log('🚀 ~ file: ReviewForm.tsx:27 ~ ReviewForm ~ user:', user);
+  const { onAddReview, isLoading } = RestaurantService.addReview();
+
+  const submitReview = () => {
+    if (user) {
+      const reviwData = {
+        caption: caption,
+        rate: rating,
+        restaurantId: restaurant,
+        reviewedBy: user,
+        reviewedAt: new Date(),
+      };
+      onAddReview(reviwData);
+      // Close the bottom sheet after submitting the review
+      handleSnapPress(0);
+    }
+  };
 
   return (
     <Box flex={1} alignItems="flex-start" justifyContent="flex-start" gap={20} spacing={{ p: 20 }}>
@@ -36,6 +61,8 @@ const ReviewForm = () => {
               style={[styles.textArea, { color: theme.colors.onCard }]}
               placeholder="write your comment here.."
               placeholderTextColor={COLORS.grey[400]}
+              value={caption}
+              onChangeText={text => setCaption(text)}
             />
           </KeyboardAvoidingView>
         </Box>
@@ -64,13 +91,18 @@ const ReviewForm = () => {
         spacing={{ py: 10, px: 10 }}
         style={{
           position: 'absolute',
-          bottom: 20,
+          bottom: verticalScale(20),
           zIndex: 1,
           left: 0,
           right: 0,
         }}
       >
-        <RNButton style={{ width: '100%' }} title="submit review" />
+        <RNButton
+          style={{ width: '100%' }}
+          isLoading={isLoading}
+          title="submit review"
+          onPress={submitReview}
+        />
       </Box>
     </Box>
   );
