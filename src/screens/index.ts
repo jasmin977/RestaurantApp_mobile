@@ -7,7 +7,7 @@ import SavedRestaurantsScreen from './restaurant/Saved';
 import LikedRestaurantsScreen from './restaurant/Liked';
 
 import ScanQRScreen from './scan/scanQRcontainer';
-import HomeScreen from './App/home/HomeContainer';
+import HomeScreen from './App/home/Home';
 import NotificationsScreen from './App/Notifications';
 import ProfileScreen from './App/profile/Profile';
 import EditProfile from './App/profile/EditProfile';

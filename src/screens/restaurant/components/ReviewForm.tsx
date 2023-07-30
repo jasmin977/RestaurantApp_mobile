@@ -7,7 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useAuth, useTheme } from '../../../context';
+import { useAuth, useReviewContext, useTheme } from '../../../context';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
 import RateOption from './RateOption';
 import { COLORS } from '../../../themes';
@@ -25,20 +25,19 @@ const ReviewForm = ({ restaurant, handleSnapPress }: IreviewProp) => {
   const [rating, setRating] = useState(0);
   const [caption, setCaption] = useState('');
   const { user } = useAuth();
-  console.log('🚀 ~ file: ReviewForm.tsx:27 ~ ReviewForm ~ user:', user);
-  const { onAddReview, isLoading } = RestaurantService.addReview();
+  const { onAddReview, isLoading, data } = RestaurantService.addReview();
 
   const submitReview = () => {
     if (user) {
-      const reviwData = {
+      const newReview = {
         caption: caption,
         rate: rating,
         restaurantId: restaurant,
         reviewedBy: user,
         reviewedAt: new Date(),
       };
-      onAddReview(reviwData);
-      // Close the bottom sheet after submitting the review
+      onAddReview(newReview);
+
       handleSnapPress(0);
     }
   };

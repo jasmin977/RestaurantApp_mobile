@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAuth } from '../../../context';
-import { Review } from '../../../entities';
-import { usePagination } from '../../../hooks';
+import { Review, user } from '../../../entities';
+
 import { ReviewService } from '../../../service';
 import { Box, RNText } from '../../../components/themed';
-import { BackButton, BackgoundContainer } from '../../../components/common';
-import ReviewCard from './../home/components/ReviewCard';
+import { BackButton, BackgoundContainer, ReviewCard } from '../../../components/common';
+
 import ProfileHeader from './components/ProfileHeader';
-import ProfileFooter from './components/ProfileFooter';
 import { RootStackParamList } from '../../../navigators/ROUTES';
 import { getUserData } from '../../../helpers';
 import CenteredContainer from '../../../components/common/containers/Centered';
@@ -24,9 +23,32 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
     setIsFollow(prevIsFollow => !prevIsFollow);
   };
 
-  const { loadPage, data, isLoading } = usePagination(ReviewService.useFetchReviewByPage);
-
   const userData = getUserData(route.params?.id, user);
+
+  const {
+    data: userReviews,
+    isLoading: reviewLoading,
+    error: reviewError,
+  } = ReviewService.useFetchReviewsByUserId(userData?.id ?? 1);
+
+  if (userData === null) {
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <RNText>loading.. </RNText>
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
+  }
+  if (reviewLoading) {
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <RNText>loading reviews.. </RNText>
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
+  }
 
   return (
     <BackgoundContainer>
@@ -39,33 +61,21 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
         <BackButton onPress={() => navigation.goBack()} />
       </Box>
 
-      {userData && (
-        <FlatList
-          data={data}
-          renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
-          keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
-          ListHeaderComponent={
-            <ProfileHeader
-              userData={userData}
-              isFollow={isFollow}
-              onToggleFollow={handleToggleFollow}
-              navigation={navigation}
-            />
-          }
-          ListFooterComponent={<ProfileFooter isLoading={isLoading} />}
-          contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
-          onEndReached={loadPage}
-          onEndReachedThreshold={0}
-        />
-      )}
-
-      {!userData && (
-        <BackgoundContainer>
-          <CenteredContainer>
-            <RNText>No profile available</RNText>
-          </CenteredContainer>
-        </BackgoundContainer>
-      )}
+      <FlatList
+        data={userReviews.data}
+        renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
+        keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
+        ListHeaderComponent={
+          <ProfileHeader
+            userData={userData}
+            isFollow={isFollow}
+            onToggleFollow={handleToggleFollow}
+            navigation={navigation}
+          />
+        }
+        contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
+        onEndReachedThreshold={100}
+      />
     </BackgoundContainer>
   );
 };

@@ -16,4 +16,6 @@ export { default as CenteredView } from './containers/Centered';
 export { default as Review } from './review/Review';
 import BackButton from './buttons/BackButton';
 import MenuButton from './buttons/MenuButton';
-export { BackButton, MenuButton };
+import FlatlistFooter from './FlatlistFooter';
+import ReviewCard from './cards/ReviewCard';
+export { BackButton, MenuButton, FlatlistFooter, ReviewCard };

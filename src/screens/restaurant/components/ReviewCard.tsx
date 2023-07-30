@@ -3,33 +3,29 @@ import React, { FunctionComponent } from 'react';
 import { Avatar, Box, RNText } from '../../../components/themed';
 import { AVATAR, vegyBurger } from '../../../assets';
 import { Review } from '../../../components/common';
-import { scale, verticalScale } from '../../../helpers';
+import { scale, timeDifference, verticalScale } from '../../../helpers';
+import { Review as ReviewModel } from '../../../entities';
 
-interface ReviewCardProps {
-  id: number;
-  date: string;
-  reviewedBy: string;
-  description?: string;
-  img?: ImageSourcePropType;
-}
-
-const ReviewCard: FunctionComponent<ReviewCardProps> = ({ date, reviewedBy, description, img }) => {
+const ReviewCard = (reviw: ReviewModel) => {
   return (
     <Box flex={1} direction="horizontal" alignItems="flex-start" spacing={{ p: 20 }} gap={10}>
       <Box>
-        <Avatar size={40} />
+        <Avatar src={reviw.reviewedBy.profileImg} size={40} />
         <Box h={'100%'} w={7} bg="card"></Box>
       </Box>
       <Box flex={1} alignItems="stretch" gap={5} bg="card" rounded={8} spacing={{ p: 10, mt: -25 }}>
         <Box direction="horizontal" justifyContent="space-between" flex={1}>
-          <RNText variant="subtitle">{reviewedBy}</RNText>
-          <RNText variant="caption">{date}</RNText>
+          <RNText variant="subtitle">{reviw.reviewedBy.username}</RNText>
+          <RNText variant="caption">
+            {' '}
+            {timeDifference(new Date(), new Date(reviw.reviewedAt))}
+          </RNText>
         </Box>
         <Review rating={4} detailled />
-        {description && <RNText variant="body">{description}</RNText>}
-        {img && (
+        {reviw.caption && <RNText variant="body">{reviw.caption}</RNText>}
+        {reviw.img && (
           <Image
-            source={img}
+            source={{ uri: reviw.img }}
             resizeMode="stretch"
             style={{ width: '100%', height: verticalScale(150), borderRadius: scale(10) }}
           />
