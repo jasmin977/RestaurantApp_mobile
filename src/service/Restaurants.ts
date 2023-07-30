@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { useMutationReq, useQueryReq } from '../hooks/useRequest';
 import RestaurantsAPI from '../api/RestaurantsAPI';
 import { Review } from '../entities';
+import { useReviewContext } from '../context';
 
 class RestaurantService {
   public static useFetchRestaurants() {
@@ -19,12 +20,13 @@ class RestaurantService {
     });
   }
   public static addReview() {
+    const { addReview } = useReviewContext();
     const { mutate, ...rest } = useMutationReq({
       queryKey: 'addReview',
       request: RestaurantsAPI.addReview,
       onSuccess: ({ data }) => {
         const reviw = data;
-        console.log('🚀 ~ file: Restaurants.ts:27 ~ RestaurantService ~ addReview ~ reviw:', reviw);
+        addReview(reviw);
       },
       onError: (err: AxiosError) => console.log('onError', err.response?.data),
     });
@@ -41,6 +43,15 @@ class RestaurantService {
     };
 
     return { onAddReview, ...rest };
+  }
+  public static useFetchRestaurantByPage() {
+    const { mutate, ...rest } = useMutationReq({
+      queryKey: `useFetchRestaurantByPage`,
+      request: RestaurantsAPI.fetchRestaurantByPage,
+      /*   onSuccess: ({ data }) => console.log('onSuccess', data),
+      onError: (err: AxiosError) => console.log('onError', err.response?.data), */
+    });
+    return { mutate, ...rest };
   }
 }
 

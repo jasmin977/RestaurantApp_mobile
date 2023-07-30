@@ -1,6 +1,10 @@
 import { RequestHandler } from '../config';
 import { Review } from '../entities';
 
+interface RestaurantDTO {
+  page: number;
+  limit: number;
+}
 class RestaurantsAPI {
   public static async fetchRestaurants() {
     return RequestHandler({
@@ -19,6 +23,12 @@ class RestaurantsAPI {
       url: `/reviews`,
       method: 'POST',
       data: data,
+    });
+  }
+  public static async fetchRestaurantByPage(restaurantDTO: RestaurantDTO) {
+    return RequestHandler({
+      url: `/restaurants?_page=${restaurantDTO.page}&_limit=${restaurantDTO.limit} `,
+      method: 'GET',
     });
   }
 }

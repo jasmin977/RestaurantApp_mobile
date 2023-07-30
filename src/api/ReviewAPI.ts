@@ -17,6 +17,18 @@ class ReviewsAPI {
       method: 'GET',
     });
   }
+  public static async fetchReviewsByRestaurantId(restaurantId: number) {
+    return RequestHandler({
+      url: `/reviews?restaurantId.id=${restaurantId}`,
+      method: 'GET',
+    });
+  }
+  public static async fetchReviewsByUserId(userId: number | string) {
+    return RequestHandler({
+      url: `/reviews?reviewedBy.id=${userId}`,
+      method: 'GET',
+    });
+  }
 
   public static async fetchReviewByPage(reviwDTO: ReviwDTO) {
     return RequestHandler({
