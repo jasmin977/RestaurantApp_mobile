@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
-import { BackIcon, ClockIcon, CloseIcon, FilterIcon, SearchIcon } from '../../assets';
+import { BackIcon, CloseIcon, FilterIcon, SearchIcon } from '../../assets';
 import { BackButton, BackgoundContainer } from '../../components/common';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 import { RootNavigationProps } from '../../navigators/ROUTES';
 import { useNavigation } from '@react-navigation/native';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { RestaurantService } from '../../service';
 import { Restaurant } from '../../entities';
 import { FlatList } from 'react-native-gesture-handler';
-
-import SearchCardItem from './components/SearchItemCard';
 import SearchHistoryCache from '../../cache/searchHistoryCache';
 import { scale } from '../../helpers';
+import RestaurantCard from './components/cards/RestaurantCard';
 
-interface SeachContainerProps {}
+interface SeachScreenProps {}
 
-const SeachContainer: React.FC<SeachContainerProps> = () => {
+const SeachScreen: React.FC<SeachScreenProps> = () => {
   const navigation = useNavigation<RootNavigationProps['navigation']>();
   const [searchText, setSearchText] = useState('');
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
@@ -160,12 +159,12 @@ const SeachContainer: React.FC<SeachContainerProps> = () => {
         <FlatList
           contentContainerStyle={{ padding: 20, gap: 10 }}
           data={searchResults}
-          renderItem={({ item }) => SearchCardItem(item)}
-          keyExtractor={item => item.id.toString()}
+          renderItem={RestaurantCard}
+          keyExtractor={(item, index) => `SEARCH_${item.id}_${item.name}_${index}`}
         />
       )}
     </BackgoundContainer>
   );
 };
 
-export default SeachContainer;
+export default SeachScreen;

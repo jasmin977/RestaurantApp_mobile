@@ -1,10 +1,11 @@
 import { View, Image, ImageSourcePropType } from 'react-native';
 import React, { FunctionComponent } from 'react';
-import { Avatar, Box, RNText } from '../../../components/themed';
-import { AVATAR, vegyBurger } from '../../../assets';
-import { Review } from '../../../components/common';
-import { scale, timeDifference, verticalScale } from '../../../helpers';
-import { Review as ReviewModel } from '../../../entities';
+import { Avatar, Box, RNText } from '../../../../components/themed';
+import { AVATAR, vegyBurger } from '../../../../assets';
+
+import { scale, timeDifference, verticalScale } from '../../../../helpers';
+import { Review as ReviewModel } from '../../../../entities';
+import RatingStars from '../reviews/RatingStars';
 
 const ReviewCard = (reviw: ReviewModel) => {
   return (
@@ -21,7 +22,10 @@ const ReviewCard = (reviw: ReviewModel) => {
             {timeDifference(new Date(), new Date(reviw.reviewedAt))}
           </RNText>
         </Box>
-        <Review rating={4} detailled />
+        <Box alignItems="flex-start">
+          <RatingStars rating={reviw.rate} detailed size={20} />
+        </Box>
+
         {reviw.caption && <RNText variant="body">{reviw.caption}</RNText>}
         {reviw.img && (
           <Image

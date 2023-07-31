@@ -6,7 +6,6 @@ import {
 } from '@react-navigation/stack';
 
 import {
-  AddReviewScreen,
   RestaurantCommentScreen,
   RestaurantProfileScreen,
   RestaurantReviewsScreen,
@@ -18,7 +17,6 @@ export type RestaurantStackParamList = {
   RestaurantProfile: { id: number };
   RestaurantComments: undefined;
   RestaurantReviews: undefined;
-  AddReview: undefined;
 };
 
 export type RestaurantNavigationProps = StackNavigationProp<
@@ -53,15 +51,6 @@ const RestaurantStack: FunctionComponent = () => {
       <Stack.Screen
         name="RestaurantReviews"
         component={RestaurantReviewsScreen}
-        options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="AddReview"
-        component={AddReviewScreen}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
 

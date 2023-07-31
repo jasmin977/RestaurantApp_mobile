@@ -1,12 +1,13 @@
 import { FunctionComponent, useState } from 'react';
 import { styled } from 'styled-components/native';
-import { MenuCategory } from '../../../entities';
+import { MenuCategory } from '../../../../entities';
 import { GestureResponderEvent, TouchableOpacity } from 'react-native';
-import { MealCard } from '../../../components/common';
+
 import { FlatList } from 'react-native';
 import { View } from 'react-native';
-import { RNText } from '../../../components/themed';
-import { useTheme } from '../../../context';
+import { RNText } from '../../../../components/themed';
+import { useTheme } from '../../../../context';
+import MealItem from '../cards/MealItem';
 
 interface MenuSectionProps {
   menu: MenuCategory[];
@@ -74,7 +75,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
       <MenuItemsContainer>
         {selectedCategory &&
           getCategoryItems(selectedCategory).map(item => (
-            <MealCard
+            <MealItem
               name={item.name}
               rating={item.rating}
               key={`${item.name}_${item.description}`}

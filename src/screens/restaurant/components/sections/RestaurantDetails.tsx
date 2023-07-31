@@ -1,12 +1,14 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ClockIcon, LocationIcon } from '../../../assets';
-import { Review } from '../../../components/common';
-import { Box, RNIcon, RNText } from '../../../components/themed';
-import { useTheme } from '../../../context';
-import { Restaurant } from '../../../entities';
-import LikeButton from './LikeButton';
+import { ClockIcon, LocationIcon } from '../../../../assets';
+
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+import { useTheme } from '../../../../context';
+import { Restaurant } from '../../../../entities';
+import LikeButton from '../buttons/LikeButton';
 import MenuSection from './MenuSection';
-import { RestaurantStackParamList } from '../../../navigators/stacks';
+import { RestaurantStackParamList } from '../../../../navigators/stacks';
+
+import RatingStars from '../reviews/RatingStars';
 
 interface RestaurantDetailsProps {
   data: Restaurant;
@@ -29,7 +31,7 @@ const RestaurantDetails = ({ data, navigation }: RestaurantDetailsProps) => {
         <LikeButton />
       </Box>
       <Box alignItems="flex-start" onPress={() => navigation.navigate('RestaurantReviews')}>
-        <Review rating={data.rating} detailled size={20} />
+        <RatingStars rating={data.rating} detailed size={20} />
       </Box>
       <Box direction="horizontal" gap={10}>
         <RNIcon as={<ClockIcon />} outline color="primary" />

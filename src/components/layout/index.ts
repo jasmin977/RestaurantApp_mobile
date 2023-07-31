@@ -1,3 +1,4 @@
 import AnimatdeHeader from './AnimatedHeader';
 import Carousel from './Carousel';
-export { AnimatdeHeader, Carousel };
+import SearchableLayout from './Searchable.layout';
+export { AnimatdeHeader, Carousel, SearchableLayout };

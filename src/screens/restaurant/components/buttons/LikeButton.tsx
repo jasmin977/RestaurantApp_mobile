@@ -1,8 +1,8 @@
 import { useState, FunctionComponent } from 'react';
 
-import { LikeIcon } from '../../../assets';
-import { useTheme } from '../../../context';
-import { RNButton, RNIcon, RNToast } from '../../../components/themed';
+import { LikeIcon } from '../../../../assets';
+import { useTheme } from '../../../../context';
+import { RNButton, RNIcon, RNToast } from '../../../../components/themed';
 
 interface ButtnProps {}
 const LikeButton: FunctionComponent<ButtnProps> = () => {

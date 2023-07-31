@@ -108,10 +108,12 @@ const MapPresentation = ({
         {data && <Geojson geojson={data.data} strokeColor={COLORS.primary} strokeWidth={6} />}
       </MapView>
 
-      <RestaurantBottomSheet
-        restaurantData={restaurantData}
-        goToRestaurantPosition={goToRestaurantPosition}
-      />
+      {restaurantData && (
+        <RestaurantBottomSheet
+          restaurantData={restaurantData}
+          goToRestaurantPosition={goToRestaurantPosition}
+        />
+      )}
     </CenteredView>
   </View>
 );

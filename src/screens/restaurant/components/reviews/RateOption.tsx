@@ -1,8 +1,8 @@
 import { View, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useTheme } from '../../../context';
-import { Box, RNIcon, RNText } from '../../../components/themed';
-import { StarIcon } from '../../../assets';
+import { useTheme } from '../../../../context';
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+import { StarIcon } from '../../../../assets';
 
 interface RateOptionProps {
   rating: number;

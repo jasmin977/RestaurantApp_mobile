@@ -1,13 +1,12 @@
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import { Box, RNIcon, RNText } from '../../../components/themed';
-import { Review } from '../../../components/common';
-import { Restaurant } from '../../../entities';
+import { Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Restaurant } from '../../../../entities';
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+import { SaveIcon } from '../../../../assets';
+import { scale } from '../../../../helpers';
+import RatingStars from '../reviews/RatingStars';
 
-import { Image } from 'react-native';
-
-interface Props {}
-
-const SearchCardItem = (item: Restaurant) => {
+const RestaurantCard = ({ item }: { item: Restaurant }) => {
   return (
     <Box bg="card" direction="horizontal" flex={1} gap={10} rounded={10} spacing={{ p: 10 }}>
       <Box direction="horizontal" flex={1}>
@@ -23,16 +22,19 @@ const SearchCardItem = (item: Restaurant) => {
               {item.name}{' '}
             </RNText>
           </Box>
+          <TouchableOpacity>
+            <RNIcon color="primary" as={<SaveIcon />} />
+          </TouchableOpacity>
         </Box>
 
-        <RNText variant="subtitle" style={{ fontSize: 15 }}>
+        <RNText variant="subtitle" style={{ fontSize: scale(13) }}>
           {item.location}
         </RNText>
-
-        <Review rating={4} />
+        <RNText variant="caption">saved 2 weeks ago</RNText>
+        <RatingStars rating={4} size={20} />
       </Box>
     </Box>
   );
 };
 
-export default SearchCardItem;
+export default RestaurantCard;

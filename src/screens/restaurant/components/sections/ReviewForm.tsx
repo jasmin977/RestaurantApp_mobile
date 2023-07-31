@@ -7,14 +7,14 @@ import {
   Platform,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useAuth, useReviewContext, useTheme } from '../../../context';
-import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
-import RateOption from './RateOption';
-import { COLORS } from '../../../themes';
-import { CameraIcon } from '../../../assets';
-import { scale, verticalScale } from '../../../helpers';
-import { Restaurant } from '../../../entities';
-import { RestaurantService } from '../../../service';
+import { useAuth, useReviewContext, useTheme } from '../../../../context';
+import { Box, RNButton, RNIcon, RNInput, RNText } from '../../../../components/themed';
+import RateOption from '../reviews/RateOption';
+import { COLORS } from '../../../../themes';
+import { CameraIcon } from '../../../../assets';
+import { scale, verticalScale } from '../../../../helpers';
+import { Restaurant } from '../../../../entities';
+import { RestaurantService } from '../../../../service';
 
 interface IreviewProp {
   restaurant: Restaurant;

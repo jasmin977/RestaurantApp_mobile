@@ -17,8 +17,8 @@ import CenteredContainer from '../../components/common/containers/Centered';
 import LottieView from 'lottie-react-native';
 import { scale, verticalScale } from '../../helpers';
 
-import RestaurantDetails from './components/RestaurantDetails';
-import RestaurantRatingAndReviews from './components/RestaurantRatingAndReviews';
+import RestaurantDetails from './components/sections/RestaurantDetails';
+import RestaurantRatingAndReviews from './components/sections/RestaurantRatingAndReviews';
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
 
 const RestaurantProfileScreen = ({ route, navigation }: Props) => {
@@ -111,16 +111,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
           </View>
 
           {/** location */}
-          <Box
-            bg="background"
-            spacing={{ p: 20 }}
-            alignItems="flex-start"
-            direction="horizontal"
-            justifyContent="space-between"
-          >
-            <RNText variant="subtitle">Location</RNText>
-            <RNIcon outline={true} color="onBackground" as={<NextIcon />} />
-          </Box>
+
           <LocationMap id={id} />
           <Box direction="horizontal" gap={5} spacing={{ py: 20 }}>
             <RNIcon outline as={<LocationIcon />} />

@@ -5,11 +5,12 @@ import { Restaurant } from '../../entities';
 import { Avatar, AvatarGroup, Box, RNIcon, RNText } from '../themed';
 import { styled } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Review } from '../common';
+
 import { AVATAR, LikeIcon } from '../../assets';
 import { RootNavigationProps } from '../../navigators/ROUTES';
 import { useNavigation } from '@react-navigation/native';
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../helpers';
+import { RatingStars } from '../../screens/restaurant/components';
 
 interface CarouselProps {
   data: Array<Restaurant>;
@@ -62,10 +63,11 @@ const Carousel = ({ cardWidth = 0.7, data }: CarouselProps) => {
           }}
         >
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
-            <Review
+            <RatingStars
+              bg="card"
               rating={item.rating}
-              additinalStyle={{
-                backgroundColor: 'rgba(255,255,255,0.7)',
+              style={{
+                alignItems: 'stretch',
                 borderRadius: 100,
                 paddingVertical: 5,
                 paddingHorizontal: 10,

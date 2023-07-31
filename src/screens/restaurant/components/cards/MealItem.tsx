@@ -1,14 +1,14 @@
 import { FunctionComponent } from 'react';
 import { ImageBackground } from 'react-native';
-import Review from '../review/Review';
 
-import { ScreenWidth } from '../containers/Backgound';
-import { Meal } from '../../../entities';
+import { ScreenWidth } from '../../../../components/common/containers/Backgound';
+import { Meal } from '../../../../entities';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native';
-import { RNText } from '../../themed';
-import { useTheme } from '../../../context';
-import { moderateVerticalScale, scale, verticalScale } from '../../../helpers';
+import { RNText } from '../../../../components/themed';
+import { useTheme } from '../../../../context';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from '../../../../helpers';
+import RatingStars from '../reviews/RatingStars';
 
 const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
   const { theme } = useTheme();
@@ -20,17 +20,19 @@ const MealItem: FunctionComponent<Meal> = ({ name, rating, img }) => {
         style={{ width: ScreenWidth * 0.4, height: verticalScale(150) }}
         source={{ uri: img }}
       >
-        <Review
+        <RatingStars
           rating={rating}
-          additinalStyle={{
-            backgroundColor: theme.colors.card,
-            borderRadius: 100,
+          size={15}
+          style={{
             width: '50%',
-            paddingHorizontal: 5,
-            top: verticalScale(10),
-            left: scale(10),
+            backgroundColor: theme.colors.card,
+            borderRadius: 30,
+            padding: 2,
+            top: moderateVerticalScale(5),
+            left: moderateScale(5),
           }}
         />
+
         <LinearGradient
           style={{
             bottom: 0,

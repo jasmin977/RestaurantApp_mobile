@@ -4,15 +4,16 @@ import { Animated, ImageBackground, TouchableOpacity, View } from 'react-native'
 import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Restaurant } from '../../../entities';
-import Review from '../review/Review';
-import { Box, RNIcon, RNText } from '../../themed';
+import { Restaurant } from '../../../../entities';
 
-import { LikeIcon } from '../../../assets';
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+
+import { LikeIcon } from '../../../../assets';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme } from '../../../context';
-import { RootNavigationProps } from '../../../navigators/ROUTES';
-import { scale, verticalScale } from '../../../helpers';
+import { useTheme } from '../../../../context';
+import { RootNavigationProps } from '../../../../navigators/ROUTES';
+import { scale, verticalScale } from '../../../../helpers';
+import RatingStars from '../reviews/RatingStars';
 
 interface CarouselProps {
   index: number;
@@ -66,9 +67,9 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
           source={{ uri: item.img }}
         >
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
-            <Review
+            <RatingStars
               rating={item.rating}
-              additinalStyle={{
+              style={{
                 backgroundColor: 'rgba(255,255,255,0.2)',
                 borderRadius: 100,
 

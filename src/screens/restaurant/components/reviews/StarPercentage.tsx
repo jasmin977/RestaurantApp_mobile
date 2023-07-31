@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import { useTheme } from '../../../context';
-import { Box, RNText } from '../../../components/themed';
-import { verticalScale } from '../../../helpers';
+import { useTheme } from '../../../../context';
+import { Box, RNText } from '../../../../components/themed';
+import { verticalScale } from '../../../../helpers';
 
 interface StarPercentage {
   star: number;

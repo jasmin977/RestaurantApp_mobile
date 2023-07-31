@@ -1,7 +1,11 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 
 import { Coords, Restaurant } from '../../../entities';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetDraggableView,
+  BottomSheetModalProvider,
+  BottomSheetScrollView,
+} from '@gorhom/bottom-sheet';
 import RestaurantMapCard from './RestaurantMapCard';
 
 interface MapPresentationProps {
@@ -31,19 +35,20 @@ const RestaurantBottomSheet = ({
   );
 
   return (
-    <BottomSheet ref={sheetRef} snapPoints={snapPoints}>
-      <BottomSheetScrollView
-        horizontal
-        pagingEnabled
-        snapToAlignment="center"
-        contentContainerStyle={{
-          gap: 10,
-          paddingHorizontal: 20,
-        }}
-      >
-        {restaurantData.map(renderItem)}
-      </BottomSheetScrollView>
-    </BottomSheet>
+    <BottomSheetModalProvider>
+      <BottomSheet ref={sheetRef} index={1} snapPoints={snapPoints}>
+        <BottomSheetScrollView
+          pagingEnabled
+          horizontal
+          contentContainerStyle={{
+            gap: 10,
+            paddingHorizontal: 20,
+          }}
+        >
+          {restaurantData.map(renderItem)}
+        </BottomSheetScrollView>
+      </BottomSheet>
+    </BottomSheetModalProvider>
   );
 };
 
