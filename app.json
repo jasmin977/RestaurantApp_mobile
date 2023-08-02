@@ -45,7 +45,7 @@
     },
     "plugins": [
       [
-        "expo-barcode-scanner",
+        "expo-camera",
         {
           "cameraPermission": "Allow JASMIN's application to access camera."
         }

@@ -6,7 +6,8 @@ type AppStateContextType = {
   isInitialized: boolean;
   firstTimeScanned: boolean;
   isDrawerOpen: boolean;
-
+  isToastVisible: boolean;
+  setToastVisible: (s: boolean) => void;
   setFirstTimeScanned: (s: boolean) => void;
   setIsInitialized: (s: boolean) => void;
   setIsDrawerOpen: (s: boolean) => void;
@@ -17,9 +18,11 @@ interface Props {
 
 const AppStateContext = createContext<AppStateContextType>({
   isInitialized: false,
+  isToastVisible: false,
   firstTimeScanned: false,
   isDrawerOpen: false,
   setIsInitialized: () => {},
+  setToastVisible: () => {},
   setIsDrawerOpen: () => {},
   setFirstTimeScanned: () => {},
 });
@@ -28,6 +31,7 @@ const AppStateProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [firstTimeScanned, setFirstTimeScanned] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isToastVisible, setToastVisible] = useState(false);
 
   const getSotredData = () => {
     const isInitializedApp = AppDataCache.getAppData()?.isInitialized;
@@ -54,6 +58,8 @@ const AppStateProvider = ({ children }: Props) => {
         setIsInitialized,
         isDrawerOpen,
         setIsDrawerOpen,
+        isToastVisible,
+        setToastVisible,
       }}
     >
       {children}

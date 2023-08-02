@@ -6,4 +6,5 @@ import RNText from './Text';
 import RNToast from './Toast';
 import Avatar from './Avatar';
 import AvatarGroup from './AvatarGroup';
-export { Box, RNButton, RNIcon, RNInput, RNText, RNToast, Avatar, AvatarGroup };
+import Carousel from './Carousel';
+export { Box, RNButton, RNIcon, RNInput, RNText, RNToast, Avatar, AvatarGroup, Carousel };

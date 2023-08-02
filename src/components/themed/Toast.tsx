@@ -1,57 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { useAppState, useTheme } from '../../context';
+import { moderateScale, moderateVerticalScale, scale } from '../../helpers';
+import Text from './Text';
+import Box from './Box';
 
 interface ToastProps {
   title: string;
-  description?: string;
+
   duration: number;
-  onClose: () => void;
 }
-const RNToast = ({ title, description, duration, onClose }: ToastProps) => {
-  const [visible, setVisible] = useState(true);
+const RNToast = ({ title, duration }: ToastProps) => {
+  const { isToastVisible, setToastVisible } = useAppState();
+  const { theme } = useTheme();
 
   // Hide the toast after the specified duration
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setVisible(false);
-      onClose();
+      setToastVisible(false);
     }, duration);
 
     return () => clearTimeout(timeout);
-  }, [duration, onClose]);
-  if (!visible) return null;
+  }, [duration]);
+  if (!isToastVisible) return null;
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => setVisible(false)}>
-      <View style={styles.toast}>
-        <Text style={styles.title}>{title}</Text>
-        {description && <Text style={styles.description}>{description}</Text>}
+    <Box>
+      <View style={[styles.toast, { backgroundColor: theme.colors.primary }]}>
+        <Text color="onPrimary" style={{ fontWeight: 'bold' }} variant="subtitle">
+          {title}
+        </Text>
       </View>
-    </TouchableOpacity>
+    </Box>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-  },
   toast: {
-    backgroundColor: 'rgba(202, 115, 15, 0.7)',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-  },
-  title: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  description: {
-    color: '#fff',
-    fontSize: 14,
-    marginTop: 4,
+    paddingVertical: moderateVerticalScale(10),
+    paddingHorizontal: moderateScale(20),
+    borderRadius: scale(50),
   },
 });
 export default RNToast;

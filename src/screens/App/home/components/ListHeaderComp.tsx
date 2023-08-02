@@ -1,15 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Box, RNButton, RNIcon, RNText } from '../../../../components/themed';
+import { Box, Carousel, RNButton, RNIcon, RNText } from '../../../../components/themed';
 import { FilterIcon, SearchIcon } from '../../../../assets';
 
-import { Carousel } from '../../../../components/layout';
 import { RootNavigationProps } from '../../../../navigators/ROUTES';
 import { Restaurant } from '../../../../entities';
 import FoodCategories from './CategoriesList';
 
 import { useAuth } from '../../../../context';
 import { scale } from '../../../../helpers';
+import RestaurantCard from './RestaurantCard';
 
 interface ListHeaderComponentProps {
   rootNavigation: RootNavigationProps['navigation'];
@@ -60,7 +60,20 @@ const ListHeaderComponent = ({ rootNavigation, restaurantData }: ListHeaderCompo
         />
       </Box>
       <FoodCategories />
-      <Carousel data={restaurantData} />
+      <Box
+        direction="horizontal"
+        w={'100%'}
+        justifyContent="space-between"
+        spacing={{ px: 20, py: 20 }}
+      >
+        <RNText color="onBackground" variant="h5">
+          Best Restaurants
+        </RNText>
+        <RNText color="primary" variant="caption" style={{ fontWeight: 'bold' }}>
+          View All
+        </RNText>
+      </Box>
+      <Carousel<Restaurant> data={restaurantData} renderItem={RestaurantCard} />
     </View>
   );
 };

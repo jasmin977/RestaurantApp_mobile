@@ -6,7 +6,7 @@ import SavedRestaurantsScreen from './restaurant/Saved.screen';
 import LikedRestaurantsScreen from './restaurant/Liked.screen';
 import SearchScreen from './restaurant/Search.screen';
 
-import ScanQRScreen from './scan/scanQRcontainer';
+import ScanQRScreen from './restaurant/Scan.screen';
 import HomeScreen from './App/home/Home';
 import NotificationsScreen from './App/Notifications';
 import SettingsScreen from './App/Settings';
@@ -15,7 +15,7 @@ import EditProfile from './App/profile/EditProfile';
 
 import LoaderScreen from './Loader';
 
-import MapScreen from './Map/MapContainer';
+import MapScreen from './Map/Map.screen';
 
 import OnboardingScreen from './Auth/OnboardingScreen';
 import LoginScreen from './Auth/Login';

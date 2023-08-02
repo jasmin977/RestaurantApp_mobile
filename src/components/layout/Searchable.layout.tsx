@@ -1,6 +1,6 @@
 import { ListRenderItem, FlatList } from 'react-native';
 import React from 'react';
-import { BackButton, BackgoundContainer } from '../common';
+import { BackButton, BackgoundContainer, Loader } from '../common';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../themed';
 import { scale } from '../../helpers';
 import { BackIcon, CloseIcon, FilterIcon, SearchIcon } from '../../assets';
@@ -38,7 +38,7 @@ const SearchableLayout: React.FC<SearchableListScreenProps> = ({
     return (
       <BackgoundContainer>
         <CenteredContainer>
-          <RNText>Loading..</RNText>
+          <Loader size={200} />
         </CenteredContainer>
       </BackgoundContainer>
     );

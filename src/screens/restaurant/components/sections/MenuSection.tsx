@@ -8,6 +8,7 @@ import { View } from 'react-native';
 import { RNText } from '../../../../components/themed';
 import { useTheme } from '../../../../context';
 import MealItem from '../cards/MealItem';
+import { moderateScale } from '../../../../helpers';
 
 interface MenuSectionProps {
   menu: MenuCategory[];
@@ -57,7 +58,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   };
 
   return (
-    <>
+    <View style={{ paddingHorizontal: moderateScale(20) }}>
       <FlatList
         data={[{ category: 'Most Popular' }, ...menu]}
         horizontal
@@ -83,7 +84,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
             />
           ))}
       </MenuItemsContainer>
-    </>
+    </View>
   );
 };
 

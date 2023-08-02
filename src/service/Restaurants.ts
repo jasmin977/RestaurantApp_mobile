@@ -13,9 +13,12 @@ class RestaurantService {
       // onError: (err: AxiosError) => console.log('onError', err.response?.data),
     });
   }
-  public static useFetchRestaurantByID(id: number) {
+  public static useFetchRestaurantByID(id: number | string | null) {
+    if (id === null) {
+      return { data: null, isLoading: true, error: null };
+    }
     return useQueryReq({
-      queryKey: `useFetchRestaurantByID`,
+      queryKey: `useFetchRestaurantByID${id}`,
       request: () => RestaurantsAPI.fetchRestaurantById(id),
     });
   }

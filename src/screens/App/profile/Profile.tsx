@@ -6,7 +6,7 @@ import { Review, user } from '../../../entities';
 
 import { ReviewService } from '../../../service';
 import { Box, RNText } from '../../../components/themed';
-import { BackButton, BackgoundContainer, ReviewCard } from '../../../components/common';
+import { BackButton, BackgoundContainer, Loader, ReviewCard } from '../../../components/common';
 
 import ProfileHeader from './components/ProfileHeader';
 import { RootStackParamList } from '../../../navigators/ROUTES';
@@ -17,30 +17,27 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
 const Profile: React.FC<Props> = ({ route, navigation }) => {
   const [isFollow, setIsFollow] = useState(false);
+
   const { user } = useAuth();
+
+  const userData = getUserData(route.params?.id, user as user);
+
+  const { data: reviews, isLoading } = ReviewService.useFetchReviewsByUserId(userData?.id);
 
   const handleToggleFollow = () => {
     setIsFollow(prevIsFollow => !prevIsFollow);
   };
-
-  const userData = getUserData(route.params?.id, user);
-
-  const {
-    data: userReviews,
-    isLoading: reviewLoading,
-    error: reviewError,
-  } = ReviewService.useFetchReviewsByUserId(userData?.id ?? 1);
-
-  if (userData === null) {
+  if (!userData || isLoading) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
-          <RNText>loading.. </RNText>
+          <Loader size={200} />
         </CenteredContainer>
       </BackgoundContainer>
     );
   }
-  if (reviewLoading) {
+
+  /*  if (isLoading) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
@@ -48,7 +45,7 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
         </CenteredContainer>
       </BackgoundContainer>
     );
-  }
+  } */
 
   return (
     <BackgoundContainer>
@@ -61,21 +58,23 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
         <BackButton onPress={() => navigation.goBack()} />
       </Box>
 
-      <FlatList
-        data={userReviews.data}
-        renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
-        keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
-        ListHeaderComponent={
-          <ProfileHeader
-            userData={userData}
-            isFollow={isFollow}
-            onToggleFollow={handleToggleFollow}
-            navigation={navigation}
-          />
-        }
-        contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
-        onEndReachedThreshold={100}
-      />
+      {userData && reviews?.data && !isLoading && (
+        <FlatList
+          data={reviews.data}
+          renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
+          keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
+          ListHeaderComponent={
+            <ProfileHeader
+              userData={userData}
+              isFollow={isFollow}
+              onToggleFollow={handleToggleFollow}
+              navigation={navigation}
+            />
+          }
+          contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
+          onEndReachedThreshold={100}
+        />
+      )}
     </BackgoundContainer>
   );
 };

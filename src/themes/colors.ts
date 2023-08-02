@@ -274,9 +274,11 @@ export const yellow = {
 const Colors = {
   common,
   grey,
+  lightgrey: grey[200],
   blue,
   purple,
   primary: '#FF6C47',
+  star: yellow[500],
   success: green[500],
   warning: yellow[200],
   error: red[600],

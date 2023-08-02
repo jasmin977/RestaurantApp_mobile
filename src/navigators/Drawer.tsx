@@ -35,7 +35,7 @@ interface DrawerProp {
 }
 
 const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
-  const { isDrawerOpen, setIsDrawerOpen, setIsInitialized } = useAppState();
+  const { isDrawerOpen, setIsDrawerOpen, setIsInitialized, setFirstTimeScanned } = useAppState();
   const { theme } = useTheme();
   const { setUser, user } = useAuth();
 
@@ -54,6 +54,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
     setUser(null);
     setIsDrawerOpen(false);
     setIsInitialized(false);
+    setFirstTimeScanned(false);
   };
 
   const toggleDrawer = () => {

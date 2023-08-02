@@ -3,27 +3,19 @@ import { Box, RNIcon, RNText } from '../../../../components/themed';
 import MapView, { Marker, LatLng, PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { useTheme } from '../../../../context';
-import { RESTAURANTS_LOCATION } from '../../../../data';
+import LottieView from 'lottie-react-native';
 import CenteredContainer from '../../../../components/common/containers/Centered';
 import { darkStyle, lightStyle } from '../../../Map/MapTheme';
-import { NextIcon } from '../../../../assets';
+import assets, { NextIcon } from '../../../../assets';
+import { COLORS } from '../../../../themes';
+import { scale } from '../../../../helpers';
 
 interface Props {
-  id: number;
+  location: LatLng;
 }
 
-const LocationMap: FunctionComponent<Props> = ({ id }) => {
+const LocationMap: FunctionComponent<Props> = ({ location }: Props) => {
   const { theme, isDarkTheme } = useTheme();
-  const [location, setLocation] = useState<LatLng | undefined>();
-
-  useEffect(() => {
-    const getLocation = () => {
-      const selectedRestaurantLocation = RESTAURANTS_LOCATION.find(loc => loc.id === id);
-      const coordinate = selectedRestaurantLocation?.coordinate;
-      setLocation(coordinate as LatLng);
-    };
-    getLocation();
-  }, [id]);
 
   if (!location) {
     return (
@@ -32,20 +24,32 @@ const LocationMap: FunctionComponent<Props> = ({ id }) => {
       </CenteredContainer>
     );
   }
-
+  const marker_color_filters = [
+    {
+      keypath: 'Path 2',
+      color: COLORS.primary,
+    },
+    {
+      keypath: 'Ellipse 1',
+      color: COLORS.primary,
+    },
+    {
+      keypath: 'shadow',
+      color: COLORS.grey[300],
+    },
+  ];
   return (
     <>
       <Box
-        bg="background"
         spacing={{ p: 20 }}
         alignItems="flex-start"
         direction="horizontal"
         justifyContent="space-between"
       >
-        <RNText variant="subtitle">Location</RNText>
+        <RNText variant="subtitle">View in map</RNText>
         <RNIcon outline color="onBackground" as={<NextIcon />} />
       </Box>
-      <Box h={400} spacing={{ px: 20 }}>
+      <Box h={500}>
         <MapView
           provider={PROVIDER_GOOGLE}
           style={{ width: '100%', height: '100%', borderRadius: 10 }}
@@ -62,8 +66,18 @@ const LocationMap: FunctionComponent<Props> = ({ id }) => {
               latitude: location?.latitude ?? 0,
               longitude: location?.longitude ?? 0,
             }}
-            pinColor={theme.colors.primary}
-          />
+          >
+            <LottieView
+              autoPlay
+              loop
+              style={{
+                width: scale(50),
+                height: scale(50),
+              }}
+              source={assets.lottieFiles.MapMarker}
+              colorFilters={marker_color_filters}
+            />
+          </Marker>
         </MapView>
       </Box>
     </>

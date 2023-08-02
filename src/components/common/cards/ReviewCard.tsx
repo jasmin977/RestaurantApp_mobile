@@ -69,7 +69,7 @@ export default function ReviewCard(item: Review) {
         >
           <RNText variant="h4">{item.restaurantId.name}</RNText>
         </TouchableOpacity>
-        <RatingStars size={35} rating={item.rate} detailed />
+        <RatingStars size={35} rating={item.rate} allStar />
         <RNText variant="body">{item.caption}</RNText>
         {item.img && (
           <Image

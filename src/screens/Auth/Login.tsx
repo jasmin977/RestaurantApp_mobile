@@ -13,6 +13,10 @@ import { user } from '../../entities';
 import AuthenticationService from '../../service/Authentication';
 import { scale, verticalScale } from '../../helpers';
 
+interface authDTO {
+  username: string;
+  password: string;
+}
 const LoginScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
   const { onLogin, isLoading, error } = AuthenticationService.useLogin();
@@ -28,7 +32,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
     },
   });
 
-  const handleLogin = (data: user) => {
+  const handleLogin = (data: authDTO) => {
     const loginData = {
       username: data.username,
       password: data.password,

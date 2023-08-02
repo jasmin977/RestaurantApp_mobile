@@ -19,17 +19,20 @@ class ReviewService {
       request: () => ReviewsAPI.fetchReviewById(id),
     });
   }
-  public static useFetchReviewsByRestaurantId(restaurantId: number) {
+  public static useFetchReviewsByRestaurantId(restaurantId: number | string | null) {
+    if (restaurantId === null) {
+      return { data: null, isLoading: true, error: null };
+    }
     const { setReviewsByRestaurantId } = useReviewContext();
     return useQueryReq({
-      queryKey: `useFetchReviewsByRestaurantId`,
+      queryKey: `useFetchReviewsByRestaurantId${restaurantId}`,
       request: () => ReviewsAPI.fetchReviewsByRestaurantId(restaurantId),
       onSuccess: ({ data }) => setReviewsByRestaurantId(data),
     });
   }
   public static useFetchReviewsByUserId(userId: number | string) {
     return useQueryReq({
-      queryKey: `useFetchReviewsByUserId`,
+      queryKey: `useFetchReviewsByUserId${userId}`,
       request: () => ReviewsAPI.fetchReviewsByUserId(userId),
     });
   }

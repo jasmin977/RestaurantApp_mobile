@@ -33,13 +33,13 @@ const ReviewProvider = ({ children }: Props) => {
   //for all the review in feed screen
   const setReviews = (updatedReviews: Review[]) => {
     const sortedReviews = sortReviewsByDateDescending(updatedReviews);
-    setReviewsState(sortedReviews);
+    setReviewsState(updatedReviews);
   };
 
   //for  the reviews in one restaurant screen
   const setReviewsByRestaurantId = (updatedReviews: Review[]) => {
     const sortedReviews = sortReviewsByDateDescending(updatedReviews);
-    setReviewsByRestaurantIdState(sortedReviews);
+    setReviewsByRestaurantIdState(updatedReviews);
   };
   const addReview = (review: Review) => {
     setReviewsState(prevReviews => {

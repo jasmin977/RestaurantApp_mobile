@@ -17,7 +17,7 @@ class ReviewsAPI {
       method: 'GET',
     });
   }
-  public static async fetchReviewsByRestaurantId(restaurantId: number) {
+  public static async fetchReviewsByRestaurantId(restaurantId: number | string) {
     return RequestHandler({
       url: `/reviews?restaurantId.id=${restaurantId}`,
       method: 'GET',

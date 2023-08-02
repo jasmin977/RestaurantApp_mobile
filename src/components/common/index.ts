@@ -9,4 +9,5 @@ import BackButton from './buttons/BackButton';
 import MenuButton from './buttons/MenuButton';
 import FlatlistFooter from './FlatlistFooter';
 import ReviewCard from './cards/ReviewCard';
-export { BackButton, MenuButton, FlatlistFooter, ReviewCard };
+import Loader from './Loader';
+export { BackButton, MenuButton, FlatlistFooter, ReviewCard, Loader };

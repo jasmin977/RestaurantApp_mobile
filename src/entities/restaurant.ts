@@ -6,10 +6,12 @@ interface Restaurant {
   name: string;
   location: string;
   img: string;
+  logo: string;
   rating: number;
   description: string;
   workingTime: string;
   menu: MenuCategory[];
+  tags: string[];
   coordinate: Coords;
 }
 export default Restaurant;

@@ -23,7 +23,7 @@ const ReviewCard = (reviw: ReviewModel) => {
           </RNText>
         </Box>
         <Box alignItems="flex-start">
-          <RatingStars rating={reviw.rate} detailed size={20} />
+          <RatingStars rating={reviw.rate} allStar size={20} />
         </Box>
 
         {reviw.caption && <RNText variant="body">{reviw.caption}</RNText>}

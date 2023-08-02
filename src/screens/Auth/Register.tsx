@@ -14,6 +14,11 @@ import { user } from '../../entities';
 import AuthenticationService from '../../service/Authentication';
 import { verticalScale } from '../../helpers';
 
+interface registerDTO {
+  email: string;
+  username: string;
+  password: string;
+}
 const RegisterScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
   const { onRegister, isLoading } = AuthenticationService.register();
@@ -30,7 +35,7 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
     },
   });
 
-  const handleRegister = (data: user) => {
+  const handleRegister = (data: registerDTO) => {
     const registerData = {
       username: data.username,
       password: data.password,

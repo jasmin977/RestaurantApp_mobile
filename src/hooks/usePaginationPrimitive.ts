@@ -19,12 +19,12 @@ const usePaginationPrimitive = <T>(
         setNoMoredata(true);
       } else {
         const newData = [...data, ...loadedData];
-        console.log(
+        /*  console.log(
           '🚀 ~ file: usePaginationPrimitive.ts:18 ~ useEffect ~ newData:',
           newData.length,
           loadedData.length,
           data.length
-        );
+        ); */
 
         setData(newData);
       }

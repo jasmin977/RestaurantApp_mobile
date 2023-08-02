@@ -1,29 +1,30 @@
-import { styled } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useMemo, useRef, useCallback } from 'react';
-import assets, { LocationIcon, NextIcon } from '../../assets';
-import { BackButton, BackgoundContainer } from '../../components/common';
-import { AnimatdeHeader } from '../../components/layout';
-import { useReviewContext, useTheme } from '../../context';
-import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
+import assets from '../../assets';
+import { BackButton, BackgoundContainer, Loader } from '../../components/common';
+import { useAppState, useReviewContext, useTheme } from '../../context';
+import { Box, RNButton, RNText, RNToast } from '../../components/themed';
 import { RestaurantStackParamList } from '../../navigators/stacks';
-import { LocationMap, ReviewForm } from './components';
+import { LikeButton, LocationMap, MenuSection, RatingStars, ReviewForm } from './components';
 import { View, ScrollView } from 'react-native';
-
 import BottomSheet from '@gorhom/bottom-sheet';
 import { RestaurantService, ReviewService } from '../../service';
-
 import CenteredContainer from '../../components/common/containers/Centered';
 import LottieView from 'lottie-react-native';
 import { scale, verticalScale } from '../../helpers';
-
+import { StatusBar, StyleSheet, ImageBackground, Animated } from 'react-native';
 import RestaurantDetails from './components/sections/RestaurantDetails';
 import RestaurantRatingAndReviews from './components/sections/RestaurantRatingAndReviews';
+import { ScreenWidth } from '../../components/common/containers/Backgound';
+import VisitedBy from './components/sections/VisitedBy';
 type Props = NativeStackScreenProps<RestaurantStackParamList, 'RestaurantProfile'>;
+const HEADER_MAX_HEIGHT = verticalScale(240);
+const HEADER_MIN_HEIGHT = verticalScale(95);
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 const RestaurantProfileScreen = ({ route, navigation }: Props) => {
   const { id } = route.params;
-  // Fetch restaurant data and reviews data separately
+  const scrollY = useRef(new Animated.Value(0)).current;
   const {
     data: restaurantData,
     isLoading: restaurantLoading,
@@ -35,19 +36,10 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     error: reviwError,
   } = ReviewService.useFetchReviewsByRestaurantId(id);
   const { reviewsByRestaurantId } = useReviewContext();
-
+  const { isToastVisible } = useAppState();
   const { theme } = useTheme();
-
-  // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
   const snapPoints = useMemo(() => ['1%', '90%'], []);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
   const handleSnapPress = useCallback((index: number) => {
     bottomSheetRef.current?.snapToIndex(index);
   }, []);
@@ -56,7 +48,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     return (
       <BackgoundContainer>
         <CenteredContainer>
-          <RNText>loading..</RNText>
+          <Loader size={200} />
         </CenteredContainer>
       </BackgoundContainer>
     );
@@ -72,8 +64,7 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     );
   }
 
-  // Check if the reviewsData and its data property exist
-  // const hasReviewsData = !!reviewsData?.data;
+  const hasReviewsData = !!reviwData?.data;
   const hasrestaurantData = !!restaurantData?.data;
 
   if (!hasrestaurantData) {
@@ -96,39 +87,132 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
     );
   }
 
+  const headerTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [0, -HEADER_SCROLL_DISTANCE],
+    extrapolate: 'clamp',
+  });
+
+  // our opacity animated from 0 to 1 and our opacity will be 0
+  const imageOpacity = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+    outputRange: [1, 1, 0],
+    extrapolate: 'clamp',
+  });
+  const imageTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [0, 100],
+    extrapolate: 'clamp',
+  });
+  const detailsTranslateY = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE * 3],
+    outputRange: [0, -HEADER_SCROLL_DISTANCE / 2, -HEADER_MAX_HEIGHT * 3],
+    extrapolate: 'clamp',
+  });
+  const topBarBGcolor = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2],
+    outputRange: ['transparent', theme.colors.background],
+    extrapolate: 'clamp',
+  });
+
+  const titleOpacity = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE / 2],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
+  const headerStyle = [
+    styles.header,
+    {
+      backgroundColor: theme.colors.background,
+    },
+  ];
+  const AnimetedImage = Animated.createAnimatedComponent(ImageBackground);
   return (
     <View style={{ flex: 1 }}>
-      <AnimatdeHeader
-        backgroundImage={{ uri: restaurantData.data.img }}
-        title={restaurantData.data.name}
-        rightIcon={<Box />}
-        leftIcon={<BackButton onPress={() => navigation.goBack()} />}
+      <Animated.ScrollView
+        contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
+        scrollEventThrottle={16}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+          useNativeDriver: false,
+        })}
       >
-        <ScrollView style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
-            <RestaurantDetails data={restaurantData.data} navigation={navigation} />
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: theme.colors.background,
+          }}
+        >
+          <Box h={HEADER_MAX_HEIGHT / 1.5}></Box>
+          <View style={{ flex: 1, paddingTop: 40 }}>
+            <MenuSection menu={restaurantData.data.menu} />
             <RestaurantRatingAndReviews data={reviewsByRestaurantId} navigation={navigation} />
+            <LocationMap location={restaurantData.data.coordinate} />
           </View>
+        </View>
+      </Animated.ScrollView>
+      <Animated.View style={[headerStyle, { transform: [{ translateY: headerTranslateY }] }]}>
+        <AnimetedImage
+          imageStyle={{ borderRadius: scale(30) }}
+          style={[
+            styles.headerBackground,
 
-          {/** location */}
+            {
+              opacity: imageOpacity,
+              transform: [{ translateY: imageTranslateY }],
+            },
+          ]}
+          source={{ uri: restaurantData.data.img }}
+        >
+          <VisitedBy />
+        </AnimetedImage>
+      </Animated.View>
 
-          <LocationMap id={id} />
-          <Box direction="horizontal" gap={5} spacing={{ py: 20 }}>
-            <RNIcon outline as={<LocationIcon />} />
+      {/** tob bar */}
+      <Animated.View
+        style={[
+          styles.navBar,
+          {
+            backgroundColor: topBarBGcolor,
+          },
+        ]}
+      >
+        <BackButton onPress={() => navigation.goBack()} />
+        <Animated.View style={{ opacity: titleOpacity }}>
+          <RNText variant="h4"> {restaurantData.data.name}</RNText>
+        </Animated.View>
+        <LikeButton />
+      </Animated.View>
 
-            <RNText>{restaurantData.data.location}</RNText>
-          </Box>
-          <Box h={100}></Box>
-        </ScrollView>
-      </AnimatdeHeader>
+      {/** restaurant details box */}
+      <Animated.View
+        style={[
+          styles.topBar,
+          {
+            transform: [{ translateY: detailsTranslateY }],
+          },
+        ]}
+      >
+        <RestaurantDetails data={restaurantData.data} />
+      </Animated.View>
 
+      {isToastVisible && (
+        <Box
+          style={{
+            position: 'absolute',
+            bottom: 100,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <RNToast title="liked" duration={2000} />
+        </Box>
+      )}
       <Box
         spacing={{ p: 10 }}
         bg="background"
         style={{
           position: 'absolute',
           bottom: 0,
-
           left: 0,
           right: 0,
         }}
@@ -147,12 +231,56 @@ const RestaurantProfileScreen = ({ route, navigation }: Props) => {
         ref={bottomSheetRef}
         index={0}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
       >
         <ReviewForm restaurant={restaurantData.data} handleSnapPress={handleSnapPress} />
       </BottomSheet>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'scroll',
+    height: HEADER_MAX_HEIGHT,
+  },
+  headerBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: ScreenWidth,
+    height: HEADER_MAX_HEIGHT,
+    borderBottomRightRadius: scale(30),
+    borderBottomLeftRadius: scale(30),
+    resizeMode: 'cover',
+  },
+  navBar: {
+    zIndex: 1,
 
+    flexDirection: 'row',
+    paddingTop: StatusBar.currentHeight,
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    paddingHorizontal: 20,
+  },
+  topBar: {
+    marginTop: StatusBar.currentHeight,
+
+    flex: 1,
+    //zIndex: 1,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: HEADER_MAX_HEIGHT / 2,
+    left: 0,
+    right: 0,
+  },
+});
 export default RestaurantProfileScreen;

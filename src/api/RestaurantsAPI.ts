@@ -12,7 +12,7 @@ class RestaurantsAPI {
       method: 'GET',
     });
   }
-  public static async fetchRestaurantById(id: number) {
+  public static async fetchRestaurantById(id: number | string) {
     return RequestHandler({
       url: `/restaurants/${id}`,
       method: 'GET',

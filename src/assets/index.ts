@@ -60,6 +60,7 @@ import EmailIcon from './svg/settings/Email';
 import PhoneIcon from './svg/settings/Phone';
 import CameraIcon from './svg/review/Camera';
 import DirectionIcon from './svg/Direction';
+import Delivery from './svg/Delivery';
 
 //GIFs
 export { default as LoaderGif } from './GIF/fork.gif';
@@ -101,4 +102,5 @@ export {
   PhoneIcon,
   CameraIcon,
   DirectionIcon,
+  Delivery,
 };

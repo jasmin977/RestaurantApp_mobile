@@ -32,7 +32,6 @@ const Home = () => {
   } = RestaurantService.useFetchRestaurants();
   const rootNavigation = useNavigation<RootNavigationProps['navigation']>();
   const { isDarkTheme } = useTheme();
-  console.log('🚀 ~ file: HomeContainer.tsx:31 ~ Home ~ ');
   const hasrestaurantData = !!restaurantData?.data;
 
   if (!reviews || reviews.length === 0) {

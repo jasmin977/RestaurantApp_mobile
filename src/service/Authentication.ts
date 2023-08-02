@@ -8,6 +8,15 @@ import AuthenticationAPI from '../api/Authentication';
 import { useMutationReq } from '../hooks/useRequest';
 import AppDataCache from '../cache/appData';
 
+interface authDTO {
+  username: string;
+  password: string;
+}
+interface registerDTO {
+  username: string;
+  password: string;
+  email: string;
+}
 class AuthenticationService {
   public static useLogin() {
     const { setUser } = useAuth();
@@ -17,10 +26,6 @@ class AuthenticationService {
       request: AuthenticationAPI.login,
       onSuccess: ({ data }) => {
         const loggedInUser = data[0];
-        console.log(
-          '🚀 ~ file: Authentication.ts:20 ~ AuthenticationService ~ useLogin ~ data:',
-          data
-        );
 
         setUser(loggedInUser);
         UserCache.storeUserData(loggedInUser);
@@ -30,7 +35,7 @@ class AuthenticationService {
       onError: (err: AxiosError) => console.log('onError', err),
     });
 
-    const onLogin = async (data: user) => {
+    const onLogin = async (data: authDTO) => {
       mutate({
         username: data.username,
         password: data.password,
@@ -55,7 +60,7 @@ class AuthenticationService {
       onError: (err: AxiosError) => console.log('onError', err.response?.data),
     });
 
-    const onRegister = async (data: user) => {
+    const onRegister = async (data: registerDTO) => {
       mutate({
         username: data.username,
         email: data.email,

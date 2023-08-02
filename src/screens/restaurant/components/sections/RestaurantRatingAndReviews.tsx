@@ -9,7 +9,7 @@ import ReviewCard from '../cards/ReviewCard';
 
 interface RestaurantRatingAndReviewsProps {
   data: Review[];
-  navigation: NativeStackNavigationProp<RestaurantStackParamList, 'RestaurantProfile'>;
+  navigation?: NativeStackNavigationProp<RestaurantStackParamList, 'RestaurantProfile'>;
 }
 
 const RestaurantRatingAndReviews = ({ data, navigation }: RestaurantRatingAndReviewsProps) => {
@@ -17,7 +17,7 @@ const RestaurantRatingAndReviews = ({ data, navigation }: RestaurantRatingAndRev
     <>
       <Box
         bg="background"
-        onPress={() => navigation.navigate('RestaurantReviews')}
+        onPress={navigation ? () => navigation.navigate('RestaurantReviews') : undefined}
         spacing={{ p: 20 }}
         alignItems="flex-start"
         direction="horizontal"
@@ -27,7 +27,7 @@ const RestaurantRatingAndReviews = ({ data, navigation }: RestaurantRatingAndRev
         <RNIcon outline={true} color="onBackground" as={<NextIcon />} />
       </Box>
       <Box w={'90%'} rounded={10} bg="card" spacing={{ p: 20, mx: 20 }}>
-        <RatingStars rating={4} detailed />
+        <RatingStars rating={4} allStar detailed />
       </Box>
       <Box spacing={{ py: 20 }} direction="horizontal" gap={5}>
         <RNIcon outline size={20} as={<UserIcon />} />

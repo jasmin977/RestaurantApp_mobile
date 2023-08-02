@@ -1,29 +1,28 @@
 import { useState, useEffect } from 'react';
-
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Camera } from 'expo-camera';
 import * as Location from 'expo-location';
+
 type PermissionType = 'barcode' | 'location';
 
-export default function usePersmissions(permissionType: PermissionType) {
+export default function usePermissions(permissionType: PermissionType) {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [errorMsg, setErrorMsg] = useState<null | string>(null);
-
   const getPermissions = async () => {
-    let { status } = await (permissionType === 'barcode'
-      ? BarCodeScanner.requestPermissionsAsync()
-      : Location.requestForegroundPermissionsAsync());
-
-    if (status !== 'granted') {
-      setErrorMsg(`Permission to access. ${permissionType} permission was denied`);
-      return;
+    if (permissionType === 'barcode') {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access the camera was denied');
+        return;
+      }
+    } else if (permissionType === 'location') {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
     }
 
-    setHasPermission(status === 'granted');
-    console.log(
-      '🚀 ~ file: usePermission.tsx:22 ~ getPermissions ~ status:',
-      permissionType,
-      status
-    );
+    setHasPermission(true);
   };
 
   useEffect(() => {

@@ -14,7 +14,7 @@ import {
 import { useTheme } from '../../context';
 
 export type RestaurantStackParamList = {
-  RestaurantProfile: { id: number };
+  RestaurantProfile: { id: number | string };
   RestaurantComments: undefined;
   RestaurantReviews: undefined;
 };

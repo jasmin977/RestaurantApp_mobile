@@ -4,10 +4,9 @@ import { RootBottomStackParamList } from '../../navigators/stacks/BotoomTab';
 import { useCurrentPosition, usePersmissions } from '../../hooks';
 import { useTheme } from '../../context';
 import { DirectionService, RestaurantService } from '../../service';
-import { Coords, Restaurant } from '../../entities';
+import { Coords } from '../../entities';
 import MapPresentation from './MapPresentation';
 import MapView, { Region } from 'react-native-maps';
-import RestaurantMapCard from './Components/RestaurantMapCard';
 import MapStatus from './Components/MapStatus';
 
 type Props = NativeStackScreenProps<RootBottomStackParamList, 'Map'>;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Box, RNButton, RNIcon, RNText } from '../../components/themed';
+import { Box, Carousel, RNButton, RNIcon, RNText } from '../../components/themed';
 import MapView, { Marker, PROVIDER_GOOGLE, Geojson, Region } from 'react-native-maps';
 import LottieView from 'lottie-react-native';
 import { RatingStars } from '../restaurant/components';
@@ -9,7 +9,8 @@ import { CenteredView, MenuButton } from '../../components/common';
 import { darkStyle, lightStyle } from './MapTheme';
 import { Coords, Restaurant } from '../../entities';
 import { COLORS } from '../../themes';
-import RestaurantBottomSheet from './Components/RestaurantBottomSheet';
+import RestaurantCard from './Components/RestaurantCard';
+import { scale } from '../../helpers';
 
 const marker_color_filters = [
   {
@@ -75,7 +76,10 @@ const MapPresentation = ({
         customMapStyle={isDarkTheme ? darkStyle : lightStyle}
       >
         <Marker coordinate={mylocation}>
-          <Image source={AVATAR} style={{ borderRadius: 30, width: 40, height: 40 }} />
+          <Image
+            source={AVATAR}
+            style={{ borderRadius: 30, width: scale(40), height: scale(40) }}
+          />
         </Marker>
         {restaurantData.map((restaurant: Restaurant) => {
           return (
@@ -94,8 +98,8 @@ const MapPresentation = ({
                     autoPlay
                     loop
                     style={{
-                      width: 50,
-                      height: 50,
+                      width: scale(50),
+                      height: scale(50),
                     }}
                     source={assets.lottieFiles.MapMarker}
                     colorFilters={marker_color_filters}
@@ -105,16 +109,25 @@ const MapPresentation = ({
             )
           );
         })}
-        {data && <Geojson geojson={data.data} strokeColor={COLORS.primary} strokeWidth={6} />}
+        {data && (
+          <Geojson geojson={data.data} strokeColor={COLORS.primary} strokeWidth={scale(6)} />
+        )}
       </MapView>
-
-      {restaurantData && (
-        <RestaurantBottomSheet
-          restaurantData={restaurantData}
-          goToRestaurantPosition={goToRestaurantPosition}
-        />
-      )}
     </CenteredView>
+    {restaurantData ? (
+      <View style={{ paddingVertical: 5 }}>
+        <Carousel<Restaurant>
+          onPress={goToRestaurantPosition}
+          data={restaurantData}
+          cardWidth={0.8}
+          renderItem={RestaurantCard}
+        />
+      </View>
+    ) : (
+      <Box>
+        <RNText>Loading..</RNText>
+      </Box>
+    )}
   </View>
 );
 

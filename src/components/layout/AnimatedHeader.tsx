@@ -94,6 +94,7 @@ const AnimatdeHeader: React.FC<animatedHeaderProp> = ({
           ]}
           source={backgroundImage}
         />
+        <Box w={200} h={200} bg="primary" spacing={{ mt: -50 }} />
       </Animated.View>
       <Animated.View
         style={[
