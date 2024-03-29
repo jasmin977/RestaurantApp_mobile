@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { Box, Carousel, RNButton, RNIcon, RNText } from '../../components/themed';
 import MapView, { Marker, PROVIDER_GOOGLE, Geojson, Region } from 'react-native-maps';
 import LottieView from 'lottie-react-native';
@@ -11,7 +11,10 @@ import { Coords, Restaurant } from '../../entities';
 import { COLORS } from '../../themes';
 import RestaurantCard from './Components/RestaurantCard';
 import { scale } from '../../helpers';
-
+import { Dimensions } from 'react-native';
+import RestaurantCardMap from './Components/RestaurantCardMap';
+import { useTheme } from '../../context';
+const SCREEN_WIDTH = Dimensions.get('window').width;
 const marker_color_filters = [
   {
     keypath: 'Path 2',
@@ -82,12 +85,14 @@ const MapPresentation = ({
           />
         </Marker>
         {restaurantData.map((restaurant: Restaurant) => {
+          const coordinate = { latitude: restaurant.latitude, longitude: restaurant.longitude };
           return (
-            restaurant.coordinate && (
+            restaurant.latitude &&
+            restaurant.longitude && (
               <Marker
-                onPress={() => goToRestaurantPosition(restaurant.coordinate)}
+                onPress={() => goToRestaurantPosition(coordinate)}
                 key={restaurant.id}
-                coordinate={restaurant.coordinate}
+                coordinate={coordinate}
               >
                 <Box>
                   <Box bg="card" spacing={{ p: 2 }} rounded={10}>
@@ -116,11 +121,17 @@ const MapPresentation = ({
     </CenteredView>
     {restaurantData ? (
       <View style={{ paddingVertical: 5 }}>
-        <Carousel<Restaurant>
-          onPress={goToRestaurantPosition}
+        <FlatList
+          horizontal
           data={restaurantData}
-          cardWidth={0.8}
-          renderItem={RestaurantCard}
+          keyExtractor={(item, index) => `restaurancar_mape${index}`}
+          pagingEnabled
+          contentContainerStyle={{ gap: 5 }}
+          snapToAlignment="center"
+          decelerationRate={'fast'}
+          renderItem={({ item, index }: { item: Restaurant; index: number }) => (
+            <RestaurantCardMap item={item} index={index} onPress={goToRestaurantPosition} />
+          )}
         />
       </View>
     ) : (

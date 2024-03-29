@@ -10,6 +10,7 @@ import { Restaurant } from '../../../../entities';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../navigators/ROUTES';
 import { COLORS } from '../../../../themes';
+import { BASE_URL } from '../../../../CONSTANTS';
 
 const RestaurantCard = ({
   item,
@@ -57,7 +58,7 @@ const RestaurantCard = ({
         style={{ height: verticalScale(400), width: scale(250) }}
         imageStyle={{ borderRadius: scale(20) }}
         source={{
-          uri: item.img,
+          uri: `http://${BASE_URL}:8000/storage/` + item.imageUrl,
         }}
       >
         <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
@@ -94,28 +95,33 @@ const RestaurantCard = ({
               style={{ flexWrap: 'wrap' }}
               justifyContent="flex-start"
             >
-              {item.tags.slice(0, 2).map((item: string) => (
-                <Box
-                  style={{ backgroundColor: COLORS.lightgrey }}
-                  spacing={{ p: 5, px: 10 }}
-                  rounded={10}
-                  key={item}
-                >
-                  <RNText>{item.trim()}</RNText>
-                </Box>
-              ))}
+              {item.tage &&
+                item.tage.split(',').length > 0 &&
+                item.tage
+                  .split(',')
+                  .slice(0, 2)
+                  .map((tag: string) => (
+                    <Box
+                      style={{ backgroundColor: COLORS.lightgrey }}
+                      spacing={{ p: 5, px: 10 }}
+                      rounded={10}
+                      key={tag}
+                    >
+                      <RNText color="black">{tag.trim()}</RNText>
+                    </Box>
+                  ))}
             </Box>
+
             <RNText color="white" variant="h3">
               {item.name}
             </RNText>
             <RNText color="white">Friends were here</RNText>
             <AvatarGroup size={35} max={3}>
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
-              <Avatar />
+              <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_1.jpg`} />
+              <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_2.jpg`} />
+              <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_3.jpg`} />
+              <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_4.jpg`} />
+              <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_1.jpg`} />
             </AvatarGroup>
           </Box>
         </LinearGradient>

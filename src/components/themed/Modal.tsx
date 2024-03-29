@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import { ScreenHeigh, ScreenWidth } from '../common/containers/Backgound';
 import { useTheme } from '../../context';
 import { RNIcon } from '.';
 import { CloseIcon } from '../../assets';
+const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 0; // Use 0 if status bar height is not available
 
 interface TransitionModalProps {
   isOpen: boolean;
@@ -42,17 +51,18 @@ const RNModal: React.FC<TransitionModalProps> = ({ isOpen, onClose, children }) 
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: ScreenHeigh - STATUS_BAR_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
   },
   modalContent: {
-    padding: 20,
+    padding: 10,
     paddingTop: 50,
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
     width: ScreenWidth,
-    height: ScreenHeigh / 2,
+    height: '100%',
+
     bottom: 0,
     position: 'absolute',
   },

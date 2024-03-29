@@ -1,7 +1,7 @@
-import { Meal } from "./Meal";
+import { Meal } from './Meal';
 
 export interface MenuCategory {
   category: string;
-  items: Meal[];
+  meals: Meal[];
 }
 export default MenuCategory;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FunctionComponent, ReactNode } from 'react';
 
-import Svg, { G, Path } from 'react-native-svg';
-import { COLORS, lightPalette } from '../../themes';
+import Svg from 'react-native-svg';
+import { lightPalette } from '../../themes';
 import { useTheme } from '../../context';
 import { scale } from '../../helpers';
 

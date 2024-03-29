@@ -46,10 +46,10 @@ const MenuCategoryItem: React.FunctionComponent<MenuCategoryItemProps> = ({
 const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   const getCategoryItems = (categoryName: string) => {
     if (categoryName === 'Most Popular') {
-      return menu.flatMap(category => category.items);
+      return menu.flatMap(category => category.meals);
     }
     const category = menu.find(item => item.category === categoryName);
-    return category ? category.items : [];
+    return category ? category.meals : [];
   };
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>('Burger');
@@ -58,7 +58,7 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
   };
 
   return (
-    <View style={{ paddingHorizontal: moderateScale(20) }}>
+    <View style={{ paddingHorizontal: moderateScale(20), paddingVertical: moderateScale(20) }}>
       <FlatList
         data={[{ category: 'Most Popular' }, ...menu]}
         horizontal
@@ -75,13 +75,17 @@ const MenuSection: FunctionComponent<MenuSectionProps> = ({ menu }) => {
       />
       <MenuItemsContainer>
         {selectedCategory &&
-          getCategoryItems(selectedCategory).map(item => (
-            <MealItem
-              name={item.name}
-              rating={item.rating}
-              key={`${item.name}_${item.description}`}
-              img={item.img}
-            />
+          (getCategoryItems(selectedCategory).length > 0 ? (
+            getCategoryItems(selectedCategory).map(item => (
+              <MealItem
+                name={item.name}
+                rating={item.rating}
+                key={`${item.name}_${item.description}`}
+                url={item.url}
+              />
+            ))
+          ) : (
+            <RNText color="black">No items in this category</RNText>
           ))}
       </MenuItemsContainer>
     </View>

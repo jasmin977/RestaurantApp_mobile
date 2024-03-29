@@ -64,7 +64,7 @@ const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselP
         <ImageBackground
           style={{ height: verticalScale(400), width: scale(boxWidth) }}
           imageStyle={{ borderRadius: 20 }}
-          source={{ uri: item.img }}
+          source={{ uri: item.imageUrl }}
         >
           <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
             <RatingStars

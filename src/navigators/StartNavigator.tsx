@@ -3,14 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useAppState, useAuth } from '../context';
 import RootStack from './ROUTES';
 import { AuthStack, OnBoardingStack } from './stacks';
+import { enableFreeze } from 'react-native-screens';
 
 const Root: FunctionComponent = props => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { isInitialized } = useAppState();
-
+  enableFreeze();
   return (
     <NavigationContainer>
-      {!isInitialized ? <OnBoardingStack /> : user ? <RootStack /> : <AuthStack />}
+      {!isInitialized ? <OnBoardingStack /> : user && token ? <RootStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

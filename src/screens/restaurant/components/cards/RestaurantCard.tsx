@@ -5,13 +5,35 @@ import { Box, RNIcon, RNText } from '../../../../components/themed';
 import { SaveIcon } from '../../../../assets';
 import { scale } from '../../../../helpers';
 import RatingStars from '../reviews/RatingStars';
+import { RootNavigationProps } from '../../../../navigators/ROUTES';
+import { useNavigation } from '@react-navigation/native';
+import { BASE_URL } from '../../../../CONSTANTS';
 
-const RestaurantCard = ({ item }: { item: Restaurant }) => {
+interface RestaurantCardProps {
+  navigation: RootNavigationProps['navigation'];
+  item: Restaurant;
+}
+const RestaurantCard: React.FC<RestaurantCardProps> = ({ navigation, item }) => {
   return (
-    <Box bg="card" direction="horizontal" flex={1} gap={10} rounded={10} spacing={{ p: 10 }}>
+    <Box
+      onPress={() => {
+        navigation.push('RestaurantStack', {
+          screen: 'RestaurantProfile',
+          params: {
+            id: item.id,
+          },
+        });
+      }}
+      bg="card"
+      direction="horizontal"
+      flex={1}
+      gap={10}
+      rounded={10}
+      spacing={{ p: 10 }}
+    >
       <Box direction="horizontal" flex={1}>
         <Image
-          source={{ uri: item.img }}
+          source={{ uri: `http://${BASE_URL}:8000/storage/${item.imageUrl}` }}
           style={{ flex: 1, width: '100%', height: '100%', aspectRatio: 1, borderRadius: 10 }}
         />
       </Box>
@@ -28,10 +50,10 @@ const RestaurantCard = ({ item }: { item: Restaurant }) => {
         </Box>
 
         <RNText variant="subtitle" style={{ fontSize: scale(13) }}>
-          {item.location}
+          {item.streetAddress}
         </RNText>
-        <RNText variant="caption">saved 2 weeks ago</RNText>
-        <RatingStars rating={4} size={20} />
+
+        <RatingStars rating={item.rating} size={20} />
       </Box>
     </Box>
   );

@@ -8,27 +8,29 @@ const useCurrentPosition = () => {
 
   const { hasPermission, errorMsg } = usePersmissions('location');
 
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (hasPermission) {
-        let location = await Location.getLastKnownPositionAsync({});
+  const requestLocationPermission = async () => {
+    if (hasPermission) {
+      let location = await Location.getLastKnownPositionAsync({});
 
-        if (location) {
-          const { latitude, longitude } = location.coords;
-          const myRegion: Region = {
-            latitude,
-            longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          };
+      if (location) {
+        const { latitude, longitude } = location.coords;
+        const myRegion: Region = {
+          latitude,
+          longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        };
 
-          setLocation(myRegion);
-        }
+        setLocation(myRegion);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
     requestLocationPermission();
   }, [hasPermission]);
 
   return { mylocation };
 };
+
 export default useCurrentPosition;

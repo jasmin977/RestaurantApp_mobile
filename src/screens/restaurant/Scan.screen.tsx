@@ -135,7 +135,7 @@ export const ScanQRcontainer: React.FC<Props> = ({ navigation }) => {
               source={assets.lottieFiles.QRscanner}
             />
           </Box>
-          <RNButton title="Flip" onPress={toggleCameraType} />
+          {/*   <RNButton title="Flip" onPress={toggleCameraType} /> */}
         </Camera>
       )}
 

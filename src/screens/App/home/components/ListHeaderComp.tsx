@@ -21,7 +21,7 @@ const ListHeaderComponent = ({ rootNavigation, restaurantData }: ListHeaderCompo
     <View>
       <Box alignItems="flex-start" spacing={{ py: 10, px: 20, pt: 30 }}>
         <RNText variant="body" style={{ fontSize: scale(18) }}>
-          Hi {user?.username}
+          Hi {user?.name}
         </RNText>
         <RNText color="onBackground" variant="h4">
           Discover{' '}

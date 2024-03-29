@@ -5,6 +5,7 @@ import { AVATAR, MenuIcon } from '../../../../assets';
 import { RootNavigationProps } from '../../../../navigators/ROUTES';
 import { useAppState, useAuth } from '../../../../context';
 import { MenuButton } from '../../../../components/common';
+import { BASE_URL } from '../../../../CONSTANTS';
 
 interface HeaderComponentProps {
   rootNavigation: RootNavigationProps['navigation'];
@@ -12,7 +13,6 @@ interface HeaderComponentProps {
 
 const HeaderComponent = ({ rootNavigation }: HeaderComponentProps) => {
   const { user } = useAuth();
-  const { isDrawerOpen, setIsDrawerOpen } = useAppState();
 
   return (
     <Box
@@ -24,7 +24,7 @@ const HeaderComponent = ({ rootNavigation }: HeaderComponentProps) => {
       <MenuButton />
       <Box />
       <TouchableOpacity activeOpacity={0.8} onPress={() => rootNavigation.navigate('Profile')}>
-        <Avatar src={user?.profileImg} size={45} />
+        <Avatar src={`http://${BASE_URL}:8000/storage/${user?.avatar}`} size={45} />
       </TouchableOpacity>
     </Box>
   );

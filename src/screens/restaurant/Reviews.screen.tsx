@@ -1,7 +1,6 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { Image, ImageSourcePropType, Text, TouchableOpacity } from 'react-native';
-import { BackButton, BackgoundContainer, ReviewCard } from '../../components/common';
-import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
+import { Image } from 'react-native';
+import { BackButton, BackgoundContainer } from '../../components/common';
+import { Box, RNText } from '../../components/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RestaurantStackParamList } from '../../navigators/stacks';
 import { AVATAR } from '../../assets';

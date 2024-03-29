@@ -1,33 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
+import { FlatList, RefreshControl } from 'react-native';
 import { useAuth } from '../../../context';
-import { Review, user } from '../../../entities';
+import { Review } from '../../../entities';
 
-import { ReviewService } from '../../../service';
-import { Box, RNText } from '../../../components/themed';
 import { BackButton, BackgoundContainer, Loader, ReviewCard } from '../../../components/common';
+import { Box } from '../../../components/themed';
 
-import ProfileHeader from './components/ProfileHeader';
-import { RootStackParamList } from '../../../navigators/ROUTES';
-import { getUserData } from '../../../helpers';
 import CenteredContainer from '../../../components/common/containers/Centered';
+import { RootStackParamList } from '../../../navigators/ROUTES';
+import UserService from '../../../service/Users';
+import ProfileHeader from './components/ProfileHeader';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
 const Profile: React.FC<Props> = ({ route, navigation }) => {
-  const [isFollow, setIsFollow] = useState(false);
-
+  const { id: userId } = route.params || {};
   const { user } = useAuth();
+  const { data: userData, isLoading, isFetching, refetch } = UserService.useFetchUserByID(userId);
+  console.log('🚀 ~ file: Profile.tsx:21 ~ userData:', userData?.data);
 
-  const userData = getUserData(route.params?.id, user as user);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('🚀 ~ file: Profile  refetch:');
+      refetch();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
+  useEffect(() => {
+    refetch();
+  }, [user]);
 
-  const { data: reviews, isLoading } = ReviewService.useFetchReviewsByUserId(userData?.id);
-
-  const handleToggleFollow = () => {
-    setIsFollow(prevIsFollow => !prevIsFollow);
-  };
-  if (!userData || isLoading) {
+  if (!userData) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
@@ -36,16 +42,6 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
       </BackgoundContainer>
     );
   }
-
-  /*  if (isLoading) {
-    return (
-      <BackgoundContainer>
-        <CenteredContainer>
-          <RNText>loading reviews.. </RNText>
-        </CenteredContainer>
-      </BackgoundContainer>
-    );
-  } */
 
   return (
     <BackgoundContainer>
@@ -58,21 +54,17 @@ const Profile: React.FC<Props> = ({ route, navigation }) => {
         <BackButton onPress={() => navigation.goBack()} />
       </Box>
 
-      {userData && reviews?.data && !isLoading && (
+      {userData?.data && (
         <FlatList
-          data={reviews.data}
+          data={userData.data.user.reviews}
           renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
-          keyExtractor={(item, index) => `Profile_${item.id}_${item.reviewedAt}_${index}`}
+          keyExtractor={(item, index) => `Profile_${item.id}_${item.created_at}_${index}`}
           ListHeaderComponent={
-            <ProfileHeader
-              userData={userData}
-              isFollow={isFollow}
-              onToggleFollow={handleToggleFollow}
-              navigation={navigation}
-            />
+            <ProfileHeader userId={userData.data.user.id} navigation={navigation} />
           }
           contentContainerStyle={{ gap: 20, paddingBottom: 50 }}
           onEndReachedThreshold={100}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
         />
       )}
     </BackgoundContainer>

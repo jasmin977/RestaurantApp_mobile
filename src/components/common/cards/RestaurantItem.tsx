@@ -3,7 +3,7 @@ import { styled } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { ScreenWidth } from '../containers/Backgound';
 import { Restaurant } from '../../../entities';
-import Review from '../review/Review';
+
 import { RNText } from '../../themed';
 
 import { useTheme } from '../../../context';
@@ -23,13 +23,9 @@ const StyledImage = styled.Image`
 
 const RestaurantItem: FunctionComponent<Restaurant> = ({
   name,
-  location,
-  img,
-  description,
-  workingTime,
+
   rating,
   id,
-  menu,
 }) => {
   const navigation = useNavigation<RootNavigationProps['navigation']>();
 
@@ -59,8 +55,6 @@ const RestaurantItem: FunctionComponent<Restaurant> = ({
         <RNText variant="subtitle" color="onCard" spacing={{ mt: 5 }}>
           {name}
         </RNText>
-        <Review rating={rating} />
-        <StyledImage resizeMode="cover" source={img} />
       </StyledView>
     </StyledCard>
   );

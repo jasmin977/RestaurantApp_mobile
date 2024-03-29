@@ -2,6 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { Avatar, AvatarGroup, Box, RNText } from '../../../../components/themed';
 import { ScreenWidth } from '../../../../components/common/containers/Backgound';
+import { BASE_URL } from '../../../../CONSTANTS';
 
 const VisitedBy = () => {
   return (
@@ -12,13 +13,12 @@ const VisitedBy = () => {
             Friends were here
           </RNText>
         </View>
-        <AvatarGroup size={25} max={3}>
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
-          <Avatar />
+        <AvatarGroup size={35} max={3}>
+          <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_1.jpg`} />
+          <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_2.jpg`} />
+          <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_3.jpg`} />
+          <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_4.jpg`} />
+          <Avatar src={`http://${BASE_URL}:8000/storage/avatars/avatar_1.jpg`} />
         </AvatarGroup>
       </Box>
     </Box>

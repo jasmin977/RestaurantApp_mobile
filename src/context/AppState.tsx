@@ -7,10 +7,12 @@ type AppStateContextType = {
   firstTimeScanned: boolean;
   isDrawerOpen: boolean;
   isToastVisible: boolean;
+  unreadNotif: number;
   setToastVisible: (s: boolean) => void;
   setFirstTimeScanned: (s: boolean) => void;
   setIsInitialized: (s: boolean) => void;
   setIsDrawerOpen: (s: boolean) => void;
+  setunreadNotif: React.Dispatch<React.SetStateAction<number>>;
 };
 interface Props {
   children: ReactNode;
@@ -21,7 +23,9 @@ const AppStateContext = createContext<AppStateContextType>({
   isToastVisible: false,
   firstTimeScanned: false,
   isDrawerOpen: false,
+  unreadNotif: 0,
   setIsInitialized: () => {},
+  setunreadNotif: () => {},
   setToastVisible: () => {},
   setIsDrawerOpen: () => {},
   setFirstTimeScanned: () => {},
@@ -32,6 +36,7 @@ const AppStateProvider = ({ children }: Props) => {
   const [firstTimeScanned, setFirstTimeScanned] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isToastVisible, setToastVisible] = useState(false);
+  const [unreadNotif, setunreadNotif] = useState(0);
 
   const getSotredData = () => {
     const isInitializedApp = AppDataCache.getAppData()?.isInitialized;
@@ -60,6 +65,8 @@ const AppStateProvider = ({ children }: Props) => {
         setIsDrawerOpen,
         isToastVisible,
         setToastVisible,
+        unreadNotif,
+        setunreadNotif,
       }}
     >
       {children}

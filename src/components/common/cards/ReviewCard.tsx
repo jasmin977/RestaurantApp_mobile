@@ -1,4 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
@@ -9,17 +16,25 @@ import { Avatar, Box, RNIcon, RNText } from '../../../components/themed';
 import { timeDifference, verticalScale } from '../../../helpers';
 import { Comment, EllipsisIcon, ThumbDown, ThumbUp, Share, AVATAR } from '../../../assets';
 import { RatingStars } from '../../../screens/restaurant/components';
+import RNModal from '../../themed/Modal';
+import { FlatList } from 'react-native';
+import { BASE_URL } from '../../../CONSTANTS';
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function ReviewCard(item: Review) {
   const { theme } = useTheme();
   const [isLike, setLike] = useState(false);
   const [isDilLike, setisDilLike] = useState(false);
   const navigation = useNavigation<RootNavigationProps['navigation']>();
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  if (!item.reviewedBy) {
+  const handleImageClick = () => {
+    setModalVisible(true);
+  };
+  if (!item) {
     return (
       <Box>
-        <RNText>Loading user data...</RNText>
+        <RNText>Loading review data...</RNText>
       </Box>
     );
   }
@@ -35,20 +50,17 @@ export default function ReviewCard(item: Review) {
         style={{ borderBottomWidth: 1, borderColor: theme.colors.background }}
       >
         <Box direction="horizontal">
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Profile', { id: item.reviewedBy.id })}
-          >
-            <Avatar src={item.reviewedBy.profileImg} />
+          <TouchableOpacity onPress={() => navigation.navigate('Profile', { id: item?.user?.id })}>
+            <Avatar src={`http://${BASE_URL}:8000/storage/${item?.user?.avatar}`} />
           </TouchableOpacity>
           <Box alignItems="flex-start" spacing={{ px: 10 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Profile', { id: item.reviewedBy.id })}
+              onPress={() => navigation.navigate('Profile', { id: item?.user?.id })}
             >
-              <RNText variant="h5">{item.reviewedBy.username}</RNText>
+              <RNText variant="h5">{item?.user?.name}</RNText>
             </TouchableOpacity>
-
             <RNText variant="caption">
-              {timeDifference(new Date(), new Date(item.reviewedAt))}
+              {item?.created_at && timeDifference(new Date(), new Date(item.created_at))}
             </RNText>
           </Box>
         </Box>
@@ -62,23 +74,154 @@ export default function ReviewCard(item: Review) {
             navigation.push('RestaurantStack', {
               screen: 'RestaurantProfile',
               params: {
-                id: item.restaurantId.id,
+                id: item?.restaurant?.id,
               },
             });
           }}
         >
-          <RNText variant="h4">{item.restaurantId.name}</RNText>
+          <RNText variant="h4">{item?.restaurant?.name}</RNText>
         </TouchableOpacity>
-        <RatingStars size={35} rating={item.rate} allStar />
+        <RatingStars size={35} rating={item.rating} allStar />
         <RNText variant="body">{item.caption}</RNText>
-        {item.img && (
-          <Image
-            source={{ uri: item.img }}
-            resizeMode="cover"
-            style={{ width: '100%', height: verticalScale(200), borderRadius: 8 }}
-          />
-        )}
-        <Box
+
+        {/** IMAGES */}
+        <Box w={'100%'}>
+          {item.images && item.images?.length == 1 && (
+            <Box direction="horizontal" w={'100%'} gap={2} onPress={handleImageClick}>
+              <Image
+                source={{
+                  uri: `http://${BASE_URL}:8000/storage/${item.images[0].url.split('public/')[1]}`,
+                }}
+                style={{
+                  width: '100%',
+
+                  height: 200,
+                  borderTopLeftRadius: 10,
+                  borderBottomLeftRadius: 10,
+                  borderWidth: 1,
+                  borderColor: theme.colors.background,
+                }}
+              />
+            </Box>
+          )}
+
+          {item.images && item.images?.length == 2 && (
+            <Box direction="horizontal" w={'100%'} gap={2}>
+              <Box w={'50%'} onPress={handleImageClick}>
+                <Image
+                  source={{
+                    uri: `http://${BASE_URL}:8000/storage/${
+                      item.images[0].url.split('public/')[1]
+                    }`,
+                  }}
+                  style={{
+                    width: '100%',
+
+                    height: 200,
+                    borderTopLeftRadius: 10,
+                    borderBottomLeftRadius: 10,
+                    borderWidth: 1,
+                    borderColor: theme.colors.background,
+                  }}
+                />
+              </Box>
+              <Box w={'50%'} onPress={handleImageClick}>
+                <Image
+                  source={{
+                    uri: `http://${BASE_URL}:8000/storage/${
+                      item.images[1].url.split('public/')[1]
+                    }`,
+                  }}
+                  style={{
+                    width: '100%',
+
+                    height: 200,
+                    borderTopRightRadius: 10,
+                    borderBottomRightRadius: 10,
+                    borderWidth: 1,
+                    borderColor: theme.colors.background,
+                  }}
+                />
+              </Box>
+            </Box>
+          )}
+
+          {item.images && item.images?.length > 2 && (
+            <Box direction="horizontal" w={'100%'} gap={2}>
+              <Box w={'60%'} onPress={handleImageClick}>
+                <Image
+                  source={{
+                    uri: `http://${BASE_URL}:8000/storage/${
+                      item.images[0].url.split('public/')[1]
+                    }`,
+                  }}
+                  style={{
+                    width: '100%',
+
+                    height: 200,
+                    borderTopLeftRadius: 10,
+                    borderBottomLeftRadius: 10,
+                    borderWidth: 1,
+                    borderColor: theme.colors.background,
+                  }}
+                />
+              </Box>
+              <Box direction="vertical" w={'40%'} gap={2}>
+                <TouchableOpacity style={{ width: '100%' }} onPress={handleImageClick}>
+                  <Image
+                    source={{
+                      uri: `http://${BASE_URL}:8000/storage/${
+                        item.images[1].url.split('public/')[1]
+                      }`,
+                    }}
+                    style={{
+                      width: '100%',
+                      height: 100,
+                      borderTopRightRadius: 10,
+                      borderWidth: 1,
+                      borderColor: theme.colors.background,
+                    }}
+                  />
+                </TouchableOpacity>
+                <View style={{ width: '100%' }}>
+                  <Image
+                    source={{
+                      uri: `http://${BASE_URL}:8000/storage/${
+                        item.images[2].url.split('public/')[1]
+                      }`,
+                    }}
+                    style={{
+                      width: '100%',
+                      height: 100,
+                      borderBottomRightRadius: 10,
+                      borderWidth: 1,
+                      borderColor: theme.colors.background,
+                    }}
+                  />
+
+                  <TouchableOpacity
+                    onPress={handleImageClick}
+                    style={{
+                      position: 'absolute',
+                      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                      width: '100%',
+                      borderBottomRightRadius: 10,
+                      height: 100,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <RNText variant="caption" color="white">{`+${
+                      item.images.slice(2).length - 1
+                    }`}</RNText>
+                  </TouchableOpacity>
+                </View>
+              </Box>
+            </Box>
+          )}
+        </Box>
+
+        {/* <Box
           w={'100%'}
           direction="horizontal"
           justifyContent="space-between"
@@ -92,44 +235,79 @@ export default function ReviewCard(item: Review) {
           </Box>
           <Box alignItems="flex-start" w={'50%'}>
             <RNText variant="subtitle">Location</RNText>
-            <RNText variant="caption">{item.restaurantId.location}</RNText>
+            <RNText variant="caption">{item.restaurant.streetAddress}</RNText>
           </Box>
-        </Box>
+        </Box> */}
         <Box w={'100%'} direction="horizontal" justifyContent="space-around">
           <Box gap={10} onPress={() => setLike(!isLike)}>
             <RNIcon color={isLike ? 'primary' : 'grey.600'} as={<ThumbUp />} />
-            <RNText
+            {/*  <RNText
               color={isLike ? 'primary' : 'onCard'}
               style={{ fontWeight: 'bold' }}
               variant="caption"
             >
-              20
-            </RNText>
+              0
+            </RNText> */}
           </Box>
           <Box gap={10} onPress={() => setisDilLike(!isDilLike)}>
             <RNIcon color={isDilLike ? 'primary' : 'grey.600'} as={<ThumbDown />} />
-            <RNText
+            {/*  <RNText
               color={isDilLike ? 'primary' : 'onCard'}
               style={{ fontWeight: 'bold' }}
               variant="caption"
             >
-              1
-            </RNText>
+             0
+            </RNText> */}
           </Box>
           <Box gap={10}>
             <RNIcon color="grey.600" as={<Comment />} />
-            <RNText variant="caption" style={{ fontWeight: 'bold' }}>
-              8
-            </RNText>
+            {/*   <RNText variant="caption" style={{ fontWeight: 'bold' }}>
+              0
+            </RNText> */}
           </Box>
           <Box gap={10}>
             <RNIcon color="grey.600" as={<Share />} />
-            <RNText variant="caption" style={{ fontWeight: 'bold' }}>
-              3
-            </RNText>
+            {/*  <RNText variant="caption" style={{ fontWeight: 'bold' }}>
+              0
+            </RNText> */}
           </Box>
         </Box>
       </Box>
+      {isModalVisible && (
+        <RNModal isOpen={isModalVisible} onClose={() => setModalVisible(false)}>
+          <FlatList
+            horizontal
+            data={item.images}
+            keyExtractor={(item, index) => index.toString()}
+            pagingEnabled
+            contentContainerStyle={{ gap: 5 }}
+            snapToAlignment="center"
+            decelerationRate={'fast'}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  width: SCREEN_WIDTH,
+                  paddingVertical: 10,
+
+                  borderRadius: 10,
+                }}
+              >
+                <Image
+                  source={{
+                    uri: `http://${BASE_URL}:8000/storage/${item.url.split('public/')[1]}`,
+                  }}
+                  style={{
+                    width: SCREEN_WIDTH,
+                    height: '100%',
+                    resizeMode: 'cover',
+                    borderRadius: 10,
+                  }}
+                />
+              </View>
+            )}
+          />
+        </RNModal>
+      )}
     </Box>
   );
 }

@@ -1,17 +1,30 @@
+import { Timestamp } from 'react-native-reanimated/lib/types/lib/reanimated2/commonTypes';
 import { MenuCategory } from './MenuCategory';
-import Coords from './coordinate';
 
+interface StarPercentage {
+  star: number;
+  percentage: number;
+}
 interface Restaurant {
   id: number;
   name: string;
-  location: string;
-  img: string;
-  logo: string;
+  city: string;
+  state: string;
+  streetAddress: string;
+  cuisineType: string;
+  imageUrl: string;
+  logoUrl: string;
   rating: number;
   description: string;
-  workingTime: string;
-  menu: MenuCategory[];
-  tags: string[];
-  coordinate: Coords;
+  startWorkingTime: Timestamp;
+  finishWorkingTime: Timestamp;
+  menu_categories: MenuCategory[];
+  tage: string;
+  starRatingPercentages?: StarPercentage[];
+  overallRating?: number;
+  totalReviews?: number;
+
+  latitude: number;
+  longitude: number;
 }
 export default Restaurant;

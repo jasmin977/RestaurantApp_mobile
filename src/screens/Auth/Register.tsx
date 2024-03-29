@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Image, ScrollView, TouchableOpacity } from 'react-native';
-import { useAuth } from '../../context';
 import { BackgoundContainer } from '../../components/common';
 import { Box, RNButton, RNIcon, RNInput, RNText } from '../../components/themed';
 import { useForm, Controller } from 'react-hook-form';
 
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../../context';
-import { emailValidator, passwordValidator, usernameValidator } from '../../helpers/validators';
 import { AuthStackProps } from '../../navigators/stacks';
 import { EmailIcon, ShieldCheckIcon, UserIcon } from '../../assets';
 import { user } from '../../entities';
@@ -15,9 +13,10 @@ import AuthenticationService from '../../service/Authentication';
 import { verticalScale } from '../../helpers';
 
 interface registerDTO {
+  name: string;
   email: string;
-  username: string;
   password: string;
+  co_password: string;
 }
 const RegisterScreen = ({ navigation }: AuthStackProps) => {
   const { isDarkTheme, theme } = useTheme();
@@ -27,19 +26,21 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<user>({
+  } = useForm<registerDTO>({
     defaultValues: {
-      username: '',
-      password: '',
-      email: '',
+      name: 'zoro',
+      password: '123456',
+      co_password: '123456',
+      email: 'zoro.@example.com',
     },
   });
 
   const handleRegister = (data: registerDTO) => {
     const registerData = {
-      username: data.username,
-      password: data.password,
+      name: data.name,
       email: data.email,
+      password: data.password,
+      co_password: data.co_password,
     };
     onRegister(registerData);
   };
@@ -93,11 +94,11 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                errorText={errors.username?.message}
+                errorText={errors.name?.message}
                 rightIcon={<RNIcon color="grey.400" as={<UserIcon />} />}
               />
             )}
-            name="username"
+            name="name"
           />
           <Controller
             control={control}
@@ -125,12 +126,38 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
             )}
             name="password"
           />
+          <Controller
+            control={control}
+            rules={{
+              required: "Password can't be empty.",
+              maxLength: {
+                value: 10,
+                message: 'Password should not exceed 10 characters.',
+              },
+              minLength: {
+                value: 5,
+                message: 'Password must be at least 5 characters long.',
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <RNInput
+                label="Cofirm Password"
+                value={value}
+                placeholder="*******"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                errorText={errors.password?.message}
+                type="password"
+              />
+            )}
+            name="co_password"
+          />
         </Box>
       </ScrollView>
       <Box
         spacing={{ px: 20 }}
         w={'100%'}
-        gap={10}
+        gap={20}
         style={{ position: 'absolute', bottom: verticalScale(20) }}
       >
         <RNButton
@@ -140,7 +167,7 @@ const RegisterScreen = ({ navigation }: AuthStackProps) => {
           onPress={handleSubmit(handleRegister)}
         />
 
-        <Box direction="horizontal" gap={5}>
+        <Box direction="horizontal" gap={10}>
           <RNText variant="caption">Already have an account?</RNText>
           <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
             <RNText color="primary" style={{ fontWeight: 'bold' }} variant="caption">

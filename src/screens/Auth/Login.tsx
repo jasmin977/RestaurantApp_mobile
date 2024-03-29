@@ -14,7 +14,7 @@ import AuthenticationService from '../../service/Authentication';
 import { scale, verticalScale } from '../../helpers';
 
 interface authDTO {
-  username: string;
+  name: string;
   password: string;
 }
 const LoginScreen = ({ navigation }: AuthStackProps) => {
@@ -25,16 +25,16 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<user>({
+  } = useForm<authDTO>({
     defaultValues: {
-      username: 'johnsmith',
-      password: 'pass123',
+      name: 'yasmine2',
+      password: '123456',
     },
   });
 
   const handleLogin = (data: authDTO) => {
     const loginData = {
-      username: data.username,
+      name: data.name,
       password: data.password,
     };
     onLogin(loginData);
@@ -72,11 +72,11 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                errorText={errors.username?.message || (error && 'wrong username')}
+                errorText={errors.name?.message || (error && 'wrong username')}
                 rightIcon={<RNIcon color="grey.400" as={<UserIcon />} />}
               />
             )}
-            name="username"
+            name="name"
           />
 
           <Controller
@@ -116,7 +116,7 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
       <Box
         spacing={{ px: 20 }}
         w={'100%'}
-        gap={10}
+        gap={20}
         style={{ position: 'absolute', bottom: verticalScale(20) }}
       >
         <RNButton
@@ -126,9 +126,9 @@ const LoginScreen = ({ navigation }: AuthStackProps) => {
           onPress={handleSubmit(handleLogin)}
         />
 
-        <Box direction="horizontal" alignItems="baseline" gap={5}>
+        <Box direction="horizontal" alignItems="baseline" gap={10}>
           <RNText variant="caption">Not a member?</RNText>
-          <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <RNText color="primary" style={{ fontWeight: 'bold' }} variant="caption">
               Register Now
             </RNText>

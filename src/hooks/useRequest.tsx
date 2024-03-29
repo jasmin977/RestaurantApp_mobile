@@ -8,6 +8,8 @@ export interface IUseMutationReq {
 export interface IUseQueryReq {
   data: any;
   isLoading: boolean;
+  isFetching: boolean;
+  refetch: () => Promise<any>;
   error: any;
 }
 interface IUseReqeustParams {
@@ -37,11 +39,11 @@ export function useQueryReq({
   onSuccess,
   onError,
 }: IUseReqeustParams): IUseQueryReq {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, isFetching, refetch } = useQuery({
     queryKey,
     queryFn: request,
     onSuccess,
     onError,
   });
-  return { data, isLoading, error };
+  return { data, isLoading, isFetching, refetch, error };
 }

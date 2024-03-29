@@ -1,20 +1,47 @@
-import { FunctionComponent } from 'react';
-import { Image, ScrollView, View, TouchableOpacity, Text } from 'react-native';
-import { BackButton, BackgoundContainer, CenteredView } from '../../../components/common';
-import { Avatar, Box, RNButton, RNIcon, RNInput, RNText } from '../../../components/themed';
-import { AVATAR, BackIcon, EditIcon, EmailIcon, PhoneIcon, UserIcon } from '../../../assets';
+import { useRef, useState } from 'react';
+import { ScrollView, Animated } from 'react-native';
+import { BackButton, BackgoundContainer } from '../../../components/common';
+import {
+  Avatar,
+  Box,
+  Carousel,
+  RNButton,
+  RNIcon,
+  RNInput,
+  RNText,
+} from '../../../components/themed';
+import { EmailIcon, PhoneIcon } from '../../../assets';
 import { RootStackParamList } from '../../../navigators/ROUTES';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useTheme } from '../../../context';
+import { useAuth, useTheme } from '../../../context';
 import { useForm, Controller } from 'react-hook-form';
 
 import { user } from '../../../entities';
 import { scale } from '../../../helpers';
 
-interface ProfileProps {}
+import AvatarCard from './components/AvatarCard';
+import { AVATARS } from '../../../CONSTANTS';
+import UserService from '../../../service/Users';
+
+const AVATAR_SIZE = 100;
+
 type Props = NativeStackScreenProps<RootStackParamList, 'EditProfile'>;
+interface userDTO {
+  bio?: string;
+  name?: string;
+  datOfBirth?: string | null;
+  phone?: string;
+  email?: string;
+  gender?: number | string;
+  avatar?: string;
+}
 const EditProfile = ({ navigation }: Props) => {
-  const { theme } = useTheme();
+  const { mutate: updateuser, data: updateddata, isLoading, error } = UserService.updateuser();
+
+  const { user, token } = useAuth();
+  const [selectedItemIndex, setSelectedItemIndex] = useState(1);
+
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   const {
     control,
@@ -22,18 +49,42 @@ const EditProfile = ({ navigation }: Props) => {
     formState: { errors },
   } = useForm<user>({
     defaultValues: {
-      username: '',
-      bio: '',
-      password: '',
-      email: '',
-      gender: 0,
-      phone: '',
-      datOfBirth: '',
+      name: user?.name,
+      bio: user?.bio,
+
+      email: user?.email,
+      gender: 1,
+      phone: user?.phone,
+      datOfBirth: user?.datOfBirth,
     },
   });
 
   const options = ['Male', 'Female'];
 
+  const handleSave = (data: userDTO) => {
+    if (user) {
+      data.gender = data.gender === 0 ? 'male' : 'female';
+      data.avatar = `avatars/avatar_${selectedItemIndex}.jpg`;
+      data.datOfBirth = null;
+
+      updateuser({ id: user.id, token: token, data: data });
+
+      if (!isLoading && !error) {
+        navigation.goBack();
+      }
+    } else {
+      console.error('User is null. Cannot update profile.');
+    }
+  };
+  const renderItem = ({ item, index }: { item: string; index: number }) => (
+    <AvatarCard item={item} index={index} selectedItemIndex={selectedItemIndex} scrollX={scrollX} />
+  );
+
+  const handleScroll = (event: any) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offsetX / AVATAR_SIZE);
+    setSelectedItemIndex(newIndex + 1);
+  };
   return (
     <BackgoundContainer>
       <ScrollView stickyHeaderIndices={[0]}>
@@ -44,30 +95,25 @@ const EditProfile = ({ navigation }: Props) => {
           spacing={{ px: 20, py: 10 }}
         >
           <BackButton onPress={() => navigation.goBack()} />
-          <RNText variant="subtitle">My Profile</RNText>
-          <RNText>{}</RNText>
+          <RNText variant="subtitle">Edit Profile</RNText>
+          <RNButton style={{ opacity: 0 }} />
         </Box>
 
-        <Box>
-          <Box w={110}>
-            <Avatar size={80} />
-
-            <Box
-              bg="background"
-              spacing={{ p: 8 }}
-              rounded={50}
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                shadowColor: 'grey',
-                elevation: 10,
-              }}
-            >
-              <RNIcon size={20} as={<EditIcon />} />
-            </Box>
-          </Box>
-        </Box>
+        <Animated.FlatList
+          data={AVATARS}
+          contentContainerStyle={{ alignItems: 'center', paddingVertical: 50 }}
+          horizontal
+          snapToInterval={AVATAR_SIZE}
+          decelerationRate={0}
+          scrollEventThrottle={16}
+          pagingEnabled
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+            useNativeDriver: true,
+            listener: handleScroll,
+          })}
+          keyExtractor={(item, index) => `AVATARS _${index}_${item.toString()}`}
+          renderItem={renderItem}
+        />
 
         <Box gap={10} alignItems="flex-start" spacing={{ px: 20, py: 20 }}>
           <RNText variant="h5">Basic Detail</RNText>
@@ -85,7 +131,7 @@ const EditProfile = ({ navigation }: Props) => {
             render={({ field: { onChange, onBlur, value } }) => (
               <RNInput label="Username" onBlur={onBlur} onChangeText={onChange} value={value} />
             )}
-            name="username"
+            name="name"
           />
 
           <Controller
@@ -110,7 +156,7 @@ const EditProfile = ({ navigation }: Props) => {
               <Controller
                 control={control}
                 name="gender"
-                defaultValue={0}
+                defaultValue={1}
                 render={({ field }) => (
                   <>
                     <Box
@@ -142,7 +188,6 @@ const EditProfile = ({ navigation }: Props) => {
             </Box>
           </Box>
         </Box>
-
         <Box gap={10} alignItems="flex-start" spacing={{ px: 20, py: 20 }}>
           <RNText variant="h5">Contact Detail</RNText>
 
@@ -189,7 +234,12 @@ const EditProfile = ({ navigation }: Props) => {
           right: 0,
         }}
       >
-        <RNButton style={{ width: '100%' }} title="Save" />
+        <RNButton
+          isLoading={isLoading}
+          onPress={handleSubmit(handleSave)}
+          style={{ width: '100%' }}
+          title="Save"
+        />
       </Box>
     </BackgoundContainer>
   );

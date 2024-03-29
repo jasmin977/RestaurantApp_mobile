@@ -21,3 +21,19 @@ export const timeDifference = (current: Date, previous: Date): string => {
     return Math.round(elapsed / msPerYear) + ' years ago';
   }
 };
+
+export function convertTo12HourFormat(time24: string) {
+  // Parse the input time
+  const [hour, minute, second] = time24.split(':').map(Number);
+
+  // Determine AM or PM
+  const period = hour >= 12 ? 'PM' : 'AM';
+
+  // Convert to 12-hour format
+  const hour12 = hour % 12 || 12; // If hour is 0, it should be 12 in 12-hour format
+
+  // Format the result
+  const time12 = `${hour12}:${minute.toString().padStart(2, '0')}${period}`;
+
+  return time12;
+}

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Camera } from 'expo-camera';
 import * as Location from 'expo-location';
-
-type PermissionType = 'barcode' | 'location';
+import * as ImagePicker from 'expo-image-picker';
+type PermissionType = 'barcode' | 'location' | 'image';
 
 export default function usePermissions(permissionType: PermissionType) {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
@@ -18,6 +18,12 @@ export default function usePermissions(permissionType: PermissionType) {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
+        return;
+      }
+    } else if (permissionType === 'image') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access the image library was denied');
         return;
       }
     }

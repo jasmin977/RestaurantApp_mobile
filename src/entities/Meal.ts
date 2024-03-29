@@ -1,8 +1,10 @@
 interface Meal {
+  id?: number;
+
   name: string;
   description?: string;
   price?: number;
   rating: number;
-  img: string;
+  url: string;
 }
 export default Meal;

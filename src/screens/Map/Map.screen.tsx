@@ -2,7 +2,7 @@ import { FunctionComponent, useCallback, useState, useRef, useMemo } from 'react
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootBottomStackParamList } from '../../navigators/stacks/BotoomTab';
 import { useCurrentPosition, usePersmissions } from '../../hooks';
-import { useTheme } from '../../context';
+import { useAuth, useTheme } from '../../context';
 import { DirectionService, RestaurantService } from '../../service';
 import { Coords } from '../../entities';
 import MapPresentation from './MapPresentation';
@@ -12,7 +12,9 @@ import MapStatus from './Components/MapStatus';
 type Props = NativeStackScreenProps<RootBottomStackParamList, 'Map'>;
 const MapContainer: FunctionComponent<Props> = ({ navigation }) => {
   const { mylocation } = useCurrentPosition();
-  const { data: restaurantData, isLoading, error } = RestaurantService.useFetchRestaurants();
+  const { token } = useAuth();
+
+  const { data: restaurantData, isLoading, error } = RestaurantService.useFetchRestaurants(token);
   const [selectedRestaurant, setSelectedRestaurant] = useState<Coords | null>(null);
   const { data, mutate: getDirection } = DirectionService.getDirection();
   const { hasPermission, errorMsg } = usePersmissions('location');
@@ -73,7 +75,7 @@ const MapContainer: FunctionComponent<Props> = ({ navigation }) => {
       mylocation={mylocation}
       isDarkTheme={isDarkTheme}
       selectedRestaurant={selectedRestaurant}
-      restaurantData={restaurantData.data}
+      restaurantData={restaurantData.data.restaurants}
       goToMyPosition={goToMyPosition}
       goToRestaurantPosition={goToRestaurantPosition}
       getRestaurantDirection={getRestaurantDirection}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BackgoundContainer, CenteredView } from '../../../components/common';
-import { RNText } from '../../../components/themed';
+import { RNButton, RNText } from '../../../components/themed';
 import { Region } from 'react-native-maps';
 
 interface MapStatusProps {
@@ -31,6 +31,7 @@ const MapStatus: React.FC<MapStatusProps> = ({
       <BackgoundContainer>
         <CenteredView>
           <RNText>no location </RNText>
+          <RNButton title="Get location" />
         </CenteredView>
       </BackgoundContainer>
     );

@@ -58,12 +58,12 @@ const RNTextInput: React.FC<RNTextInputProps> = ({
   return (
     <Box gap={5} alignItems="flex-start" flex={1}>
       {label && <Text variant="subtitle">{label}</Text>}
-      <View style={[inputContainerStyle, { backgroundColor: theme.colors.card }]}>
+      <View style={[inputContainerStyle, { backgroundColor: theme.colors.card, height: 40 }]}>
         {leftIcon && <View style={styles.iconContainer}>{leftIcon}</View>}
         <TextInput
           value={value}
           onChangeText={onChangeText}
-          style={[inputBorderStyle, inputStyle]}
+          style={[inputBorderStyle, inputStyle, { height: 40 }]}
           placeholder={placeholder}
           secureTextEntry={type === 'password' ? secureText : false}
           placeholderTextColor={COLORS.grey[400]}

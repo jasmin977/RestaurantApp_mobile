@@ -20,6 +20,7 @@ import MapScreen from './Map/Map.screen';
 import OnboardingScreen from './Auth/OnboardingScreen';
 import LoginScreen from './Auth/Login';
 import RegisterScreen from './Auth/Register';
+import VerifEmailScreen from './Auth/VerifyEmail';
 
 export {
   RestaurantProfileScreen,
@@ -37,6 +38,7 @@ export {
   OnboardingScreen,
   LoginScreen,
   RegisterScreen,
+  VerifEmailScreen,
   EditProfile,
   SearchScreen,
 };

@@ -1,40 +1,75 @@
-import React, { useMemo } from 'react';
-import { ActivityIndicator, FlatList, SafeAreaView } from 'react-native';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, FlatList, RefreshControl, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useReviewContext, useTheme } from '../../../context';
+import { useAuth, useTheme } from '../../../context';
 import { RootNavigationProps } from '../../../navigators/ROUTES';
 import { StatusBar } from 'expo-status-bar';
 
-import { BackgoundContainer, FlatlistFooter, ReviewCard } from '../../../components/common';
+import { BackgoundContainer, ReviewCard } from '../../../components/common';
 
 import HeaderComponent from './components/HeaderComp';
 import ListHeaderComponent from './components/ListHeaderComp';
 import { Review } from '../../../entities';
 
 import { RestaurantService, ReviewService } from '../../../service';
-import usePaginationPrimitive from '../../../hooks/usePaginationPrimitive';
 import { RNText, Box } from '../../../components/themed';
 import CenteredContainer from '../../../components/common/containers/Centered';
+import LoaderScreen from '../../Loader';
 import { COLORS } from '../../../themes';
 
 const Home = () => {
-  const { reviews, setReviews } = useReviewContext();
-  const {
+  const { token, user } = useAuth();
+
+  /*   const {
     isLoading: reviewIsLoading,
     loadPage: loadReviewPage,
     noMoreData,
   } = usePaginationPrimitive<Review>(ReviewService.useFetchReviewByPage, reviews, setReviews);
-
+ */
   const {
-    data: restaurantData,
+    data: restaurantsData,
     isLoading: restaurantLoading,
     error: restaurantError,
-  } = RestaurantService.useFetchRestaurants();
+  } = RestaurantService.useFetchRestaurants(token);
+  const {
+    data: reviewsData,
+    isLoading: reviewLoading,
+    error: reviewError,
+    isFetching,
+    refetch: refteshReviews,
+  } = ReviewService.useFetchReviews(token);
   const rootNavigation = useNavigation<RootNavigationProps['navigation']>();
   const { isDarkTheme } = useTheme();
-  const hasrestaurantData = !!restaurantData?.data;
 
-  if (!reviews || reviews.length === 0) {
+  useEffect(() => {
+    const unsubscribe = rootNavigation.addListener('focus', () => {
+      console.log('Screen focused');
+      refteshReviews;
+    });
+
+    return unsubscribe;
+  }, [rootNavigation]);
+
+  if (reviewError || restaurantError) {
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <RNText>error.</RNText>
+          {/* <ActivityIndicator color={COLORS.primary} size={'large'} /> */}
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
+  }
+  if (!reviewsData) {
+    return (
+      <BackgoundContainer>
+        <CenteredContainer>
+          <ActivityIndicator color={COLORS.primary} size={'large'} />
+        </CenteredContainer>
+      </BackgoundContainer>
+    );
+  }
+  if (!restaurantsData) {
     return (
       <BackgoundContainer>
         <CenteredContainer>
@@ -58,9 +93,9 @@ const Home = () => {
               <Box>
                 <RNText>Loading resturants..</RNText>
               </Box>
-            ) : hasrestaurantData ? (
+            ) : restaurantsData.data.success ? (
               <ListHeaderComponent
-                restaurantData={restaurantData.data}
+                restaurantData={restaurantsData.data.restaurants}
                 rootNavigation={rootNavigation}
               />
             ) : (
@@ -69,8 +104,9 @@ const Home = () => {
               </Box>
             )
           }
-          data={reviews}
-          onEndReached={noMoreData ? null : loadReviewPage}
+          data={reviewsData?.data[0] ?? []}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refteshReviews} />}
+          /*  onEndReached={noMoreData ? null : loadReviewPage}
           ListFooterComponent={
             noMoreData ? (
               <Box>
@@ -80,9 +116,9 @@ const Home = () => {
               <FlatlistFooter isLoading={reviewIsLoading} />
             )
           }
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={0} */
           renderItem={({ item }: { item: Review }) => <ReviewCard {...item} />}
-          keyExtractor={(item, index) => `HOME_${item.id}_${item.reviewedAt}_${index}`}
+          keyExtractor={(item, index) => `HOME_${item.id}_${item.created_at}_${index}`}
         />
       </SafeAreaView>
     </BackgoundContainer>

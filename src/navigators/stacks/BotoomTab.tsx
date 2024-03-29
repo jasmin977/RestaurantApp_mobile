@@ -9,12 +9,14 @@ import {
 } from '../../screens';
 import { HomeIcon, LocationIcon, NotifIcon, SaveIcon } from '../../assets';
 import { ScanQRButton } from '../../components/common';
-import { useTheme } from '../../context';
-import { RNIcon } from '../../components/themed';
+import { useAppState, useTheme } from '../../context';
+import { Box, RNIcon, RNText } from '../../components/themed';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Drawer from '../Drawer';
 import { moderateVerticalScale, verticalScale } from '../../helpers';
+import { View } from 'react-native';
+import { NotificationService } from '../../service';
 
 export type RootBottomStackParamList = {
   Feed: undefined;
@@ -30,6 +32,9 @@ const Tab = createBottomTabNavigator<RootBottomStackParamList>();
 
 const TabStack: FunctionComponent = () => {
   const { theme } = useTheme();
+  const { data: unreadnotifications, isLoading } = NotificationService.useFetchUnreadNotifcations();
+  const { unreadNotif, setunreadNotif } = useAppState();
+
   return (
     <Drawer>
       <Tab.Navigator
@@ -93,7 +98,30 @@ const TabStack: FunctionComponent = () => {
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <RNIcon color={focused ? 'primary' : 'grey.400'} as={<NotifIcon />} />
+              <View>
+                <RNIcon color={focused ? 'primary' : 'grey.400'} as={<NotifIcon />} />
+                {unreadNotif != 0 && (
+                  <Box
+                    alignItems="center"
+                    justifyContent="center"
+                    bg="primary"
+                    rounded={50}
+                    w={20}
+                    h={20}
+                    style={{
+                      position: 'absolute',
+                      top: -10,
+                      left: -5,
+                      borderColor: theme.colors.card,
+                      borderWidth: 1,
+                    }}
+                  >
+                    <RNText variant="caption" color="onPrimary">
+                      {unreadNotif}
+                    </RNText>
+                  </Box>
+                )}
+              </View>
             ),
           }}
         />

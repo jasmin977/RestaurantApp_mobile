@@ -6,11 +6,14 @@ import { RootNavigationProps } from '../../navigators/ROUTES';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
 import { RestaurantService } from '../../service';
-import { Restaurant } from '../../entities';
+import { Restaurant, user } from '../../entities';
 import { FlatList } from 'react-native-gesture-handler';
 import SearchHistoryCache from '../../cache/searchHistoryCache';
 import { scale } from '../../helpers';
 import RestaurantCard from './components/cards/RestaurantCard';
+import { useAuth } from '../../context';
+import UserService from '../../service/Users';
+import UserCard from './components/cards/UserCard';
 
 interface SeachScreenProps {}
 
@@ -18,8 +21,10 @@ const SeachScreen: React.FC<SeachScreenProps> = () => {
   const navigation = useNavigation<RootNavigationProps['navigation']>();
   const [searchText, setSearchText] = useState('');
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const { token } = useAuth();
 
   const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
+  const [searchUsersResults, setUsersSearchResults] = useState<user[]>([]);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
 
   const loadSearchHistory = () => {
@@ -61,15 +66,24 @@ const SeachScreen: React.FC<SeachScreenProps> = () => {
     data: restaurantData,
     isLoading: restaurantIsLoading,
     error: restaurantError,
-  } = RestaurantService.useFetchRestaurants();
+  } = RestaurantService.useFetchRestaurants(token);
+  const {
+    data: usersData,
+    isLoading: usersIsLoading,
+    error: usersError,
+  } = UserService.useFetchUsers(token);
 
   const handleSearch = (searchText: string) => {
     setSearchText(searchText);
     setIsSearchClicked(true);
-    const filtered = restaurantData.data.filter((restaurant: Restaurant) =>
+    const filtered = restaurantData.data.restaurants.filter((restaurant: Restaurant) =>
+      restaurant.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    const filteredUsers = usersData.data.users.filter((restaurant: user) =>
       restaurant.name.toLowerCase().includes(searchText.toLowerCase())
     );
     setSearchResults(filtered);
+    setUsersSearchResults(filteredUsers);
     saveSearchHistory(searchText);
   };
 
@@ -134,11 +148,17 @@ const SeachScreen: React.FC<SeachScreenProps> = () => {
 
       {searchResults.length === 0 && searchText.length > 0 && isSearchClicked && (
         <Box spacing={{ py: 20 }}>
-          <RNText>No results..</RNText>
+          <RNText>No restaurants results..</RNText>
+        </Box>
+      )}
+      {searchUsersResults.length === 0 && searchText.length > 0 && isSearchClicked && (
+        <Box spacing={{ py: 20 }}>
+          <RNText>No users results..</RNText>
         </Box>
       )}
 
-      {searchText.length === 0 || (searchResults.length === 0 && !isSearchClicked) ? (
+      {searchText.length === 0 ||
+      (searchResults.length === 0 && searchUsersResults.length === 0 && !isSearchClicked) ? (
         <View>
           <FlatList
             data={searchHistory}
@@ -156,12 +176,22 @@ const SeachScreen: React.FC<SeachScreenProps> = () => {
           </Box>
         </View>
       ) : (
-        <FlatList
-          contentContainerStyle={{ padding: 20, gap: 10 }}
-          data={searchResults}
-          renderItem={RestaurantCard}
-          keyExtractor={(item, index) => `SEARCH_${item.id}_${item.name}_${index}`}
-        />
+        <>
+          <FlatList
+            contentContainerStyle={{ paddingHorizontal: 20, gap: 10, paddingBottom: 20 }}
+            ListHeaderComponent={<RNText variant="subtitle">Result for {searchText}..</RNText>}
+            data={[...searchResults, ...searchUsersResults]}
+            renderItem={({ item }) => {
+              // Check the type of item to decide whether it's a restaurant or user
+              if ('cuisineType' in item) {
+                return <RestaurantCard navigation={navigation} item={item} />;
+              } else {
+                return <UserCard navigation={navigation} item={item} />;
+              }
+            }}
+            keyExtractor={(item, index) => `COMBINED_ITEM_${index}`}
+          />
+        </>
       )}
     </BackgoundContainer>
   );

@@ -158,7 +158,7 @@ const Drawer: FunctionComponent<DrawerProp> = ({ children }) => {
 
           <View>
             <RNText color="white" variant="h5">
-              {user?.username}
+              {user?.name}
             </RNText>
             <RNText color="white" variant="caption">
               {user?.email}
