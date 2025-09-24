@@ -1,0 +1,106 @@
+import { FunctionComponent, useState, useRef } from 'react';
+import { Animated, ImageBackground, TouchableOpacity, View } from 'react-native';
+
+import { styled } from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
+
+import { Restaurant } from '../../../../entities';
+
+import { Box, RNIcon, RNText } from '../../../../components/themed';
+
+import { LikeIcon } from '../../../../assets';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from '../../../../context';
+import { RootNavigationProps } from '../../../../navigators/ROUTES';
+import { scale, verticalScale } from '../../../../helpers';
+import RatingStars from '../reviews/RatingStars';
+
+interface CarouselProps {
+  index: number;
+  item: Restaurant;
+  cardWidth?: number;
+  onPress?: () => void;
+}
+const RestaurantHomeCard = ({ cardWidth = 0.7, onPress, index, item }: CarouselProps) => {
+  const pan = useRef(new Animated.ValueXY()).current;
+  const [scrollViewWidth, setScrollViewWidth] = useState(0);
+
+  const boxWidth = scrollViewWidth * cardWidth;
+  const boxDistance = scrollViewWidth - boxWidth;
+  const halfBoxDistance = boxDistance / 2;
+  const navigation = useNavigation<RootNavigationProps['navigation']>();
+
+  const { theme } = useTheme();
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.push('RestaurantStack', {
+          screen: 'RestaurantProfile',
+          params: {
+            id: item.id,
+          },
+        });
+      }}
+      activeOpacity={0.8}
+    >
+      <Animated.View
+        style={{
+          transform: [
+            {
+              scale: pan.x.interpolate({
+                inputRange: [
+                  (index - 1) * boxWidth - halfBoxDistance,
+                  index * boxWidth - halfBoxDistance,
+                  (index + 1) * boxWidth - halfBoxDistance, // adjust positioning
+                ],
+                outputRange: [0.8, 1, 0.8], // scale down when out of scope
+                extrapolate: 'clamp',
+              }),
+            },
+          ],
+        }}
+      >
+        <ImageBackground
+          style={{ height: verticalScale(400), width: scale(boxWidth) }}
+          imageStyle={{ borderRadius: 20 }}
+          source={{ uri: item.imageUrl }}
+        >
+          <Box direction="horizontal" justifyContent="space-between" spacing={{ p: 10 }}>
+            <RatingStars
+              rating={item.rating}
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                borderRadius: 100,
+
+                paddingHorizontal: 10,
+              }}
+            />
+            <Box bg="background" spacing={{ p: 10 }} rounded={50}>
+              <RNIcon size={25} color="primary" as={<LikeIcon />} />
+            </Box>
+          </Box>
+          <LinearGradient
+            style={{
+              bottom: 0,
+              position: 'absolute',
+              width: '100%',
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderBottomLeftRadius: 20,
+              borderBottomRightRadius: 20,
+            }}
+            colors={['transparent', 'black']}
+          >
+            <Box alignItems="flex-start" gap={10} spacing={{ pt: 20 }}>
+              <RNText variant="h2">{item.name}</RNText>
+              <RNText>Friends went here</RNText>
+            </Box>
+          </LinearGradient>
+        </ImageBackground>
+      </Animated.View>
+    </TouchableOpacity>
+  );
+};
+
+export default RestaurantHomeCard;

@@ -1,5 +1,8 @@
-export { default as Colors } from "./colors";
-export { default as FontSizes } from "./fontSize";
-export { default as Fonts } from "./fonts";
-export { default as Palette } from "./palette";
-export { default as Typography } from "./typography";
+import COLORS from './colors';
+import FONSIZES from './fontSize';
+import FONTS from './fonts';
+import { lightPalette, darkPalette } from './palette';
+import TYPOGRAPHY from './typography';
+import SIZES from './sizes';
+
+export { COLORS, FONSIZES, FONTS, TYPOGRAPHY, SIZES, lightPalette, darkPalette };

@@ -1,16 +1,9 @@
-import * as React from "react";
-import { Palette } from "../../themes";
-import Svg, { Path } from "react-native-svg";
+import * as React from 'react';
+
+import Svg, { Path } from 'react-native-svg';
 
 const LoaderIcon = () => (
-  <Svg
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke={Palette.text}
-    width={30}
-    height={30}
-  >
+  <Svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke={'red'} width={30} height={30}>
     <Path
       strokeLinecap="round"
       strokeLinejoin="round"

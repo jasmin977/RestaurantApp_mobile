@@ -1,20 +1,25 @@
 //that's a module declaration file
 
-declare module "*.png" {
+declare module '*.png' {
   const value: any;
   export = value;
 }
 
-declare module "*.jpeg" {
+declare module '*.jpeg' {
   const value: any;
   export = value;
 }
-declare module "*.jpg" {
+declare module '*.jpg' {
   const value: any;
   export = value;
 }
 
-declare module "*.ttf" {
+declare module '*.gif' {
+  const value: any;
+  export = value;
+}
+
+declare module '*.ttf' {
   const value: any;
   export default value;
 }

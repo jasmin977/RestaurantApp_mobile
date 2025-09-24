@@ -1,29 +1,35 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { useFonts } from "expo-font";
-import RootStack from "./src/navigators/RootStack";
-import { BOLD, MEDIUM, REGULAR } from "./src/assets";
-import { LoaderScreen } from "./src/screens";
+import { LoaderScreen } from './src/screens';
+import {
+  AppStateProvider,
+  AuthProvider,
+  FollowProvider,
+  ReviewProvider,
+  ThemeProvider,
+} from './src/context';
+import { useAssetLoader } from './src/hooks';
+import Root from './src/navigators/StartNavigator';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-//react navigation
 export default function App() {
-  const [fontLoaded] = useFonts({
-    FONT_BOLD: BOLD,
-    FONT_REGULAR: REGULAR,
-    FONT_MEDIUM: MEDIUM,
-  });
+  const queryClient = new QueryClient();
+  const { isLoading } = useAssetLoader();
 
-  if (!fontLoaded) {
+  if (isLoading) {
     return <LoaderScreen />;
   }
-  return <RootStack />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppStateProvider>
+            <FollowProvider>
+              <ReviewProvider>
+                <Root />
+              </ReviewProvider>
+            </FollowProvider>
+          </AppStateProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

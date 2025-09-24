@@ -1,13 +1,36 @@
-import Colors from "./colors";
+import Colors, { common, green, purple, red, yellow } from './colors';
 
-export const Palette = {
-  background: Colors.BackgroundColor,
-  text: Colors.TextColor,
-  title: Colors.TitleColor,
-  surafce: Colors.SurfaceBackgroundColor,
-  SecondColor: Colors.SecondaryColor,
-  PrimaryColor: Colors.PrimaryColor,
-  // Add more named colors as needed
+const darkPalette = {
+  primary: Colors.primary,
+  success: green[500],
+  warning: yellow[200],
+  error: red[600],
+  background: '#202128',
+  card: '#2E2F36',
+  onPrimary: common.white,
+  onBackground: common.white,
+  onCard: common.white,
+  onError: common.white,
+  black: common.black,
+  grey: Colors.grey,
+  white: common.white,
 };
 
-export default Palette;
+const lightPalette = {
+  common: common,
+  grey: Colors.grey,
+  primary: Colors.primary,
+  success: green[500],
+  warning: yellow[200],
+  error: red[600],
+  background: '#F6F6F6',
+  card: common.white,
+  onPrimary: common.white,
+  onBackground: common.black,
+  onCard: common.black,
+  onError: common.white,
+  black: common.black,
+  white: common.white,
+};
+
+export { lightPalette, darkPalette };

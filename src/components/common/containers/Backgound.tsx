@@ -1,14 +1,29 @@
-import { styled } from "styled-components/native";
+import React, { FunctionComponent, ReactNode } from 'react';
+import { Dimensions, StatusBar, View } from 'react-native';
+import { useTheme } from '../../../context';
 
-import { Palette } from "../../../themes";
-import { Dimensions } from "react-native";
+import { Box } from '../../themed';
 
-export const BackgoundContainer = styled.View`
-  flex: 1;
-  background-color: ${Palette.background};
-`;
+interface IProps {
+  children: ReactNode;
+}
+
+const BackgoundContainer: FunctionComponent<IProps> = ({ children }) => {
+  const { theme } = useTheme();
+  return (
+    <View
+      style={{
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        backgroundColor: theme.colors.background,
+      }}
+    >
+      {children}
+    </View>
+  );
+};
 
 export default BackgoundContainer;
 
-export const ScreenWidth = Dimensions.get("screen").width;
-export const ScreenHeigh = Dimensions.get("screen").height;
+export const ScreenWidth = Dimensions.get('screen').width;
+export const ScreenHeigh = Dimensions.get('screen').height;
