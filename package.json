@@ -17,6 +17,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@react-navigation/stack": "^6.3.16",
     "axios": "^1.4.0",
+    "clsx": "^2.1.0",
     "expo": "~48.0.18",
     "expo-app-loading": "^2.1.1",
     "expo-barcode-scanner": "~12.3.2",
@@ -42,7 +43,8 @@
     "react-native-screens": "~3.20.0",
     "react-native-svg": "13.4.0",
     "react-query": "^3.39.3",
-    "styled-components": "6.0.0-rc.3"
+    "styled-components": "6.0.0-rc.3",
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
